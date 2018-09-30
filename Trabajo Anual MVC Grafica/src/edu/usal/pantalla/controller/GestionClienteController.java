@@ -1,6 +1,7 @@
 package edu.usal.pantalla.controller;
 
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
@@ -44,6 +45,7 @@ public class GestionClienteController {
 		}
 	}
 	
+	@SuppressWarnings("deprecation")
 	public void almacenarDatos(FrameNuevoCliente datos) {
 		//System.out.println("Datos recibidos");
 		clientedao = ClienteFactory.getClienteDAO(Ejecutar.source);
@@ -53,10 +55,7 @@ public class GestionClienteController {
 		cliente.setDNI(Integer.parseInt((datos.getTextDNI().getText())));
 		cliente.setCuitcuil(datos.getTextCuit().getText());
 		cliente.setEmail(datos.getTextEmail().getText());
-		cliente.setFechaNac(new GregorianCalendar(Integer.parseInt(datos.getTextFechaAAAA().getText()),
-				Integer.parseInt(datos.getTextFechaMM().getText()), Integer.parseInt(datos.getTextFechaDD().getText())));
-		Cliente asd = new Cliente();
-		asd.setDNI(123);
+		cliente.setFechaNac(new Date(Integer.parseInt(datos.getTextFechaAAAA().getText()), Integer.parseInt(datos.getTextFechaMM().getText()), Integer.parseInt(datos.getTextFechaDD().getText())));
 		try {
 			if(clientedao.addCliente(cliente)) {
 				menu.exitoOperacion();
@@ -69,7 +68,7 @@ public class GestionClienteController {
 		}
 		menu.getLblCartelSelec().setVisible(true);
 		menu.getNuevoCliente().setVisible(false);
-		
+		IOGeneral.pritln(">>>>>Proceso OK<<<<<");
 	}
 
 	public GestionClienteVista getMenu() {
@@ -89,17 +88,20 @@ public class GestionClienteController {
 	}
 	
 	private void modificarCliente() {
-		int dni = menu.solicitarDNI();
-		Cliente selec = new Cliente();
-		selec.setApellido("Castro");
-		selec.setNombre("Agustin");
-		selec.setDNI(40648652);
-		switch(menu.confirmarSeleccion(selec)) {
-			case 0:datosClienteDB(selec);
-				break;
-			case 1:menu.cancelaOperacion();
-		}
 		
+		try {
+			clientedao = ClienteFactory.getClienteDAO(Ejecutar.source);
+			int dni = menu.solicitarDNI();
+			Cliente selec = clientedao.readCliente(dni);
+			switch(menu.confirmarSeleccion(selec)) {
+				case 0:datosClienteDB(selec);
+					break;
+				case 1:menu.cancelaOperacion();
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	private void datosClienteDB(Cliente cliente) {

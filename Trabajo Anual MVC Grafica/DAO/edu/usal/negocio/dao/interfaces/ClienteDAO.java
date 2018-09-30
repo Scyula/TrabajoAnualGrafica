@@ -11,6 +11,6 @@ public interface ClienteDAO {
 	public boolean updateCliente(Cliente cliente) throws SQLException;
 	public boolean deleteCliente(Cliente cliente) throws SQLException;
 	public List<Cliente> getAllCliente() throws SQLException;
-	public void readCliente(int dni) throws SQLException;
+	public Cliente readCliente(int dni) throws SQLException;
 	
 }

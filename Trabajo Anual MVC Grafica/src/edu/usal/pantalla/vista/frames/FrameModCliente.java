@@ -1,8 +1,5 @@
 package edu.usal.pantalla.vista.frames;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -12,66 +9,68 @@ import javax.swing.JTextField;
 
 import edu.usal.negocio.dominio.*;
 import edu.usal.pantalla.vista.GestionClienteVista;
+import edu.usal.pantalla.vista.eventos.CapturaBtnModCliente;
 
 public class FrameModCliente extends JPanel {
 
 private static final long serialVersionUID = 1L;
 	
-	GestionClienteVista vista;
-	
-	private JLabel lblNombre;
-	private JLabel lblApellido;
-	private JLabel lblDni;
-	private JLabel label_4;
-	private JLabel label_5;
-	private JTextField textEmail;
-	private JTextField textNombre;
-	private JTextField textApellido;
-	private JTextField textFechaDD;
-	private JTextField textFechaMM;
-	private JTextField textFechaAAAA;
-	private JTextField textDNI;
-	private JButton btnGuardar;
-	private JLabel label_8;
-	private JLabel lblPais;
-	private JTextField textField_3;
-	private JLabel lblCiudad;
-	private JTextField textField_4;
-	private JLabel lblCiudad_1;
-	private JTextField textField_5;
-	private JLabel lblCodigoPostal;
-	private JTextField textField_6;
-	private JLabel lblCalle;
-	private JTextField textField_7;
-	private JLabel lblAltura;
-	private JTextField textField_8;
-	private JLabel label;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JTextField textField;
-	private JTextField textField_19;
-	private JTextField textField_20;
-	private JTextField textField_21;
-	private JTextField textField_23;
-	private JTextField textField_26;
-	private JTextField textField_27;
-	private JTextField textField_29;
-	private JTextField textField_30;
-	private JTextField textField_31;
-	private JTextField textField_32;
-	private JTextField textField_33;
-	private JTextField textField_34;
-	private JTextField textField_35;
-	private JTextField textField_36;
-	private JTextField textField_37;
-	private JLabel lblDdmmaaaa;
-	private JLabel label_19;
-	private JLabel label_23;
-	private JLabel lblPasajeroFrecuente;
-	private JLabel lblPasaporte;
-	private JLabel lblDatosBasicos;
-	private JLabel lblTelefono;
-	private JLabel lblDireccion;
+private GestionClienteVista vista;
+
+private JLabel lblNombre;
+private JLabel lblApellido;
+private JLabel lblDni;
+private JLabel label_4;
+private JLabel label_5;
+private JTextField textEmail;
+private JTextField textNombre;
+private JTextField textApellido;
+private JTextField textFechaDD;
+private JTextField textFechaMM;
+private JTextField textFechaAAAA;
+private JTextField textDNI;
+private JButton btnGuardar;
+private JLabel label_8;
+private JLabel lblPais;
+private JTextField textField_3;
+private JLabel lblCiudad;
+private JTextField textField_4;
+private JLabel lblCiudad_1;
+private JTextField textField_5;
+private JLabel lblCodigoPostal;
+private JTextField textField_6;
+private JLabel lblCalle;
+private JTextField textField_7;
+private JLabel lblAltura;
+private JTextField textField_8;
+private JLabel label;
+private JTextField textField_1;
+private JTextField textField_2;
+private JTextField textField;
+private JTextField textField_19;
+private JTextField textField_20;
+private JTextField textField_21;
+private JTextField textField_23;
+private JTextField textField_26;
+private JTextField textField_27;
+private JTextField textField_29;
+private JTextField textField_30;
+private JTextField textField_31;
+private JTextField textField_32;
+private JTextField textField_33;
+private JTextField textField_34;
+private JTextField textField_35;
+private JTextField textField_36;
+private JTextField textField_37;
+private JLabel lblDdmmaaaa;
+private JLabel label_19;
+private JLabel label_23;
+private JLabel lblPasajeroFrecuente;
+private JLabel lblPasaporte;
+private JLabel lblDatosBasicos;
+private JLabel lblTelefono;
+private JLabel lblDireccion;
+private JTextField textCuit;
 	
 	public FrameModCliente() {
 		
@@ -79,7 +78,7 @@ private static final long serialVersionUID = 1L;
 	
 	public FrameModCliente(GestionClienteVista vista, Cliente cliente,Telefono telefono, 
 			Direccion direccion, Pasaporte pasaporte, PasajeroFrecuente pasajero) {
-		this.vista = vista;
+this.vista = vista;
 		
 		
 		setBounds(5, 53, 969, 590);
@@ -98,7 +97,7 @@ private static final long serialVersionUID = 1L;
 		this.add(lblDni);
 		
 		label_4 = new JLabel("Fecha de Nacimiento");
-		label_4.setBounds(62, 165, 126, 16);
+		label_4.setBounds(34, 165, 126, 16);
 		this.add(label_4);
 		
 		label_5 = new JLabel("E-mail");
@@ -121,40 +120,37 @@ private static final long serialVersionUID = 1L;
 		this.add(textApellido);
 		
 		textFechaDD = new JTextField();
-		textFechaDD.setEditable(false);
 		textFechaDD.setColumns(10);
-		textFechaDD.setBounds(52, 139, 35, 22);
+		textFechaDD.setBounds(24, 139, 35, 22);
 		this.add(textFechaDD);
 		
 		textFechaMM = new JTextField();
-		textFechaMM.setEditable(false);
 		textFechaMM.setColumns(10);
-		textFechaMM.setBounds(96, 139, 35, 22);
+		textFechaMM.setBounds(68, 139, 35, 22);
 		this.add(textFechaMM);
 		
 		textFechaAAAA = new JTextField();
-		textFechaAAAA.setEditable(false);
 		textFechaAAAA.setColumns(10);
-		textFechaAAAA.setBounds(143, 139, 47, 22);
+		textFechaAAAA.setBounds(115, 139, 47, 22);
 		this.add(textFechaAAAA);
 		
 		textDNI = new JTextField();
-		textDNI.setEditable(false);
 		textDNI.setColumns(10);
 		textDNI.setBounds(26, 90, 208, 22);
 		this.add(textDNI);
 		
 		btnGuardar = new JButton("Guardar");
-		btnGuardar.addActionListener(new ActionListener() {
+		btnGuardar.addActionListener(new CapturaBtnModCliente(this));
+		/*btnGuardar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				vista.getClienteController().almacenarDatos(vista.getNuevoCliente());
 			}
-		});
+		});*/
 		btnGuardar.setBounds(437, 552, 97, 25);
 		this.add(btnGuardar);
 
 		label_8 = new JLabel("-");
-		label_8.setBounds(133, 142, 17, 16);
+		label_8.setBounds(105, 142, 17, 16);
 		this.add(label_8);
 		
 		lblPais = new JLabel("Pais");
@@ -212,7 +208,7 @@ private static final long serialVersionUID = 1L;
 		this.add(textField_8);
 		
 		label = new JLabel("-");
-		label.setBounds(89, 142, 17, 16);
+		label.setBounds(61, 142, 17, 16);
 		this.add(label);
 		
 		textField_1 = new JTextField();
@@ -264,7 +260,6 @@ private static final long serialVersionUID = 1L;
 		this.add(textField_19);
 		
 		textField_20 = new JTextField();
-		textField_20.setEditable(false);
 		textField_20.setColumns(10);
 		textField_20.setBounds(526, 43, 208, 22);
 		this.add(textField_20);
@@ -411,7 +406,7 @@ private static final long serialVersionUID = 1L;
 		this.add(separator_2);
 		
 		lblDdmmaaaa = new JLabel("DD-MM-AAAA");
-		lblDdmmaaaa.setBounds(211, 139, 73, 22);
+		lblDdmmaaaa.setBounds(172, 139, 73, 22);
 		this.add(lblDdmmaaaa);
 		
 		label_19 = new JLabel("DD-MM-AAAA");
@@ -441,8 +436,32 @@ private static final long serialVersionUID = 1L;
 		lblDireccion = new JLabel("Direccion");
 		lblDireccion.setBounds(24, 335, 221, 16);
 		this.add(lblDireccion);
+		
+		JLabel lblCuitcuil = new JLabel("CUIT/CUIL");
+		lblCuitcuil.setBounds(316, 166, 72, 14);
+		add(lblCuitcuil);
+		
+		textCuit = new JTextField();
+		textCuit.setBounds(252, 140, 208, 20);
+		add(textCuit);
+		textCuit.setColumns(10);
 		this.setVisible(false);
 	}
-	
 
+	public GestionClienteVista getVista() {
+		return vista;
+	}
+
+	public void setVista(GestionClienteVista vista) {
+		this.vista = vista;
+	}
+
+	public JButton getBtnGuardar() {
+		return btnGuardar;
+	}
+
+	public void setBtnGuardar(JButton btnGuardar) {
+		this.btnGuardar = btnGuardar;
+	}
+	
 }

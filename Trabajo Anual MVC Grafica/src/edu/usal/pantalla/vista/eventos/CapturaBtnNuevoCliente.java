@@ -8,7 +8,6 @@ import edu.usal.pantalla.vista.*;
 import edu.usal.pantalla.vista.frames.FrameNuevoCliente;
 
 public class CapturaBtnNuevoCliente implements ActionListener {
-	GestionClienteController control;
 	FrameNuevoCliente frame;
 	
 	

@@ -3,6 +3,7 @@ package edu.usal.negocio.dominio;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
@@ -17,13 +18,13 @@ public class Cliente implements Serializable{
 	private int DNI;
 	private Pasaporte pasaporte;
 	private String cuitcuil;
-	private Calendar fechaNac;
+	private Date fechaNac;
 	private String email;
 	private Telefono telefono;
 	private PasajeroFrecuente pasajeroFrecuente;
 	private Direccion direccion;
 	
-	public Cliente(String nombre, String apellido,int dni, Pasaporte pasaporte, String cuitcuil, Calendar fechaNac,
+	public Cliente(String nombre, String apellido,int dni, Pasaporte pasaporte, String cuitcuil, Date fechaNac,
 			String email, Telefono telefono, PasajeroFrecuente pasajeroFrecuente, Direccion direccion) {
 		super();
 		this.nombre = nombre;
@@ -70,10 +71,10 @@ public class Cliente implements Serializable{
 	public void setCuitcuil(String cuitcuil) {
 		this.cuitcuil = cuitcuil;
 	}
-	public Calendar getFechaNac() {
+	public Date getFechaNac() {
 		return fechaNac;
 	}
-	public void setFechaNac(Calendar fechaNac) {
+	public void setFechaNac(Date fechaNac) {
 		this.fechaNac = fechaNac;
 	}
 	public String getEmail() {

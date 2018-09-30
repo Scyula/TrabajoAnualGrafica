@@ -34,7 +34,6 @@ public class GestionClienteVista extends JFrame {
 	private JLabel lblCartelSelec;
 	private GestionClienteController clienteController;
 	
-	
 
 	public FrameModCliente getModCliente() {
 		return modCliente;
@@ -160,7 +159,7 @@ public class GestionClienteVista extends JFrame {
 		return Integer.parseInt(JOptionPane.showInputDialog(null, "Ingrese DNI del cliente a modificar", "Modificar Cliente", JOptionPane.QUESTION_MESSAGE));
 	}
 	public int confirmarSeleccion(Cliente cliente) {
-		return JOptionPane.showConfirmDialog(null, ("Desea eliminar a "+cliente.getApellido()+", "+cliente.getNombre()+"["+cliente.getDNI()+"]"), "Confirmacion de seleccion", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+		return JOptionPane.showConfirmDialog(null, ("Desea seleccionar a Apellido: "+cliente.getApellido()+"\nNombre: "+cliente.getNombre()+"\nDNI: ["+cliente.getDNI()+"]"), "Confirmacion de seleccion", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 	}
 	public void cancelaOperacion() {
 		JOptionPane.showMessageDialog(null, "La operacion se ha cancelado", "", JOptionPane.WARNING_MESSAGE);

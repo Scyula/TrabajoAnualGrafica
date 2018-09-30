@@ -1,36 +1,49 @@
 package edu.usal.negocio.dao.implementacion.SQL;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import edu.usal.negocio.dao.interfaces.ClienteDAO;
 import edu.usal.negocio.dominio.Cliente;
-import edu.usal.util.Conec;
+import edu.usal.util.Coneccion;
+import edu.usal.util.IOGeneral;
 
 public class ClienteDAOImplSQL implements ClienteDAO {
-	Conec con;
+	//Tabla Cliente => 1 [DNI], 2 [Nombre], 3 [Apellido], 4 [CuitCuil], 5 [FechaNacimiento], 6 [Email]
+	Coneccion con;
 	Statement stm;
+	PreparedStatement prep;
 	String query;
+	
 	
 	@Override
 	public boolean addCliente(Cliente cliente)  throws SQLException {
-		con = new Conec();
+		con = new Coneccion();
 		if(con.iniciarConeccion()) {
-			stm = con.getCon().createStatement();
-			query = ("INSERT INTO Cliente values ("+cliente.getDNI()+",'"+cliente.getNombre()+"','"+cliente.getApellido()+"','"+
-			cliente.getCuitcuil()+"','"+fechaToString(cliente.getFechaNac())+"','"+cliente.getEmail()+"');");
-			int r = stm.executeUpdate(query);
+			query = ("INSERT INTO Cliente VALUES (?,?,?,?,?,?);");
+			prep = con.getConeccion().prepareStatement(query);
+			prep.setInt(1,cliente.getDNI());
+			prep.setString(2, cliente.getNombre());
+			prep.setString(3, cliente.getApellido());
+			prep.setString(4, cliente.getCuitcuil());
+			prep.setString(5, fechaToString(cliente.getFechaNac()));
+			prep.setString(6, cliente.getEmail());
+			int r = prep.executeUpdate();
 			if(r==1) {
+				prep.close();
+				con.cerrarConeccion();
 				return true;
 			}else if(r>1) {
-				return false;
-			}else {
-				
-				return false;
+				IOGeneral.pritln("CUIDADO, se afectó mas de una sola columna");
 			}
 		}
+		prep.close();
+		con.cerrarConeccion();
 		return false;
 	}
 
@@ -53,12 +66,31 @@ public class ClienteDAOImplSQL implements ClienteDAO {
 	}
 
 	@Override
-	public void readCliente(int dni) throws SQLException {
-		// TODO Auto-generated method stub
-		
+	public Cliente readCliente(int dni) throws SQLException {
+		con = new Coneccion();
+		if(con.iniciarConeccion()) {
+			query = "SELECT * FROM Cliente WHERE DNI= ?";
+			prep = con.getConeccion().prepareStatement(query);
+			prep.setInt(1, dni);
+			ResultSet rs = prep.executeQuery();
+			rs.next();
+			Cliente nuevo = new Cliente(rs.getString(2),rs.getString(3), rs.getInt(1), null, rs.getString(4), stringToFecha(rs.getString(5)), rs.getString(6), null, null, null);
+			prep.close();
+			con.cerrarConeccion();
+			return nuevo;
+		}
+		prep.close();
+		con.cerrarConeccion();
+		return null;
 	}
-	private String fechaToString(Calendar fecha) {
-		return fecha.get(Calendar.YEAR)+"-"+fecha.get(Calendar.MONTH)+"-"+fecha.get(Calendar.DAY_OF_MONTH);
-
+	@SuppressWarnings("deprecation")
+	private String fechaToString(Date fecha) {
+		return fecha.getYear()+"-"+fecha.getMonth()+"-"+fecha.getDay();
+	}
+	private Date stringToFecha(String fecha) {
+		String[] valores = fecha.split("-");
+		@SuppressWarnings("deprecation")
+		Date nuevo = new Date(Integer.parseInt(valores[0]), Integer.parseInt(valores[1]), Integer.parseInt(valores[2]));
+		return nuevo;
 	}
 }
