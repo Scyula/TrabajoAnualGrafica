@@ -86,7 +86,7 @@ public class LineaAereaDAOImplFileStream implements LineaAereaDAO {
 		this.objOutput.close();
 	}
 	
-	private ArrayList<LineaAerea> primeraLectura(){
+	public ArrayList<LineaAerea> primeraLectura(){
 		ArrayList<LineaAerea> lista = new ArrayList<LineaAerea>();
 		try {
 			

@@ -1,6 +1,9 @@
 package edu.usal.pantalla.vista.frames;
 
+import javax.swing.ButtonGroup;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
@@ -10,6 +13,7 @@ import javax.swing.JTextField;
 import edu.usal.negocio.dominio.*;
 import edu.usal.pantalla.vista.GestionClienteVista;
 import edu.usal.pantalla.vista.eventos.CapturaBtnModCliente;
+import edu.usal.pantalla.vista.eventos.CapturaBtnNuevoCliente;
 
 public class FrameModCliente extends JPanel {
 
@@ -25,43 +29,36 @@ private JLabel label_5;
 private JTextField textEmail;
 private JTextField textNombre;
 private JTextField textApellido;
-private JTextField textFechaDD;
-private JTextField textFechaMM;
-private JTextField textFechaAAAA;
+private JTextField textFechaNacDD;
+private JTextField textFechaNacMM;
+private JTextField textFechaNacAAAA;
 private JTextField textDNI;
 private JButton btnGuardar;
 private JLabel label_8;
 private JLabel lblPais;
-private JTextField textField_3;
 private JLabel lblCiudad;
-private JTextField textField_4;
 private JLabel lblCiudad_1;
-private JTextField textField_5;
+private JTextField textCiudad;
 private JLabel lblCodigoPostal;
-private JTextField textField_6;
+private JTextField textCodPostal;
 private JLabel lblCalle;
-private JTextField textField_7;
+private JTextField textCalle;
 private JLabel lblAltura;
-private JTextField textField_8;
+private JTextField textAltura;
 private JLabel label;
-private JTextField textField_1;
-private JTextField textField_2;
-private JTextField textField;
-private JTextField textField_19;
-private JTextField textField_20;
-private JTextField textField_21;
-private JTextField textField_23;
-private JTextField textField_26;
-private JTextField textField_27;
-private JTextField textField_29;
-private JTextField textField_30;
-private JTextField textField_31;
-private JTextField textField_32;
-private JTextField textField_33;
-private JTextField textField_34;
-private JTextField textField_35;
-private JTextField textField_36;
-private JTextField textField_37;
+private JTextField textTelCelular;
+private JTextField textTelLaboral;
+private JTextField textTelPersonal;
+private JTextField textNroPasaporte;
+private JTextField textAutoridadEmision;
+private JTextField textFechaEmiDD;
+private JTextField textFechaEmiMM;
+private JTextField textFechaEmiAAAA;
+private JTextField textNroPasajero;
+private JTextField textCategoria;
+private JTextField textFechaVencDD;
+private JTextField textFechaVencMM;
+private JTextField textFechaVencAAAA;
 private JLabel lblDdmmaaaa;
 private JLabel label_19;
 private JLabel label_23;
@@ -71,6 +68,10 @@ private JLabel lblDatosBasicos;
 private JLabel lblTelefono;
 private JLabel lblDireccion;
 private JTextField textCuit;
+private JComboBox<Pais> comboBox_Pais;
+private JComboBox<Provincia> comboBox_Provincia;
+private JComboBox<Pais> comboBox_PaisEmision;
+private JComboBox<LineaAerea> comboBox_Aerolinea;
 	
 	public FrameModCliente() {
 		
@@ -78,7 +79,7 @@ private JTextField textCuit;
 	
 	public FrameModCliente(GestionClienteVista vista, Cliente cliente,Telefono telefono, 
 			Direccion direccion, Pasaporte pasaporte, PasajeroFrecuente pasajero) {
-this.vista = vista;
+		this.vista = vista;
 		
 		
 		setBounds(5, 53, 969, 590);
@@ -119,20 +120,20 @@ this.vista = vista;
 		textApellido.setBounds(252, 43, 208, 22);
 		this.add(textApellido);
 		
-		textFechaDD = new JTextField();
-		textFechaDD.setColumns(10);
-		textFechaDD.setBounds(24, 139, 35, 22);
-		this.add(textFechaDD);
+		textFechaNacDD = new JTextField();
+		textFechaNacDD.setColumns(10);
+		textFechaNacDD.setBounds(24, 139, 35, 22);
+		this.add(textFechaNacDD);
 		
-		textFechaMM = new JTextField();
-		textFechaMM.setColumns(10);
-		textFechaMM.setBounds(68, 139, 35, 22);
-		this.add(textFechaMM);
+		textFechaNacMM = new JTextField();
+		textFechaNacMM.setColumns(10);
+		textFechaNacMM.setBounds(68, 139, 35, 22);
+		this.add(textFechaNacMM);
 		
-		textFechaAAAA = new JTextField();
-		textFechaAAAA.setColumns(10);
-		textFechaAAAA.setBounds(115, 139, 47, 22);
-		this.add(textFechaAAAA);
+		textFechaNacAAAA = new JTextField();
+		textFechaNacAAAA.setColumns(10);
+		textFechaNacAAAA.setBounds(115, 139, 47, 22);
+		this.add(textFechaNacAAAA);
 		
 		textDNI = new JTextField();
 		textDNI.setColumns(10);
@@ -141,11 +142,6 @@ this.vista = vista;
 		
 		btnGuardar = new JButton("Guardar");
 		btnGuardar.addActionListener(new CapturaBtnModCliente(this));
-		/*btnGuardar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				vista.getClienteController().almacenarDatos(vista.getNuevoCliente());
-			}
-		});*/
 		btnGuardar.setBounds(437, 552, 97, 25);
 		this.add(btnGuardar);
 
@@ -157,82 +153,72 @@ this.vista = vista;
 		lblPais.setBounds(120, 380, 26, 16);
 		this.add(lblPais);
 		
-		textField_3 = new JTextField();
-		textField_3.setColumns(10);
-		textField_3.setBounds(24, 356, 208, 22);
-		this.add(textField_3);
-		
 		lblCiudad = new JLabel("Provincia");
 		lblCiudad.setBounds(334, 380, 54, 16);
 		this.add(lblCiudad);
-		
-		textField_4 = new JTextField();
-		textField_4.setColumns(10);
-		textField_4.setBounds(252, 356, 208, 22);
-		this.add(textField_4);
 		
 		lblCiudad_1 = new JLabel("Ciudad");
 		lblCiudad_1.setBounds(106, 426, 37, 16);
 		this.add(lblCiudad_1);
 		
-		textField_5 = new JTextField();
-		textField_5.setColumns(10);
-		textField_5.setBounds(24, 402, 208, 22);
-		this.add(textField_5);
+		textCiudad = new JTextField();
+		textCiudad.setColumns(10);
+		textCiudad.setBounds(24, 402, 208, 22);
+		this.add(textCiudad);
 		
 		lblCodigoPostal = new JLabel("Codigo Postal");
 		lblCodigoPostal.setBounds(273, 426, 73, 16);
 		this.add(lblCodigoPostal);
 		
-		textField_6 = new JTextField();
-		textField_6.setColumns(10);
-		textField_6.setBounds(252, 402, 107, 22);
-		this.add(textField_6);
+		textCodPostal = new JTextField();
+		textCodPostal.setColumns(10);
+		textCodPostal.setBounds(252, 402, 107, 22);
+		this.add(textCodPostal);
 		
 		lblCalle = new JLabel("Calle");
 		lblCalle.setBounds(117, 476, 26, 16);
 		this.add(lblCalle);
 		
-		textField_7 = new JTextField();
-		textField_7.setColumns(10);
-		textField_7.setBounds(24, 452, 208, 22);
-		this.add(textField_7);
+		textCalle = new JTextField();
+		textCalle.setColumns(10);
+		textCalle.setBounds(24, 452, 208, 22);
+		this.add(textCalle);
 		
 		lblAltura = new JLabel("Altura");
 		lblAltura.setBounds(287, 476, 37, 16);
 		this.add(lblAltura);
 		
-		textField_8 = new JTextField();
-		textField_8.setColumns(10);
-		textField_8.setBounds(252, 452, 107, 22);
-		this.add(textField_8);
+		textAltura = new JTextField();
+		textAltura.setColumns(10);
+		textAltura.setBounds(252, 452, 107, 22);
+		this.add(textAltura);
 		
 		label = new JLabel("-");
 		label.setBounds(61, 142, 17, 16);
 		this.add(label);
 		
-		textField_1 = new JTextField();
-		textField_1.setColumns(10);
-		textField_1.setBounds(252, 219, 208, 22);
-		this.add(textField_1);
+		textTelCelular = new JTextField();
+		textTelCelular.setColumns(10);
+		textTelCelular.setBounds(252, 219, 208, 22);
+		this.add(textTelCelular);
 		
 		JLabel lblTelCelular = new JLabel("Tel. Celular");
 		lblTelCelular.setBounds(334, 243, 54, 16);
 		this.add(lblTelCelular);
 		
-		textField_2 = new JTextField();
-		textField_2.setColumns(10);
-		textField_2.setBounds(24, 272, 208, 22);
-		this.add(textField_2);
+		textTelLaboral = new JTextField();
+		textTelLaboral.setColumns(10);
+		textTelLaboral.setBounds(24, 272, 208, 22);
+		this.add(textTelLaboral);
 		
 		JLabel lblTelLaboral = new JLabel("Tel. Laboral");
 		lblTelLaboral.setBounds(81, 296, 97, 16);
 		this.add(lblTelLaboral);
 		
-		textField = new JTextField();
-		textField.setColumns(10);
-		textField.setBounds(24, 219, 208, 22);
-		this.add(textField);
+		textTelPersonal = new JTextField();
+		textTelPersonal.setColumns(10);
+		textTelPersonal.setBounds(24, 219, 208, 22);
+		this.add(textTelPersonal);
 		
 		JLabel lblTelPersonal = new JLabel("Tel. Personal");
 		lblTelPersonal.setBounds(81, 243, 97, 16);
@@ -254,70 +240,60 @@ this.vista = vista;
 		label_6.setBounds(815, 115, 78, 16);
 		this.add(label_6);
 		
-		textField_19 = new JTextField();
-		textField_19.setColumns(10);
-		textField_19.setBounds(753, 94, 208, 22);
-		this.add(textField_19);
+		textNroPasaporte = new JTextField();
+		textNroPasaporte.setColumns(10);
+		textNroPasaporte.setBounds(526, 43, 208, 22);
+		this.add(textNroPasaporte);
 		
-		textField_20 = new JTextField();
-		textField_20.setColumns(10);
-		textField_20.setBounds(526, 43, 208, 22);
-		this.add(textField_20);
+		textAutoridadEmision = new JTextField();
+		textAutoridadEmision.setColumns(10);
+		textAutoridadEmision.setBounds(753, 43, 208, 22);
+		this.add(textAutoridadEmision);
 		
-		textField_21 = new JTextField();
-		textField_21.setColumns(10);
-		textField_21.setBounds(753, 43, 208, 22);
-		this.add(textField_21);
+		textFechaEmiDD = new JTextField();
+		textFechaEmiDD.setColumns(10);
+		textFechaEmiDD.setBounds(526, 96, 35, 22);
+		this.add(textFechaEmiDD);
 		
-		textField_23 = new JTextField();
-		textField_23.setColumns(10);
-		textField_23.setBounds(526, 96, 35, 22);
-		this.add(textField_23);
+		textFechaEmiMM = new JTextField();
+		textFechaEmiMM.setColumns(10);
+		textFechaEmiMM.setBounds(570, 96, 35, 22);
+		this.add(textFechaEmiMM);
 		
-		textField_26 = new JTextField();
-		textField_26.setColumns(10);
-		textField_26.setBounds(570, 96, 35, 22);
-		this.add(textField_26);
-		
-		textField_27 = new JTextField();
-		textField_27.setColumns(10);
-		textField_27.setBounds(617, 96, 47, 22);
-		this.add(textField_27);
+		textFechaEmiAAAA = new JTextField();
+		textFechaEmiAAAA.setColumns(10);
+		textFechaEmiAAAA.setBounds(617, 96, 47, 22);
+		this.add(textFechaEmiAAAA);
 		
 		JLabel label_7 = new JLabel("-");
 		label_7.setBounds(607, 99, 17, 16);
 		this.add(label_7);
 		
 		JLabel label_9 = new JLabel("Aerolinea");
-		label_9.setBounds(596, 248, 47, 16);
+		label_9.setBounds(617, 335, 47, 16);
 		this.add(label_9);
-		
-		textField_29 = new JTextField();
-		textField_29.setColumns(10);
-		textField_29.setBounds(526, 225, 208, 22);
-		this.add(textField_29);
 		
 		JLabel label_10 = new JLabel("Alianza");
 		label_10.setBounds(636, 414, 45, 16);
 		this.add(label_10);
 		
-		JLabel label_11 = new JLabel("Numero");
-		label_11.setBounds(606, 296, 37, 16);
-		this.add(label_11);
+		JLabel lblNumeroPasajero = new JLabel("Numero Pasajero");
+		lblNumeroPasajero.setBounds(596, 296, 85, 16);
+		this.add(lblNumeroPasajero);
 		
-		textField_30 = new JTextField();
-		textField_30.setColumns(10);
-		textField_30.setBounds(526, 275, 208, 22);
-		this.add(textField_30);
+		textNroPasajero = new JTextField();
+		textNroPasajero.setColumns(10);
+		textNroPasajero.setBounds(526, 275, 208, 22);
+		this.add(textNroPasajero);
 		
 		JLabel label_12 = new JLabel("Categoria");
 		label_12.setBounds(826, 296, 54, 16);
 		this.add(label_12);
 		
-		textField_31 = new JTextField();
-		textField_31.setColumns(10);
-		textField_31.setBounds(744, 275, 208, 22);
-		this.add(textField_31);
+		textCategoria = new JTextField();
+		textCategoria.setColumns(10);
+		textCategoria.setBounds(744, 275, 208, 22);
+		this.add(textCategoria);
 		
 		JLabel label_13 = new JLabel("-");
 		label_13.setBounds(563, 99, 17, 16);
@@ -327,20 +303,20 @@ this.vista = vista;
 		label_14.setBounds(536, 170, 126, 16);
 		this.add(label_14);
 		
-		textField_32 = new JTextField();
-		textField_32.setColumns(10);
-		textField_32.setBounds(526, 144, 35, 22);
-		this.add(textField_32);
+		textFechaVencDD = new JTextField();
+		textFechaVencDD.setColumns(10);
+		textFechaVencDD.setBounds(526, 144, 35, 22);
+		this.add(textFechaVencDD);
 		
-		textField_33 = new JTextField();
-		textField_33.setColumns(10);
-		textField_33.setBounds(570, 144, 35, 22);
-		this.add(textField_33);
+		textFechaVencMM = new JTextField();
+		textFechaVencMM.setColumns(10);
+		textFechaVencMM.setBounds(570, 144, 35, 22);
+		this.add(textFechaVencMM);
 		
-		textField_34 = new JTextField();
-		textField_34.setColumns(10);
-		textField_34.setBounds(617, 144, 47, 22);
-		this.add(textField_34);
+		textFechaVencAAAA = new JTextField();
+		textFechaVencAAAA.setColumns(10);
+		textFechaVencAAAA.setBounds(617, 144, 47, 22);
+		this.add(textFechaVencAAAA);
 		
 		JLabel label_15 = new JLabel("-");
 		label_15.setBounds(607, 147, 17, 16);
@@ -350,60 +326,25 @@ this.vista = vista;
 		label_16.setBounds(563, 147, 17, 16);
 		this.add(label_16);
 		
-		textField_35 = new JTextField();
-		textField_35.setText("DD");
-		textField_35.setColumns(10);
-		textField_35.setBounds(526, 144, 35, 22);
-		this.add(textField_35);
-		
-		textField_36 = new JTextField();
-		textField_36.setText("MM");
-		textField_36.setColumns(10);
-		textField_36.setBounds(570, 144, 35, 22);
-		this.add(textField_36);
-		
-		textField_37 = new JTextField();
-		textField_37.setText("AAAA");
-		textField_37.setColumns(10);
-		textField_37.setBounds(617, 144, 47, 22);
-		this.add(textField_37);
-		
-		JLabel label_17 = new JLabel("-");
-		label_17.setBounds(607, 147, 17, 16);
-		this.add(label_17);
-		
-		JLabel label_18 = new JLabel("-");
-		label_18.setBounds(563, 147, 17, 16);
-		this.add(label_18);
-		
-		JRadioButton radioButton = new JRadioButton("Skyteam");
-		radioButton.setBounds(745, 367, 127, 25);
+		JRadioButton radioButton_Skyteam = new JRadioButton("Skyteam");
+		radioButton_Skyteam.setBounds(745, 367, 127, 25);
 		
 		
-		JRadioButton radioButton_1 = new JRadioButton("Oneworld");
-		radioButton_1.setBounds(745, 410, 127, 25);
+		JRadioButton radioButton_OneWorld = new JRadioButton("Oneworld");
+		radioButton_OneWorld.setBounds(745, 410, 127, 25);
 		
 		
-		JRadioButton radioButton_2 = new JRadioButton("Star Alliance");
-		radioButton_2.setBounds(745, 458, 127, 25);
+		JRadioButton radioButton_StarAlliance = new JRadioButton("Star Alliance");
+		radioButton_StarAlliance.setBounds(745, 458, 127, 25);
 		
+		ButtonGroup grupoAlianza = new ButtonGroup();
+		grupoAlianza.add(radioButton_OneWorld);
+		grupoAlianza.add(radioButton_Skyteam);
+		grupoAlianza.add(radioButton_StarAlliance);
 		
-		
-		this.add(radioButton_1);
-		this.add(radioButton);
-		this.add(radioButton_2);
-		
-		JSeparator separator = new JSeparator();
-		separator.setBounds(10, 335, 476, 177);
-		this.add(separator);
-		
-		JSeparator separator_1 = new JSeparator();
-		separator_1.setBounds(10, 197, 476, 139);
-		this.add(separator_1);
-		
-		JSeparator separator_2 = new JSeparator();
-		separator_2.setBounds(510, 197, 449, 330);
-		this.add(separator_2);
+		this.add(radioButton_OneWorld);
+		this.add(radioButton_Skyteam);
+		this.add(radioButton_StarAlliance);
 		
 		lblDdmmaaaa = new JLabel("DD-MM-AAAA");
 		lblDdmmaaaa.setBounds(172, 139, 73, 22);
@@ -418,7 +359,7 @@ this.vista = vista;
 		this.add(label_23);
 		
 		lblPasajeroFrecuente = new JLabel("Pasajero Frecuente");
-		lblPasajeroFrecuente.setBounds(526, 197, 221, 16);
+		lblPasajeroFrecuente.setBounds(526, 247, 221, 17);
 		this.add(lblPasajeroFrecuente);
 		
 		lblPasaporte = new JLabel("Pasaporte");
@@ -441,27 +382,377 @@ this.vista = vista;
 		lblCuitcuil.setBounds(316, 166, 72, 14);
 		add(lblCuitcuil);
 		
+		comboBox_Pais = new JComboBox<Pais>();
+		comboBox_Pais.setBounds(24, 357, 208, 20);
+		DefaultComboBoxModel<Pais> modeloPais = new DefaultComboBoxModel<Pais>(vista.getClienteController().obtenerListaPaises());
+		comboBox_Pais.setModel(modeloPais);
+		add(comboBox_Pais);
+		
+		comboBox_Provincia = new JComboBox<Provincia>();
+		comboBox_Provincia.setBounds(252, 357, 208, 20);
+		DefaultComboBoxModel<Provincia> model = new DefaultComboBoxModel<Provincia>(vista.getClienteController().obtenerListaProvincias());
+		comboBox_Provincia.setModel(model);
+		add(comboBox_Provincia);
+		
+		comboBox_PaisEmision = new JComboBox<Pais>();
+		DefaultComboBoxModel<Pais> modeloPaisEmision = new DefaultComboBoxModel<Pais>(vista.getClienteController().obtenerListaPaises());
+		comboBox_PaisEmision.setModel(modeloPaisEmision);
+		comboBox_PaisEmision.setBounds(753, 93, 208, 20);
+		add(comboBox_PaisEmision);
+		
 		textCuit = new JTextField();
 		textCuit.setBounds(252, 140, 208, 20);
 		add(textCuit);
 		textCuit.setColumns(10);
+		
+		comboBox_Aerolinea = new JComboBox<LineaAerea>();
+		DefaultComboBoxModel<LineaAerea> mode = new DefaultComboBoxModel<LineaAerea>(vista.getClienteController().obtenerListaAerolinea());
+		comboBox_Aerolinea.setModel(mode);
+		comboBox_Aerolinea.setBounds(696, 335, 172, 22);
+		add(comboBox_Aerolinea);
+		
+		JSeparator separator = new JSeparator();
+		separator.setBounds(10, 335, 476, 177);
+		this.add(separator);
+		
+		JSeparator separator_1 = new JSeparator();
+		separator_1.setBounds(10, 197, 476, 139);
+		this.add(separator_1);
+		
+		JSeparator separator_2 = new JSeparator();
+		separator_2.setBounds(510, 247, 449, 265);
+		this.add(separator_2);
 		this.setVisible(false);
 	}
+	public JTextField getTextEmail() {
+		return textEmail;
+	}
+
+
+	public void setTextEmail(JTextField textEmail) {
+		this.textEmail = textEmail;
+	}
+
+
+	public JTextField getTextNombre() {
+		return textNombre;
+	}
+
+
+	public void setTextNombre(JTextField textNombre) {
+		this.textNombre = textNombre;
+	}
+
+
+	public JTextField getTextApellido() {
+		return textApellido;
+	}
+
+
+	public void setTextApellido(JTextField textApellido) {
+		this.textApellido = textApellido;
+	}
+
+
+	public JTextField getTextFechaDD() {
+		return textFechaNacDD;
+	}
+
+
+	public void setTextFechaDD(JTextField textFechaDD) {
+		this.textFechaNacDD = textFechaDD;
+	}
+
+
+	public JTextField getTextFechaMM() {
+		return textFechaNacMM;
+	}
+
+
+	public void setTextFechaMM(JTextField textFechaMM) {
+		this.textFechaNacMM = textFechaMM;
+	}
+
+
+	public JTextField getTextFechaAAAA() {
+		return textFechaNacAAAA;
+	}
+
+
+	public void setTextFechaAAAA(JTextField textFechaAAAA) {
+		this.textFechaNacAAAA = textFechaAAAA;
+	}
+
+
+	public JTextField getTextDNI() {
+		return textDNI;
+	}
+
+
+	public void setTextDNI(JTextField textDNI) {
+		this.textDNI = textDNI;
+	}
+
+
+	public JTextField getTextCuit() {
+		return textCuit;
+	}
+
+
+	public void setTextCuit(JTextField textCuit) {
+		this.textCuit = textCuit;
+	}
+
 
 	public GestionClienteVista getVista() {
 		return vista;
 	}
 
+
 	public void setVista(GestionClienteVista vista) {
 		this.vista = vista;
 	}
+
 
 	public JButton getBtnGuardar() {
 		return btnGuardar;
 	}
 
+
 	public void setBtnGuardar(JButton btnGuardar) {
 		this.btnGuardar = btnGuardar;
+	}
+
+
+	public JTextField getTextFechaNacDD() {
+		return textFechaNacDD;
+	}
+
+
+	public void setTextFechaNacDD(JTextField textFechaNacDD) {
+		this.textFechaNacDD = textFechaNacDD;
+	}
+
+
+	public JTextField getTextFechaNacMM() {
+		return textFechaNacMM;
+	}
+
+
+	public void setTextFechaNacMM(JTextField textFechaNacMM) {
+		this.textFechaNacMM = textFechaNacMM;
+	}
+
+
+	public JTextField getTextFechaNacAAAA() {
+		return textFechaNacAAAA;
+	}
+
+
+	public void setTextFechaNacAAAA(JTextField textFechaNacAAAA) {
+		this.textFechaNacAAAA = textFechaNacAAAA;
+	}
+
+
+	public JTextField getTextCiudad() {
+		return textCiudad;
+	}
+
+
+	public void setTextCiudad(JTextField textCiudad) {
+		this.textCiudad = textCiudad;
+	}
+
+
+	public JTextField getTextCodPostal() {
+		return textCodPostal;
+	}
+
+
+	public void setTextCodPostal(JTextField textCodPostal) {
+		this.textCodPostal = textCodPostal;
+	}
+
+
+	public JTextField getTextCalle() {
+		return textCalle;
+	}
+
+
+	public void setTextCalle(JTextField textCalle) {
+		this.textCalle = textCalle;
+	}
+
+
+	public JTextField getTextAltura() {
+		return textAltura;
+	}
+
+
+	public void setTextAltura(JTextField textAltura) {
+		this.textAltura = textAltura;
+	}
+
+
+	public JTextField getTextTelCelular() {
+		return textTelCelular;
+	}
+
+
+	public void setTextTelCelular(JTextField textTelCelular) {
+		this.textTelCelular = textTelCelular;
+	}
+
+
+	public JTextField getTextTelLaboral() {
+		return textTelLaboral;
+	}
+
+
+	public void setTextTelLaboral(JTextField textTelLaboral) {
+		this.textTelLaboral = textTelLaboral;
+	}
+
+
+	public JTextField getTextTelPersonal() {
+		return textTelPersonal;
+	}
+
+
+	public void setTextTelPersonal(JTextField textTelPersonal) {
+		this.textTelPersonal = textTelPersonal;
+	}
+
+
+	public JTextField getTextNroPasaporte() {
+		return textNroPasaporte;
+	}
+
+
+	public void setTextNroPasaporte(JTextField textNroPasaporte) {
+		this.textNroPasaporte = textNroPasaporte;
+	}
+
+
+	public JTextField getTextAutoridadEmision() {
+		return textAutoridadEmision;
+	}
+
+
+	public void setTextAutoridadEmision(JTextField textAutoridadEmision) {
+		this.textAutoridadEmision = textAutoridadEmision;
+	}
+
+
+	public JTextField getTextFechaEmiDD() {
+		return textFechaEmiDD;
+	}
+
+
+	public void setTextFechaEmiDD(JTextField textFechaEmiDD) {
+		this.textFechaEmiDD = textFechaEmiDD;
+	}
+
+
+	public JTextField getTextFechaEmiMM() {
+		return textFechaEmiMM;
+	}
+
+
+	public void setTextFechaEmiMM(JTextField textFechaEmiMM) {
+		this.textFechaEmiMM = textFechaEmiMM;
+	}
+
+
+	public JTextField getTextFechaEmiAAAA() {
+		return textFechaEmiAAAA;
+	}
+
+
+	public void setTextFechaEmiAAAA(JTextField textFechaEmiAAAA) {
+		this.textFechaEmiAAAA = textFechaEmiAAAA;
+	}
+
+
+	public JTextField getTextNroPasajero() {
+		return textNroPasajero;
+	}
+
+
+	public void setTextNroPasajero(JTextField textNroPasajero) {
+		this.textNroPasajero = textNroPasajero;
+	}
+
+
+	public JTextField getTextCategoria() {
+		return textCategoria;
+	}
+
+
+	public void setTextCategoria(JTextField textCategoria) {
+		this.textCategoria = textCategoria;
+	}
+
+
+	public JTextField getTextFechaVencDD() {
+		return textFechaVencDD;
+	}
+
+
+	public void setTextFechaVencDD(JTextField textFechaVencDD) {
+		this.textFechaVencDD = textFechaVencDD;
+	}
+
+
+	public JTextField getTextFechaVencMM() {
+		return textFechaVencMM;
+	}
+
+
+	public void setTextFechaVencMM(JTextField textFechaVencMM) {
+		this.textFechaVencMM = textFechaVencMM;
+	}
+
+
+	public JTextField getTextFechaVencAAAA() {
+		return textFechaVencAAAA;
+	}
+
+
+	public void setTextFechaVencAAAA(JTextField textFechaVencAAAA) {
+		this.textFechaVencAAAA = textFechaVencAAAA;
+	}
+
+	public JComboBox<Pais> getComboBox_Pais() {
+		return comboBox_Pais;
+	}
+
+	public void setComboBox_Pais(JComboBox<Pais> comboBox_Pais) {
+		this.comboBox_Pais = comboBox_Pais;
+	}
+
+	public JComboBox<Provincia> getComboBox_Provincia() {
+		return comboBox_Provincia;
+	}
+
+	public void setComboBox_Provincia(JComboBox<Provincia> comboBox_Provincia) {
+		this.comboBox_Provincia = comboBox_Provincia;
+	}
+
+	public JComboBox<Pais> getComboBox_PaisEmision() {
+		return comboBox_PaisEmision;
+	}
+
+	public void setComboBox_PaisEmision(JComboBox<Pais> comboBox_PaisEmision) {
+		this.comboBox_PaisEmision = comboBox_PaisEmision;
+	}
+
+	public JComboBox<LineaAerea> getComboBox_Aerolinea() {
+		return comboBox_Aerolinea;
+	}
+
+	public void setComboBox_Aerolinea(JComboBox<LineaAerea> comboBox_Aerolinea) {
+		this.comboBox_Aerolinea = comboBox_Aerolinea;
 	}
 	
 }

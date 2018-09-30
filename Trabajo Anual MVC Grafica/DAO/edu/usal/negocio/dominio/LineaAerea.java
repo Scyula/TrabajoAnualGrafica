@@ -43,4 +43,11 @@ public class LineaAerea implements Serializable{
 	public void setVuelos(ArrayList<String> vuelos) {
 		this.vuelos = vuelos;
 	}
+
+
+	@Override
+	public String toString() {
+		return nombre;
+	}
+	
 }

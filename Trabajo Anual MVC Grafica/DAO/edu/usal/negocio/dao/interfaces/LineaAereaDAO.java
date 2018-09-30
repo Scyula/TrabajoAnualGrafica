@@ -2,6 +2,7 @@ package edu.usal.negocio.dao.interfaces;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import edu.usal.negocio.dominio.LineaAerea ;
@@ -13,5 +14,6 @@ public interface LineaAereaDAO {
 	public boolean deleteLineaAerea(LineaAerea  lineaAerea) throws FileNotFoundException, IOException;
 	public List<LineaAerea > getAllLineaAerea() throws FileNotFoundException, IOException;
 	public void saveAllLineaAerea(List<LineaAerea > lineaAerea) throws FileNotFoundException, IOException;
+	public ArrayList<LineaAerea> primeraLectura() throws FileNotFoundException, IOException;
 	
 }

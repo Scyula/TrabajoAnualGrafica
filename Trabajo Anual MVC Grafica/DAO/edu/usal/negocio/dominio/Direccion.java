@@ -10,15 +10,15 @@ public class Direccion implements Serializable{
 	private String calle;
 	private String altura;
 	private String ciudad;
-	private int provincia;
-	private int pais;
+	private Provincia provincia;
+	private Pais pais;
 	private String codPostal;
 	
 	public Direccion() {
 		
 	}
 	
-	public Direccion(String calle, String altura, String ciudad, int provincia, int pais, String codPostal) {
+	public Direccion(String calle, String altura, String ciudad, Provincia provincia, Pais pais, String codPostal) {
 		super();
 		this.calle = calle;
 		this.altura = altura;
@@ -45,16 +45,16 @@ public class Direccion implements Serializable{
 	public void setCiudad(String ciudad) {
 		this.ciudad = ciudad;
 	}
-	public int getProvincia() {
+	public Provincia getProvincia() {
 		return provincia;
 	}
-	public void setProvincia(int provincia) {
+	public void setProvincia(Provincia provincia) {
 		this.provincia = provincia;
 	}
-	public int getPais() {
+	public Pais getPais() {
 		return pais;
 	}
-	public void setPais(int pais) {
+	public void setPais(Pais pais) {
 		this.pais = pais;
 	}
 	public String getCodPostal() {
