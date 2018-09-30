@@ -7,6 +7,7 @@ import javax.swing.border.EmptyBorder;
 import edu.usal.negocio.dominio.Cliente;
 import edu.usal.pantalla.controller.GestionClienteController;
 import edu.usal.pantalla.vista.eventos.CapturaBtnGestionCliente;
+import edu.usal.pantalla.vista.frames.CartelSeleccionar;
 import edu.usal.pantalla.vista.frames.FrameModCliente;
 import edu.usal.pantalla.vista.frames.FrameNuevoCliente;
 
@@ -16,6 +17,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.Font;
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
 
 public class GestionClienteVista extends JFrame {
 
@@ -31,8 +34,9 @@ public class GestionClienteVista extends JFrame {
 	private JButton btnEliminar;
 	private JButton btnBuscar;
 	private JButton btnVolverAlMenu;
-	private JLabel lblCartelSelec;
+	private CartelSeleccionar cartelSelec;
 	private GestionClienteController clienteController;
+	public JPanel panelMenuCliente;
 	
 
 	public FrameModCliente getModCliente() {
@@ -52,7 +56,7 @@ public class GestionClienteVista extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JPanel panelMenuCliente = new JPanel();
+		panelMenuCliente = new JPanel();
 		panelMenuCliente.setBounds(5, 5, 969, 35);
 		contentPane.add(panelMenuCliente);
 		
@@ -77,11 +81,9 @@ public class GestionClienteVista extends JFrame {
 		btnVolverAlMenu.addActionListener(new CapturaBtnGestionCliente(this));
 		contentPane.add(btnVolverAlMenu);
 		
-		lblCartelSelec = new JLabel("Seleccione una opcion");
-		lblCartelSelec.setBounds(258, 51, 488, 173);
-		contentPane.add(lblCartelSelec);
-		lblCartelSelec.setFont(new Font("Arial", Font.PLAIN, 36));
-		lblCartelSelec.setHorizontalAlignment(SwingConstants.CENTER);
+		cartelSelec= new CartelSeleccionar();
+		cartelSelec.setBounds(300, 200, 488, 173);
+		contentPane.add(cartelSelec);
 		
 		nuevoCliente = new FrameNuevoCliente(this);
 		nuevoCliente.setBounds(5, 53, 969, 590);
@@ -133,12 +135,12 @@ public class GestionClienteVista extends JFrame {
 		this.btnVolverAlMenu = btnVolverAlMenu;
 	}
 	
-	public JLabel getLblCartelSelec() {
-		return lblCartelSelec;
+	public CartelSeleccionar getLblCartelSelec() {
+		return cartelSelec;
 	}
 
-	public void setLblCartelSelec(JLabel lblCartelSelec) {
-		this.lblCartelSelec = lblCartelSelec;
+	public void setCartelSelec(CartelSeleccionar lblCartelSelec) {
+		this.cartelSelec = lblCartelSelec;
 	}
 	public FrameNuevoCliente getNuevoCliente() {
 		return nuevoCliente;
@@ -155,6 +157,7 @@ public class GestionClienteVista extends JFrame {
 	public void setClienteController(GestionClienteController menu) {
 		this.clienteController = menu;
 	}
+
 	public int solicitarDNI() {
 		return Integer.parseInt(JOptionPane.showInputDialog(null, "Ingrese DNI del cliente a modificar", "Modificar Cliente", JOptionPane.QUESTION_MESSAGE));
 	}

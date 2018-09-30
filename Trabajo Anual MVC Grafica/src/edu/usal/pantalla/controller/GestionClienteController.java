@@ -13,6 +13,7 @@ import java.util.Scanner;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
+import javax.swing.JButton;
 
 import edu.usal.negocio.dao.factory.ClienteFactory;
 import edu.usal.negocio.dao.implementacion.SQL.ClienteDAOImplSQL;
@@ -32,6 +33,7 @@ import edu.usal.negocio.dominio.Pasaporte;
 import edu.usal.negocio.dominio.Provincia;
 import edu.usal.negocio.dominio.Telefono;
 import edu.usal.pantalla.vista.GestionClienteVista;
+import edu.usal.pantalla.vista.frames.CartelSeleccionar;
 import edu.usal.pantalla.vista.frames.FrameNuevoCliente;
 import edu.usal.principal.Ejecutar;
 import edu.usal.util.IOGeneral;
@@ -53,8 +55,7 @@ public class GestionClienteController {
 	public void EjecutarOpcionSeleccionada(int opc) {
 		if(opc==1) {//Nuevo cliente
 			menu.getLblCartelSelec().setVisible(false);
-			menu.getNuevoCliente().setVisible(true);
-			
+			menu.getNuevoCliente().setVisible(true);			
 		}else if (opc==2) {//Modificar Cliente
 			modificarCliente();
 		}else if (opc==3) {//Eliminar Cliente
@@ -73,10 +74,15 @@ public class GestionClienteController {
 		//System.out.println("Datos recibidos");
 		
 		if(guardarCliente(datos)) {
-			
+			menu.exitoOperacion();
+		}else {
+			menu.fracasoOperacion();
 		}
 		menu.getLblCartelSelec().setVisible(true);
 		menu.getNuevoCliente().setVisible(false);
+		//menu.setNuevoCliente(new FrameNuevoCliente(menu));
+		//menu.getNuevoCliente().setBounds(5, 53, 969, 590);
+		
 		IOGeneral.pritln(">>>>>Proceso OK<<<<<");
 	}
 	@SuppressWarnings("deprecation")

@@ -26,8 +26,8 @@ public class ClienteDAOImplSQL implements ClienteDAO {
 	@Override
 	public boolean addCliente(Cliente cliente)  throws SQLException {
 		con = new Coneccion();
-		con.getConeccion().setAutoCommit(false);
 		if(con.iniciarConeccion()) {
+			con.getConeccion().setAutoCommit(false);
 			query = ("INSERT INTO Cliente VALUES (?,?,?,?,?,?);");
 			prep = con.getConeccion().prepareStatement(query);
 			prep.setInt(1,cliente.getDNI());
@@ -62,7 +62,7 @@ public class ClienteDAOImplSQL implements ClienteDAO {
 			prep.setString(2, cliente.getNombre());
 			prep.setString(3, cliente.getApellido());
 			prep.setString(4, cliente.getCuitcuil());
-			prep.setDate(5, (java.sql.Date) cliente.getFechaNac());
+			prep.setDate(5, convertUtilToSql(cliente.getFechaNac()));
 			prep.setString(6, cliente.getEmail());
 			prep.setInt(7, cliente.getDNI());
 			int r = prep.executeUpdate();
@@ -186,8 +186,8 @@ public class ClienteDAOImplSQL implements ClienteDAO {
 		prep.setString(2, cliente.getPasaporte().getNroPasaporte());
 		prep.setString(3, cliente.getPasaporte().getPais().getNombre());
 		prep.setString(4, cliente.getPasaporte().getAutoridademision());
-		prep.setString(5, fechaToString(cliente.getPasaporte().getEmision()));
-		prep.setString(6, fechaToString(cliente.getPasaporte().getVencimiento()));
+		prep.setDate(5, convertUtilToSql(cliente.getPasaporte().getEmision()));
+		prep.setDate(6, convertUtilToSql(cliente.getPasaporte().getVencimiento()));
 		int r= prep.executeUpdate();
 		if(r==1) {
 			prep.close();
@@ -225,4 +225,8 @@ public class ClienteDAOImplSQL implements ClienteDAO {
 		Date nuevo = new Date(Integer.parseInt(valores[0]), Integer.parseInt(valores[1]), Integer.parseInt(valores[2]));
 		return nuevo;
 	}
+	private java.sql.Date convertUtilToSql(java.util.Date uDate) {
+			        java.sql.Date sDate = new java.sql.Date(uDate.getTime());
+			        return sDate;
+			    }
 }
