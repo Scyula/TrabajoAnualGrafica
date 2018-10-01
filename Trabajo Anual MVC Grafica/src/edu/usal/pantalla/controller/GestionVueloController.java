@@ -15,6 +15,7 @@ import edu.usal.pantalla.vista.GestionVueloVista;
 import edu.usal.pantalla.vista.frames.FrameNuevoCliente;
 import edu.usal.pantalla.vista.frames.FrameNuevoVuelo;
 import edu.usal.principal.Ejecutar;
+import edu.usal.principal.Principal;
 import edu.usal.util.IOGeneral;
 
 public class GestionVueloController {
@@ -51,7 +52,7 @@ public class GestionVueloController {
 	
 	public void almacenarDatos(FrameNuevoVuelo datos) {
 		//System.out.println("Datos recibidos");
-		vuelodao = VueloFactory.getVueloDAO(Ejecutar.source);
+		vuelodao = VueloFactory.getVueloDAO(Principal.source);
 		Vuelo vuelo = new Vuelo();
 		vuelo.setNombreAerolinea(datos.getTextNombre().getText());
 		/*

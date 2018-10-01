@@ -38,7 +38,7 @@ public class ClienteDAOImplSQL implements ClienteDAO {
 			prep.setString(2, cliente.getNombre());
 			prep.setString(3, cliente.getApellido());
 			prep.setString(4, cliente.getCuitcuil());
-			prep.setString(5, fechaToString(cliente.getFechaNac()));
+			prep.setDate(5, convertUtilToSql(cliente.getFechaNac()));
 			prep.setString(6, cliente.getEmail());
 			int r = prep.executeUpdate();
 			if(r==1) {
@@ -150,7 +150,7 @@ public class ClienteDAOImplSQL implements ClienteDAO {
 		if(cliente.getDireccion().getPais().getId()==9) {
 			prep.setInt(3, cliente.getDireccion().getProvincia().getId());
 		}else {
-			prep.setInt(3, Integer.valueOf(null));
+			prep.setInt(3, -1);
 		}
 		prep.setString(4, cliente.getDireccion().getCiudad());
 		prep.setString(5, cliente.getDireccion().getCodPostal());
@@ -200,7 +200,7 @@ public class ClienteDAOImplSQL implements ClienteDAO {
 	}
 	
 	private boolean guardarPasajero(Cliente cliente, Coneccion con) throws SQLException{
-		query = ("INSERT INTO PasajeroFrecuente VALUES (?,(Select ID_Aerolinea FROM LineaAerea WHERE Nombre=?),?,?);");
+		query = ("INSERT INTO PasajeroFrecuente VALUES (?,?,?,?);");
 		prep = con.getConeccion().prepareStatement(query);
 		prep.setInt(1, cliente.getDNI());
 		prep.setInt(2, cliente.getPasajeroFrecuente().getAerolinea());

@@ -73,7 +73,7 @@ public class GestionClienteController {
 	
 	
 	public void almacenarDatos(FrameNuevoCliente datos) {
-		//System.out.println("Datos recibidos");
+		System.out.println("Datos recibidos");
 		
 		if(guardarCliente(datos)) {
 			menu.exitoOperacion();
