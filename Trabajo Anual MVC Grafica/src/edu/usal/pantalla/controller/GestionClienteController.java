@@ -17,6 +17,7 @@ import javax.swing.JButton;
 
 import edu.usal.negocio.dao.factory.ClienteFactory;
 import edu.usal.negocio.dao.implementacion.SQL.ClienteDAOImplSQL;
+import edu.usal.negocio.dao.implementacion.SQL.LineaAereaDAOImplSQL;
 import edu.usal.negocio.dao.implementacion.Stream.LineaAereaDAOImplFileStream;
 import edu.usal.negocio.dao.implementacion.String.PaisesDAOImplFileString;
 import edu.usal.negocio.dao.implementacion.String.ProvinciasDAOImplFileString;
@@ -34,8 +35,9 @@ import edu.usal.negocio.dominio.Provincia;
 import edu.usal.negocio.dominio.Telefono;
 import edu.usal.pantalla.vista.GestionClienteVista;
 import edu.usal.pantalla.vista.frames.CartelSeleccionar;
+import edu.usal.pantalla.vista.frames.FrameModCliente;
 import edu.usal.pantalla.vista.frames.FrameNuevoCliente;
-import edu.usal.principal.Ejecutar;
+import edu.usal.principal.Principal;
 import edu.usal.util.IOGeneral;
 import edu.usal.util.PropertiesUtil;
 
@@ -87,7 +89,7 @@ public class GestionClienteController {
 	}
 	@SuppressWarnings("deprecation")
 	private boolean guardarCliente(FrameNuevoCliente datos) {
-		clientedao = ClienteFactory.getClienteDAO(Ejecutar.source);
+		clientedao = ClienteFactory.getClienteDAO(Principal.source);
 		Cliente cliente = new Cliente();
 		cliente.setNombre(datos.getTextNombre().getText());
 		cliente.setApellido(datos.getTextApellido().getText());
@@ -134,7 +136,7 @@ public class GestionClienteController {
 	private void modificarCliente() {
 		
 		try {
-			clientedao = ClienteFactory.getClienteDAO(Ejecutar.source);
+			clientedao = ClienteFactory.getClienteDAO(Principal.source);
 			int dni = menu.solicitarDNI();
 			Cliente selec = clientedao.readCliente(dni);
 			switch(menu.confirmarSeleccion(selec)) {
@@ -149,7 +151,7 @@ public class GestionClienteController {
 	}
 	
 	private void datosClienteDB(Cliente cliente) {
-		//menu.setModCliente(new FrameModCliente(menu, cliente, telefono, direccion, pasaporte, pasajero));
+		menu.setModCliente(new FrameModCliente(menu, cliente, cliente.getTelefono(), cliente.getDireccion(), cliente.getPasaporte(),cliente.getPasajeroFrecuente()));
 		return;
 	}
 	
@@ -176,7 +178,7 @@ public class GestionClienteController {
 		return pasa;
 	}
 	private PasajeroFrecuente obtenerPasajeroFrecuente(FrameNuevoCliente datos) {
-		return new PasajeroFrecuente(((LineaAerea)datos.getComboBox_Aerolinea().getSelectedItem()).getAlianza(), ((LineaAerea)datos.getComboBox_Aerolinea().getSelectedItem()).getNombre(), datos.getTextNroPasajero().getText(), datos.getTextCategoria().getText());
+		return new PasajeroFrecuente(((LineaAerea)datos.getComboBox_Aerolinea().getSelectedItem()).getAlianza(), ((LineaAerea)datos.getComboBox_Aerolinea().getSelectedItem()).getId(), datos.getTextNroPasajero().getText(), datos.getTextCategoria().getText());
 	}
 	
 	public Pais[] obtenerListaPaises() {	
@@ -217,21 +219,22 @@ public class GestionClienteController {
 
 	public LineaAerea[] obtenerListaAerolinea() {
 		try {
-			LineaAereaDAO lineaAerea = new LineaAereaDAOImplFileStream();
-			List<LineaAerea> lista = lineaAerea.primeraLectura();
-			LineaAerea[] modelo = new LineaAerea[lista.size()+1];
+			LineaAereaDAO lineaAerea = new LineaAereaDAOImplSQL();
+			LineaAerea[] lista = lineaAerea.primeraLectura();
+			LineaAerea[] modelo = new LineaAerea[lista.length+1];
 			modelo[0]= new LineaAerea();
 			modelo[0].setNombre("Seleccione una aerolinea");
-			for (int i=1; i<lista.size();i++) {
-				modelo[i+1]= lista.get(i);
+			for (int i=1; i<lista.length;i++) {
+				modelo[i+1]= lista[i];
 			}
 			return modelo;
-		} catch (IOException e) {
-			IOGeneral.pritln(">>>>>Ocurrio un error al leer las aerolineas<<<<<");
+		} catch (SQLException e) {
+			IOGeneral.pritln(">>>>>Ocurrio un error al leer las aerolineas de la base de datos<<<<<");
 			IOGeneral.pritln(e.getMessage());
 		}
-		
 		return null;
+		
+		
 	}
 	
 	

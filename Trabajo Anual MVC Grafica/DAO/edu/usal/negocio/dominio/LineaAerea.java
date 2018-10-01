@@ -8,6 +8,7 @@ public class LineaAerea implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 664L;
+	private int id;
 	private String nombre;
 	private int alianza;
 	private ArrayList<String> vuelos;
@@ -17,11 +18,22 @@ public class LineaAerea implements Serializable{
 	}
 	
 	
-	public LineaAerea(String nombre, int alianza, ArrayList<String> vuelos) {
+	public LineaAerea(int id ,String nombre, int alianza, ArrayList<String> vuelos) {
 		super();
+		this.id = id;
 		this.nombre = nombre;
 		this.alianza = alianza;
 		this.vuelos = vuelos;
+	}
+
+	
+	public int getId() {
+		return id;
+	}
+
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 

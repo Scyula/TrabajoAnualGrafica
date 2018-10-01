@@ -89,9 +89,9 @@ public class GestionClienteVista extends JFrame {
 		nuevoCliente.setBounds(5, 53, 969, 590);
 		contentPane.add(nuevoCliente);
 		
-		modCliente = new FrameModCliente();
-		modCliente.setBounds(5, 53, 969, 590);
-		contentPane.add(modCliente);
+		//modCliente = new FrameModCliente();
+		//modCliente.setBounds(5, 53, 969, 590);
+		//contentPane.add(modCliente);
 		setVisible(true);
 	}
 

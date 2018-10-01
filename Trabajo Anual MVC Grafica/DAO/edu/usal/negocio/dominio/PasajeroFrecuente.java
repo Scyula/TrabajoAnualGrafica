@@ -8,7 +8,7 @@ public class PasajeroFrecuente implements Serializable{
 	 */
 	private static final long serialVersionUID = 233L;
 	private int alianza;
-	private String aerolinea;
+	private int aerolinea;
 	private String numero;
 	private String Catergoria;
 	
@@ -16,7 +16,7 @@ public class PasajeroFrecuente implements Serializable{
 		
 	}
 	
-	public PasajeroFrecuente(int alianza, String aerolinea, String numero, String catergoria) {
+	public PasajeroFrecuente(int alianza, int aerolinea, String numero, String catergoria) {
 		super();
 		this.alianza = alianza;
 		this.aerolinea = aerolinea;
@@ -29,10 +29,10 @@ public class PasajeroFrecuente implements Serializable{
 	public void setAlianza(int alianza) {
 		this.alianza = alianza;
 	}
-	public String getAerolinea() {
+	public int getAerolinea() {
 		return aerolinea;
 	}
-	public void setAerolinea(String aerolinea) {
+	public void setAerolinea(int aerolinea) {
 		this.aerolinea = aerolinea;
 	}
 	public String getNumero() {

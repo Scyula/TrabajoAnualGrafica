@@ -11,12 +11,16 @@ import java.util.List;
 
 import edu.usal.negocio.dao.interfaces.ClienteDAO;
 import edu.usal.negocio.dominio.Cliente;
+import edu.usal.negocio.dominio.Direccion;
 import edu.usal.negocio.dominio.Pais;
+import edu.usal.negocio.dominio.PasajeroFrecuente;
+import edu.usal.negocio.dominio.Pasaporte;
+import edu.usal.negocio.dominio.Provincia;
+import edu.usal.negocio.dominio.Telefono;
 import edu.usal.util.Coneccion;
 import edu.usal.util.IOGeneral;
 
 public class ClienteDAOImplSQL implements ClienteDAO {
-	//Tabla Cliente => 1 [DNI], 2 [Nombre], 3 [Apellido], 4 [CuitCuil], 5 [FechaNacimiento], 6 [Email]
 	Coneccion con;
 	Statement stm;
 	PreparedStatement prep;
@@ -128,7 +132,7 @@ public class ClienteDAOImplSQL implements ClienteDAO {
 			prep.setInt(1, dni);
 			ResultSet rs = prep.executeQuery();
 			rs.next();
-			Cliente nuevo = new Cliente(rs.getString(2),rs.getString(3), rs.getInt(1), null, rs.getString(4), stringToFecha(rs.getString(5)), rs.getString(6), null, null, null);
+			Cliente nuevo = new Cliente(rs.getString(2),rs.getString(3), rs.getInt(1), leerPasaporte(dni), rs.getString(4), stringToFecha(rs.getString(5)), rs.getString(6), leerTelefono(dni), leerPasajero(dni), leerDireccion(dni));
 			prep.close();
 			con.cerrarConeccion();
 			return nuevo;
@@ -139,20 +143,20 @@ public class ClienteDAOImplSQL implements ClienteDAO {
 	}
 	
 	private boolean guardarDireccion(Cliente cliente, Coneccion con) throws SQLException{
-		//1[ID_Cliente] 2[Calle] 3[Altura] 4 [Ciudad] 5[Provincia] 6 [Pais] 7 [CodPostal]
 		query = ("INSERT INTO Direccion VALUES (?,?,?,?,?,?,?)");
 		prep = con.getConeccion().prepareStatement(query);
 		prep.setInt(1, cliente.getDNI());
-		prep.setString(2, cliente.getDireccion().getCalle());
-		prep.setString(3, cliente.getDireccion().getAltura());
-		prep.setString(4, cliente.getDireccion().getCiudad());
+		prep.setInt(2, cliente.getDireccion().getPais().getId());
 		if(cliente.getDireccion().getPais().getId()==9) {
-			prep.setString(5, cliente.getDireccion().getProvincia().getNombre());
+			prep.setInt(3, cliente.getDireccion().getProvincia().getId());
 		}else {
-			prep.setString(5, null);
+			prep.setInt(3, Integer.valueOf(null));
 		}
-		prep.setString(6, cliente.getDireccion().getPais().getNombre());
-		prep.setString(7, cliente.getDireccion().getCodPostal());
+		prep.setString(4, cliente.getDireccion().getCiudad());
+		prep.setString(5, cliente.getDireccion().getCodPostal());
+		
+		prep.setString(6, cliente.getDireccion().getCalle());
+		prep.setString(7, cliente.getDireccion().getAltura());
 		int r= prep.executeUpdate();
 		if(r==1) {
 			prep.close();
@@ -163,13 +167,12 @@ public class ClienteDAOImplSQL implements ClienteDAO {
 	}
 	
 	private boolean guardarTelefono(Cliente cliente, Coneccion con) throws SQLException{
-		//1[ID_Cliente] 2[Celular] 3[Laboral] 4 [Personal]
 		query = ("INSERT INTO Telefono VALUES (?,?,?,?)");
 		prep = con.getConeccion().prepareStatement(query);
 		prep.setInt(1, cliente.getDNI());
-		prep.setString(2, cliente.getTelefono().getNroCelular());
+		prep.setString(2, cliente.getTelefono().getNroPersonal());
 		prep.setString(3, cliente.getTelefono().getNroLaboral());
-		prep.setString(4, cliente.getTelefono().getNroPersonal());
+		prep.setString(4, cliente.getTelefono().getNroCelular());
 		int r= prep.executeUpdate();
 		if(r==1) {
 			prep.close();
@@ -179,13 +182,12 @@ public class ClienteDAOImplSQL implements ClienteDAO {
 		return false;
 	}
 	private boolean guardarPasaporte(Cliente cliente, Coneccion con) throws SQLException{
-		//1 nroPasaporte, 2 pais, 3 autoridademision, 4 emision, 5 vencimiento
 		query = ("INSERT INTO Pasaporte VALUES (?,?,?,?,?,?)");
 		prep = con.getConeccion().prepareStatement(query);
 		prep.setInt(1, cliente.getDNI());
 		prep.setString(2, cliente.getPasaporte().getNroPasaporte());
-		prep.setString(3, cliente.getPasaporte().getPais().getNombre());
-		prep.setString(4, cliente.getPasaporte().getAutoridademision());
+		prep.setString(3, cliente.getPasaporte().getAutoridademision());
+		prep.setInt(4, cliente.getPasaporte().getPais().getId());
 		prep.setDate(5, convertUtilToSql(cliente.getPasaporte().getEmision()));
 		prep.setDate(6, convertUtilToSql(cliente.getPasaporte().getVencimiento()));
 		int r= prep.executeUpdate();
@@ -198,11 +200,10 @@ public class ClienteDAOImplSQL implements ClienteDAO {
 	}
 	
 	private boolean guardarPasajero(Cliente cliente, Coneccion con) throws SQLException{
-		//1 alianza, 2 aerolinea, 3 numero, 4 catergoria
 		query = ("INSERT INTO PasajeroFrecuente VALUES (?,(Select ID_Aerolinea FROM LineaAerea WHERE Nombre=?),?,?);");
 		prep = con.getConeccion().prepareStatement(query);
 		prep.setInt(1, cliente.getDNI());
-		prep.setString(2, cliente.getPasajeroFrecuente().getAerolinea());
+		prep.setInt(2, cliente.getPasajeroFrecuente().getAerolinea());
 		prep.setString(3, cliente.getPasajeroFrecuente().getNumero());
 		prep.setString(4, cliente.getPasajeroFrecuente().getCatergoria());
 		int r= prep.executeUpdate();
@@ -213,6 +214,47 @@ public class ClienteDAOImplSQL implements ClienteDAO {
 		prep.close();
 		return false;
 	}
+	private Telefono leerTelefono(int dni)throws SQLException { // Cliente-Personal-Laboral-Celular
+		query = "SELECT * FROM Telefono WHERE DNI= ?";
+		prep = con.getConeccion().prepareStatement(query);
+		prep.setInt(1, dni);
+		ResultSet rs = prep.executeQuery();
+		rs.next();
+		prep.close();
+		return new Telefono(rs.getString(2), rs.getString(4), rs.getString(3));
+		
+	}
+	@SuppressWarnings("null")
+	private Direccion leerDireccion(int dni)throws SQLException { // cliente-pais-provincia-ciudad-codpostal-calle-altura
+		query = "SELECT * FROM Direccion WHERE DNI= ?";
+		prep = con.getConeccion().prepareStatement(query);
+		prep.setInt(1, dni);
+		ResultSet rs = prep.executeQuery();
+		rs.next();
+		prep.close();
+		return new Direccion(rs.getString(6), rs.getString(7), rs.getString(4), new Provincia(rs.getInt(3),null), new Pais (rs.getInt(2),null), rs.getString(5));
+	}
+	private Pasaporte leerPasaporte(int dni)throws SQLException {	// ID_Cliente-NumPasaporte-AutoridadEmision-Pais-FechaEmision-FechaVenc
+		query = "SELECT * FROM Pasaporte WHERE DNI= ?";
+		prep = con.getConeccion().prepareStatement(query);
+		prep.setInt(1, dni);
+		ResultSet rs = prep.executeQuery();
+		rs.next();
+		prep.close();
+		return new Pasaporte(rs.getString(2), new Pais(rs.getInt(4),null), rs.getString(3), convertFromSQLDateToJAVADate(rs.getDate(5)), convertFromSQLDateToJAVADate(rs.getDate(6)));
+	}
+	private PasajeroFrecuente leerPasajero(int dni)throws SQLException { //IDCliente-ID_Aerolinea- Numero-Categoria
+		query = "SELECT Aerolinea.ID_Alianza, PasajeroFrecuente.ID_Aerolinea, Numero,Categoria  FROM PasajeroFrecuente\r\n" + 
+				"INNER JOIN Aerolinea ON PasajeroFrecuente.ID_Aerolinea=Aerolinea.ID_Aerolinea\r\n" + 
+				"WHERE ID_Cliente= ?";
+		prep = con.getConeccion().prepareStatement(query);
+		prep.setInt(1, dni);
+		ResultSet rs = prep.executeQuery();
+		rs.next();
+		prep.close();
+		return new PasajeroFrecuente(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4));
+	}
+	
 	
 	
 	@SuppressWarnings("deprecation")
@@ -229,4 +271,11 @@ public class ClienteDAOImplSQL implements ClienteDAO {
 			        java.sql.Date sDate = new java.sql.Date(uDate.getTime());
 			        return sDate;
 			    }
+	private java.util.Date convertFromSQLDateToJAVADate(java.sql.Date sqlDate) {
+        java.util.Date javaDate = null;
+        if (sqlDate != null) {
+            javaDate = new Date(sqlDate.getTime());
+        }
+        return javaDate;
+    }
 }
