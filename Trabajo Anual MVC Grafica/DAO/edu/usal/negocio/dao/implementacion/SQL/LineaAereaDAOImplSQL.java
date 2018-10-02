@@ -47,7 +47,7 @@ public class LineaAereaDAOImplSQL implements LineaAereaDAO {
 	}
 
 	@Override
-	public LineaAerea[] primeraLectura() throws SQLException {
+	public ArrayList<LineaAerea> primeraLectura() throws SQLException {
 		//ArrayList<LineaAerea> lista = new ArrayList<>();
 		con = new Coneccion();
 		if(con.iniciarConeccion()) {
@@ -68,14 +68,14 @@ public class LineaAereaDAOImplSQL implements LineaAereaDAO {
 			stm = con.getConeccion().createStatement();
 			ResultSet rs = stm.executeQuery(query);
 			rs.next();
-			LineaAerea[] array = new LineaAerea[rs.getInt(1)];
+			ArrayList<LineaAerea> array = new ArrayList<LineaAerea>();
 			query = "SELECT *  FROM Aerolinea;";
 			stm = con.getConeccion().createStatement();
 			rs = stm.executeQuery(query);
-			int i=0;
+			
 			while(rs.next()) {
-				array[i]= new LineaAerea(rs.getInt(1),rs.getString(3), rs.getInt(2), null);
-				i++;
+				array.add(new LineaAerea(rs.getInt(1),rs.getString(3), rs.getInt(2), null));
+				
 			}
 			rs.close();
 			con.cerrarConeccion();

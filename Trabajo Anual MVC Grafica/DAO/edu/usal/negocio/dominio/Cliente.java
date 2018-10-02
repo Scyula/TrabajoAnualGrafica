@@ -15,7 +15,7 @@ public class Cliente implements Serializable{
 	private static final long serialVersionUID = 516L;
 	private String nombre;
 	private String apellido;
-	private int DNI;
+	private Integer DNI;
 	private Pasaporte pasaporte;
 	private String cuitcuil;
 	private Date fechaNac;
@@ -101,11 +101,16 @@ public class Cliente implements Serializable{
 	public void setDireccion(Direccion direccion) {
 		this.direccion = direccion;
 	}
-	public int getDNI() {
+	public Integer getDNI() {
 		return DNI;
 	}
-	public void setDNI(int dNI) {
+	public void setDNI(Integer dNI) {
 		DNI = dNI;
+	}
+	@Override
+	public String toString() {
+		return nombre + ", " + apellido + " -DNI=" + DNI + " -CUIT/CUIL=" + cuitcuil
+				+ " -Fecha de Nacimiento=" + fechaNac + " -E-mail=" + email;
 	}	
 	
 }

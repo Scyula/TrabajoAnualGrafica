@@ -111,9 +111,8 @@ public class ClienteDAOImplSQL implements ClienteDAO {
 			prep = con.getConeccion().prepareStatement(query);
 			ResultSet rs = prep.executeQuery();
 			while(rs.next()) {
-				Cliente nuevo = new Cliente(rs.getString(2),rs.getString(3), rs.getInt(1), null, rs.getString(4), stringToFecha(rs.getString(5)), rs.getString(6), null, null, null);
-				lista.add(nuevo);
-			}
+				lista.add(new Cliente(rs.getString(2),rs.getString(3), rs.getInt(1), leerPasaporte(rs.getInt(1)), rs.getString(4), stringToFecha(rs.getString(5)), rs.getString(6), leerTelefono(rs.getInt(1)), leerPasajero(rs.getInt(1)), leerDireccion(rs.getInt(1))));
+				}
 			prep.close();
 			con.cerrarConeccion();
 			return lista;
@@ -127,12 +126,12 @@ public class ClienteDAOImplSQL implements ClienteDAO {
 	public Cliente readCliente(int dni) throws SQLException {
 		con = new Coneccion();
 		if(con.iniciarConeccion()) {
-			query = "SELECT * FROM Cliente WHERE DNI= ?";
+			query = "SELECT * FROM Cliente WHERE DNI=?";
 			prep = con.getConeccion().prepareStatement(query);
 			prep.setInt(1, dni);
 			ResultSet rs = prep.executeQuery();
 			rs.next();
-			Cliente nuevo = new Cliente(rs.getString(2),rs.getString(3), rs.getInt(1), leerPasaporte(dni), rs.getString(4), stringToFecha(rs.getString(5)), rs.getString(6), leerTelefono(dni), leerPasajero(dni), leerDireccion(dni));
+			Cliente nuevo = new Cliente(rs.getString(2),rs.getString(3), rs.getInt(1), leerPasaporte(rs.getInt(1)), rs.getString(4), stringToFecha(rs.getString(5)), rs.getString(6), leerTelefono(rs.getInt(1)), leerPasajero(rs.getInt(1)), leerDireccion(rs.getInt(1)));
 			prep.close();
 			con.cerrarConeccion();
 			return nuevo;
@@ -215,32 +214,29 @@ public class ClienteDAOImplSQL implements ClienteDAO {
 		return false;
 	}
 	private Telefono leerTelefono(int dni)throws SQLException { // Cliente-Personal-Laboral-Celular
-		query = "SELECT * FROM Telefono WHERE DNI= ?";
+		query = "SELECT * FROM Telefono WHERE ID_Cliente= ?";
 		prep = con.getConeccion().prepareStatement(query);
 		prep.setInt(1, dni);
 		ResultSet rs = prep.executeQuery();
 		rs.next();
-		prep.close();
 		return new Telefono(rs.getString(2), rs.getString(4), rs.getString(3));
 		
 	}
 	@SuppressWarnings("null")
 	private Direccion leerDireccion(int dni)throws SQLException { // cliente-pais-provincia-ciudad-codpostal-calle-altura
-		query = "SELECT * FROM Direccion WHERE DNI= ?";
+		query = "SELECT * FROM Direccion WHERE ID_Cliente= ?";
 		prep = con.getConeccion().prepareStatement(query);
 		prep.setInt(1, dni);
 		ResultSet rs = prep.executeQuery();
 		rs.next();
-		prep.close();
 		return new Direccion(rs.getString(6), rs.getString(7), rs.getString(4), new Provincia(rs.getInt(3),null), new Pais (rs.getInt(2),null), rs.getString(5));
 	}
 	private Pasaporte leerPasaporte(int dni)throws SQLException {	// ID_Cliente-NumPasaporte-AutoridadEmision-Pais-FechaEmision-FechaVenc
-		query = "SELECT * FROM Pasaporte WHERE DNI= ?";
+		query = "SELECT * FROM Pasaporte WHERE ID_Cliente= ?";
 		prep = con.getConeccion().prepareStatement(query);
 		prep.setInt(1, dni);
 		ResultSet rs = prep.executeQuery();
 		rs.next();
-		prep.close();
 		return new Pasaporte(rs.getString(2), new Pais(rs.getInt(4),null), rs.getString(3), convertFromSQLDateToJAVADate(rs.getDate(5)), convertFromSQLDateToJAVADate(rs.getDate(6)));
 	}
 	private PasajeroFrecuente leerPasajero(int dni)throws SQLException { //IDCliente-ID_Aerolinea- Numero-Categoria
@@ -251,7 +247,6 @@ public class ClienteDAOImplSQL implements ClienteDAO {
 		prep.setInt(1, dni);
 		ResultSet rs = prep.executeQuery();
 		rs.next();
-		prep.close();
 		return new PasajeroFrecuente(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4));
 	}
 	
