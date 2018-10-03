@@ -18,6 +18,7 @@ import javax.swing.JOptionPane;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import java.awt.GridLayout;
+import javax.swing.JScrollPane;
 
 public class Cliente_ModDel_Vista extends JFrame {
 
@@ -28,10 +29,10 @@ public class Cliente_ModDel_Vista extends JFrame {
 	private JPanel contentPane;
 	private Cliente_ModDel_Controller control;
 	DefaultListModel<Cliente> modelo;
-	private JList<Cliente> list;
 	private JButton btnModificar;
 	private JButton btnEliminar;
 	private JButton btnMenuPrincipal;
+	JList<Cliente> list;
 	
 
 	public Cliente_ModDel_Vista(Cliente_ModDel_Controller controller) {
@@ -57,11 +58,7 @@ public class Cliente_ModDel_Vista extends JFrame {
 		JLabel lblSeleccioneUnaCliente = new JLabel("Seleccione una cliente para la operacion");
 		lblSeleccioneUnaCliente.setHorizontalAlignment(SwingConstants.CENTER);
 		contentPane.add(lblSeleccioneUnaCliente, BorderLayout.NORTH);
-		
-		list = new JList<Cliente>();
 		modelo = control.pedirListaClientes();
-		list.setModel(modelo);
-		contentPane.add(list, BorderLayout.CENTER);
 		
 		
 		JPanel panel = new JPanel();
@@ -89,6 +86,14 @@ public class Cliente_ModDel_Vista extends JFrame {
 		btnEliminar = new JButton("Eliminar");
 		btnEliminar.addActionListener(new CapturaBtnCliente_ModDel(this));
 		panel.add(btnEliminar);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		contentPane.add(scrollPane, BorderLayout.CENTER);
+		
+		list = new JList<Cliente>();
+		scrollPane.setViewportView(list);
+		modelo= control.pedirListaClientes();
+		list.setModel(modelo);
 		setVisible(true);
 	}
 

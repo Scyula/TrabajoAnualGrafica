@@ -43,17 +43,11 @@ public class MenuPrincipalVista extends JFrame {
 	private JButton btn_Cliente_Nuevo;
 	private JButton btn_Cliente_Ver;
 	private JButton btn_Aerolinea_Nuevo;
-	private JButton btn_Aerolinea_Buscar;
-	private JButton btn_Aerolinea_Modificar;
-	private JButton btn_Aerolinea_Eliminar;
+	private JButton btn_Aerolinea_Ver;
 	private JButton btn_Vuelo_Nuevo;
-	private JButton btn_Vuelo_Buscar;
-	private JButton btn_Vuelo_Modificar;
-	private JButton btn_Vuelo_Eliminar;
+	private JButton btn_Vuelo_Ver;
 	private JButton btn_Venta_Nuevo;
-	private JButton btn_Venta_Buscar;
-	private JButton btn_Venta_Modificar;
-	private JButton btn_Venta_Eliminar;
+	private JButton btn_Venta_Ver;
 	private JButton btnActualizarDatosAerolineas;
 	
 
@@ -76,7 +70,7 @@ public class MenuPrincipalVista extends JFrame {
                 close();
             }
         });
-		setBounds(100, 100, 1023, 735);
+		setBounds(100, 100, 738, 735);
 		setLocationRelativeTo(null);		
 		
 		contentPane = new JPanel();
@@ -111,7 +105,7 @@ public class MenuPrincipalVista extends JFrame {
 		JPanel panel_Base = new JPanel();
 		panel_Base.setBackground(new Color(51, 153, 255));
 		panel_Clientes.add(panel_Base, BorderLayout.CENTER);
-		panel_Base.setLayout(new GridLayout(0, 5, 0, 0));
+		panel_Base.setLayout(new GridLayout(0, 4, 0, 0));
 		
 		JPanel panel_VacioSupIzq_Cliente = new JPanel();
 		panel_VacioSupIzq_Cliente.setBackground(new Color(51, 153, 255));
@@ -158,7 +152,7 @@ public class MenuPrincipalVista extends JFrame {
 		JPanel panel_7 = new JPanel();
 		panel_7.setBackground(new Color(51, 153, 255));
 		panel_Aerolinea.add(panel_7, BorderLayout.CENTER);
-		panel_7.setLayout(new GridLayout(0, 5, 0, 0));
+		panel_7.setLayout(new GridLayout(0, 4, 0, 0));
 		
 		JPanel panel_VacioIzq_Aero = new JPanel();
 		panel_VacioIzq_Aero.setBackground(new Color(51, 153, 255));
@@ -166,19 +160,13 @@ public class MenuPrincipalVista extends JFrame {
 		
 		btn_Aerolinea_Nuevo = new JButton("Nueva Aerolinea");
 		btn_Aerolinea_Nuevo.setBackground(UIManager.getColor("Button.background"));
+		btn_Aerolinea_Nuevo.addActionListener(new CapturaBtnMP(this));
 		panel_7.add(btn_Aerolinea_Nuevo);
 		
-		btn_Aerolinea_Modificar = new JButton("Modificar Aerolinea");
-		btn_Aerolinea_Modificar.setBackground(UIManager.getColor("Button.background"));
-		panel_7.add(btn_Aerolinea_Modificar);
-		
-		btn_Aerolinea_Buscar = new JButton("Buscar Aerolinea");
-		btn_Aerolinea_Buscar.setBackground(UIManager.getColor("Button.background"));
-		panel_7.add(btn_Aerolinea_Buscar);
-		
-		btn_Aerolinea_Eliminar = new JButton("Eliminar Aerolinea");
-		btn_Aerolinea_Eliminar.setBackground(UIManager.getColor("Button.background"));
-		panel_7.add(btn_Aerolinea_Eliminar);
+		btn_Aerolinea_Ver = new JButton("Ver Aerolineas");
+		btn_Aerolinea_Ver.setBackground(UIManager.getColor("Button.background"));
+		btn_Aerolinea_Ver.addActionListener(new CapturaBtnMP(this));
+		panel_7.add(btn_Aerolinea_Ver);
 		
 		JSeparator separator_1 = new JSeparator();
 		separator_1.setBackground(new Color(51, 153, 255));
@@ -212,7 +200,7 @@ public class MenuPrincipalVista extends JFrame {
 		JPanel panel_8 = new JPanel();
 		panel_8.setBackground(new Color(51, 153, 255));
 		panel_Vuelo.add(panel_8, BorderLayout.CENTER);
-		panel_8.setLayout(new GridLayout(0, 5, 0, 0));
+		panel_8.setLayout(new GridLayout(0, 4, 0, 0));
 		
 		JPanel panel_VacioIzq_Vuelo = new JPanel();
 		panel_VacioIzq_Vuelo.setBackground(new Color(51, 153, 255));
@@ -220,19 +208,13 @@ public class MenuPrincipalVista extends JFrame {
 		
 		btn_Vuelo_Nuevo = new JButton("Nuevo Vuelo");
 		btn_Vuelo_Nuevo.setBackground(UIManager.getColor("Button.background"));
+		btn_Vuelo_Nuevo.addActionListener(new CapturaBtnMP(this));
 		panel_8.add(btn_Vuelo_Nuevo);
 		
-		btn_Vuelo_Modificar = new JButton("Modificar Vuelo");
-		btn_Vuelo_Modificar.setBackground(UIManager.getColor("Button.background"));
-		panel_8.add(btn_Vuelo_Modificar);
-		
-		btn_Vuelo_Buscar = new JButton("Buscar Vuelo");
-		btn_Vuelo_Buscar.setBackground(UIManager.getColor("Button.background"));
-		panel_8.add(btn_Vuelo_Buscar);
-		
-		btn_Vuelo_Eliminar = new JButton("Eliminar Vuelo");
-		btn_Vuelo_Eliminar.setBackground(UIManager.getColor("Button.background"));
-		panel_8.add(btn_Vuelo_Eliminar);
+		btn_Vuelo_Ver = new JButton("Ver Vuelos");
+		btn_Vuelo_Ver.setBackground(UIManager.getColor("Button.background"));
+		btn_Vuelo_Ver.addActionListener(new CapturaBtnMP(this));
+		panel_8.add(btn_Vuelo_Ver);
 		
 		JSeparator separator_2 = new JSeparator();
 		separator_2.setBackground(new Color(51, 153, 255));
@@ -265,7 +247,7 @@ public class MenuPrincipalVista extends JFrame {
 		JPanel panel_10 = new JPanel();
 		panel_10.setBackground(new Color(51, 153, 255));
 		panel_Ventas.add(panel_10, BorderLayout.CENTER);
-		panel_10.setLayout(new GridLayout(0, 5, 0, 0));
+		panel_10.setLayout(new GridLayout(0, 4, 0, 0));
 		
 		JPanel panel_VacioIzq_Ventas = new JPanel();
 		panel_VacioIzq_Ventas.setBackground(new Color(51, 153, 255));
@@ -273,19 +255,13 @@ public class MenuPrincipalVista extends JFrame {
 		
 		btn_Venta_Nuevo = new JButton("Nueva Venta");
 		btn_Venta_Nuevo.setBackground(UIManager.getColor("Button.background"));
+		btn_Venta_Nuevo.addActionListener(new CapturaBtnMP(this));
 		panel_10.add(btn_Venta_Nuevo);
 		
-		btn_Venta_Modificar = new JButton("Modificar Venta");
-		btn_Venta_Modificar.setBackground(UIManager.getColor("Button.background"));
-		panel_10.add(btn_Venta_Modificar);
-		
-		btn_Venta_Buscar = new JButton("Buscar Venta");
-		btn_Venta_Buscar.setBackground(UIManager.getColor("Button.background"));
-		panel_10.add(btn_Venta_Buscar);
-		
-		btn_Venta_Eliminar = new JButton("Eliminar Venta");
-		btn_Venta_Eliminar.setBackground(UIManager.getColor("Button.background"));
-		panel_10.add(btn_Venta_Eliminar);
+		btn_Venta_Ver = new JButton("Ver Ventas");
+		btn_Venta_Ver.setBackground(UIManager.getColor("Button.background"));
+		btn_Venta_Ver.addActionListener(new CapturaBtnMP(this));
+		panel_10.add(btn_Venta_Ver);
 		
 		JPanel panel_3 = new JPanel();
 		panel_3.setBackground(new Color(51, 153, 255));
@@ -378,6 +354,8 @@ public class MenuPrincipalVista extends JFrame {
 		this.btn_Cliente_Ver = btn_Cliente_Ver;
 	}
 
+	
+
 	public JButton getBtn_Aerolinea_Nuevo() {
 		return btn_Aerolinea_Nuevo;
 	}
@@ -386,28 +364,12 @@ public class MenuPrincipalVista extends JFrame {
 		this.btn_Aerolinea_Nuevo = btn_Aerolinea_Nuevo;
 	}
 
-	public JButton getBtn_Aerolinea_Buscar() {
-		return btn_Aerolinea_Buscar;
+	public JButton getBtn_Aerolinea_Ver() {
+		return btn_Aerolinea_Ver;
 	}
 
-	public void setBtn_Aerolinea_Buscar(JButton btn_Aerolinea_Buscar) {
-		this.btn_Aerolinea_Buscar = btn_Aerolinea_Buscar;
-	}
-
-	public JButton getBtn_Aerolinea_Modificar() {
-		return btn_Aerolinea_Modificar;
-	}
-
-	public void setBtn_Aerolinea_Modificar(JButton btn_Aerolinea_Modificar) {
-		this.btn_Aerolinea_Modificar = btn_Aerolinea_Modificar;
-	}
-
-	public JButton getBtn_Aerolinea_Eliminar() {
-		return btn_Aerolinea_Eliminar;
-	}
-
-	public void setBtn_Aerolinea_Eliminar(JButton btn_Aerolinea_Eliminar) {
-		this.btn_Aerolinea_Eliminar = btn_Aerolinea_Eliminar;
+	public void setBtn_Aerolinea_Ver(JButton btn_Aerolinea_Ver) {
+		this.btn_Aerolinea_Ver = btn_Aerolinea_Ver;
 	}
 
 	public JButton getBtn_Vuelo_Nuevo() {
@@ -418,28 +380,12 @@ public class MenuPrincipalVista extends JFrame {
 		this.btn_Vuelo_Nuevo = btn_Vuelo_Nuevo;
 	}
 
-	public JButton getBtn_Vuelo_Buscar() {
-		return btn_Vuelo_Buscar;
+	public JButton getBtn_Vuelo_Ver() {
+		return btn_Vuelo_Ver;
 	}
 
-	public void setBtn_Vuelo_Buscar(JButton btn_Vuelo_Buscar) {
-		this.btn_Vuelo_Buscar = btn_Vuelo_Buscar;
-	}
-
-	public JButton getBtn_Vuelo_Modificar() {
-		return btn_Vuelo_Modificar;
-	}
-
-	public void setBtn_Vuelo_Modificar(JButton btn_Vuelo_Modificar) {
-		this.btn_Vuelo_Modificar = btn_Vuelo_Modificar;
-	}
-
-	public JButton getBtn_Vuelo_Eliminar() {
-		return btn_Vuelo_Eliminar;
-	}
-
-	public void setBtn_Vuelo_Eliminar(JButton btn_Vuelo_Eliminar) {
-		this.btn_Vuelo_Eliminar = btn_Vuelo_Eliminar;
+	public void setBtn_Vuelo_Ver(JButton btn_Vuelo_Ver) {
+		this.btn_Vuelo_Ver = btn_Vuelo_Ver;
 	}
 
 	public JButton getBtn_Venta_Nuevo() {
@@ -450,28 +396,12 @@ public class MenuPrincipalVista extends JFrame {
 		this.btn_Venta_Nuevo = btn_Venta_Nuevo;
 	}
 
-	public JButton getBtn_Venta_Buscar() {
-		return btn_Venta_Buscar;
+	public JButton getBtn_Venta_Ver() {
+		return btn_Venta_Ver;
 	}
 
-	public void setBtn_Venta_Buscar(JButton btn_Venta_Buscar) {
-		this.btn_Venta_Buscar = btn_Venta_Buscar;
-	}
-
-	public JButton getBtn_Venta_Modificar() {
-		return btn_Venta_Modificar;
-	}
-
-	public void setBtn_Venta_Modificar(JButton btn_Venta_Modificar) {
-		this.btn_Venta_Modificar = btn_Venta_Modificar;
-	}
-
-	public JButton getBtn_Venta_Eliminar() {
-		return btn_Venta_Eliminar;
-	}
-
-	public void setBtn_Venta_Eliminar(JButton btn_Venta_Eliminar) {
-		this.btn_Venta_Eliminar = btn_Venta_Eliminar;
+	public void setBtn_Venta_Ver(JButton btn_Venta_Ver) {
+		this.btn_Venta_Ver = btn_Venta_Ver;
 	}
 
 	public JButton getBtnActualizarDatosAerolineas() {

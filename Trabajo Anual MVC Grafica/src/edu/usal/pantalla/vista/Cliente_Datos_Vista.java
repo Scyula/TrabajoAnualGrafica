@@ -105,11 +105,11 @@ public class Cliente_Datos_Vista extends JFrame {
                 close();
             }
         });
+		setBounds(5, 53, 980, 694);
 		setLocationRelativeTo(null);
 		
 		
 		setTitle("Alta de Cliente");
-		setBounds(5, 53, 980, 694);
 		getContentPane().setLayout(null);
 		
 		lblNombre = new JLabel("Nombre");

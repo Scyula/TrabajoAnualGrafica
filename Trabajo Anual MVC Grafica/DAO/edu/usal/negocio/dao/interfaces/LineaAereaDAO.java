@@ -11,8 +11,6 @@ public interface LineaAereaDAO {
 	public boolean addLineaAerea(LineaAerea lineaAerea) throws SQLException;
 	public boolean updateLineaAerea(LineaAerea lineaAerea) throws SQLException;
 	public boolean deleteLineaAerea(LineaAerea  lineaAerea) throws SQLException;
-	public List<LineaAerea > getAllLineaAerea() throws SQLException;
-	public void saveAllLineaAerea(List<LineaAerea > lineaAerea) throws SQLException;
-	public ArrayList<LineaAerea> primeraLectura() throws SQLException;
+	public ArrayList<LineaAerea > getAllLineaAerea() throws SQLException;
 	
 }

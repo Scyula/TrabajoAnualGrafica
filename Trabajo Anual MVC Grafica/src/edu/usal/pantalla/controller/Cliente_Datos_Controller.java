@@ -89,6 +89,7 @@ public class Cliente_Datos_Controller {
 		
 		try {
 			if(clientedao.addCliente(cliente)) {
+				
 				return true;
 			}
 		} catch (SQLException e) {

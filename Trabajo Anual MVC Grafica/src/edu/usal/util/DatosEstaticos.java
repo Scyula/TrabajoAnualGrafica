@@ -19,11 +19,19 @@ public class DatosEstaticos {
 	private static ArrayList<LineaAerea> aerolineas= cargarAerolineas();
 	private static Hashtable<Integer, String> paises = cargarPaises();
 	private static Hashtable<Integer, String> provincias = cargarProvincias();
-
+	private static Hashtable<Integer, String> alianza = cargarAlianzas();
 
 
 	public static ArrayList<LineaAerea> getAerolineas() {
 		return aerolineas;
+	}
+
+	private static Hashtable<Integer, String> cargarAlianzas() {
+		Hashtable<Integer,String> lista = new Hashtable<Integer,String>(); 
+		lista.put(1, "Skyteam");
+		lista.put(2, "Openworld");
+		lista.put(3, "Star Alliance");
+		return lista;
 	}
 
 	public static void setAerolineas(ArrayList<LineaAerea> aerolineas) {
@@ -44,10 +52,15 @@ public class DatosEstaticos {
 		return source;
 	}
 	
+	
+	public static Hashtable<Integer, String> getAlianza() {
+		return alianza;
+	}
+
 	private static ArrayList<LineaAerea> cargarAerolineas() {
 		try {
 			LineaAereaDAO lineaAerea = new LineaAereaDAOImplSQL();
-			return lineaAerea.primeraLectura();
+			return lineaAerea.getAllLineaAerea();
 			
 		} catch (SQLException e) {
 			IOGeneral.pritln(">>>>>Ocurrio un error al leer las aerolineas de la base de datos<<<<<");
