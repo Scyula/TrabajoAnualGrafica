@@ -21,7 +21,7 @@ public class LineaAereaDAOImplSQL implements LineaAereaDAO {
 	public boolean addLineaAerea(LineaAerea lineaAerea) throws SQLException {
 		con = new Coneccion();
 		if(con.iniciarConeccion()) {
-			query = "INSERT INTO Aerolinea VALUES (?,?)";
+			query = "INSERT INTO Aerolinea VALUES (?,?,null)";
 			prep = con.getConeccion().prepareStatement(query);
 			prep.setInt(1, lineaAerea.getAlianza());
 			prep.setString(2, lineaAerea.getNombre());

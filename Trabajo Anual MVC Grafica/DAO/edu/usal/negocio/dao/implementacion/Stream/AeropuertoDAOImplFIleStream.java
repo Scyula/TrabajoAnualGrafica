@@ -14,6 +14,8 @@ import java.util.Scanner;
 
 import edu.usal.negocio.dao.interfaces.AeropuertoDAO;
 import edu.usal.negocio.dominio.Aeropuerto;
+import edu.usal.negocio.dominio.Pais;
+import edu.usal.negocio.dominio.Provincia;
 import edu.usal.util.PropertiesUtil;
 
 public class AeropuertoDAOImplFIleStream implements AeropuertoDAO {
@@ -94,7 +96,7 @@ public class AeropuertoDAOImplFIleStream implements AeropuertoDAO {
 		this.saveAllAeropuerto(this.primeraLectura());
 		return true;
 	}
-	private ArrayList<Aeropuerto> primeraLectura(){
+	public ArrayList<Aeropuerto> primeraLectura(){
 		ArrayList<Aeropuerto> lista = new ArrayList<Aeropuerto>();
 		try {
 			
@@ -105,11 +107,11 @@ public class AeropuertoDAOImplFIleStream implements AeropuertoDAO {
 				Aeropuerto nueva = new Aeropuerto();
 				nueva.setCiudad(straux[0]);
 				nueva.setIdAeropuerto(straux[1]);
-				nueva.setPais(Integer.parseInt(straux[2]));
-				if(nueva.getPais()==9) {
-					nueva.setProvincia(Integer.parseInt(straux[3]));
+				nueva.setPais(new Pais(Integer.parseInt(straux[2]),null));
+				if(nueva.getPais().getId()==9) {
+					nueva.setProvincia(new Provincia(Integer.parseInt(straux[3]),null));
 				}else {
-					nueva.setProvincia(0);
+					nueva.setProvincia(new Provincia (0,null));
 				}
 				lista.add(nueva);
 			}
