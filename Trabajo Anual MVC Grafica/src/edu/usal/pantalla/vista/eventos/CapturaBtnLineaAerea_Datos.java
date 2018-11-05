@@ -17,9 +17,12 @@ public class CapturaBtnLineaAerea_Datos implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource().equals(vista.getBtnGuardar())) {
-			vista.getControl().guardarDatos(vista);
+			vista.getControl().guardarDatos();
 		}else if(e.getSource().equals(vista.getBtnCancelar())) {
-			
+			vista.getControl().getmPController().hacerVisibleMP();
+			vista.getControl().cerrarVentana();
+		}else if(e.getSource().equals(vista.getBtnGuardarMod())) {
+			vista.getControl().updateDatos();
 		}
 
 	}

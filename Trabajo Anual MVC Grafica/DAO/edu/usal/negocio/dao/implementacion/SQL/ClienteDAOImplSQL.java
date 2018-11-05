@@ -60,24 +60,26 @@ public class ClienteDAOImplSQL implements ClienteDAO {
 	public boolean updateCliente(Cliente cliente)  throws SQLException {
 		con = new Coneccion();
 		if(con.iniciarConeccion()) {
-			query = ("INSERT INTO Cliente VALUES (?,?,?,?,?,?) WHERE DNI=?;");
+			con.getConeccion().setAutoCommit(false);
+			query = ("UPDATE Cliente SET Nombre=?,Apellido=?,CuitCuil=?,FechaNacimiento=?,Email= ? WHERE DNI=?;");
 			prep = con.getConeccion().prepareStatement(query);
-			prep.setInt(1,cliente.getDNI());
-			prep.setString(2, cliente.getNombre());
-			prep.setString(3, cliente.getApellido());
-			prep.setString(4, cliente.getCuitcuil());
-			prep.setDate(5, convertUtilToSql(cliente.getFechaNac()));
-			prep.setString(6, cliente.getEmail());
-			prep.setInt(7, cliente.getDNI());
+			prep.setString(1, cliente.getNombre());
+			prep.setString(2, cliente.getApellido());
+			prep.setString(3, cliente.getCuitcuil());
+			prep.setDate(4, convertUtilToSql(cliente.getFechaNac()));
+			prep.setString(5, cliente.getEmail());
+			prep.setInt(6, cliente.getDNI());
 			int r = prep.executeUpdate();
 			if(r==1) {
 				prep.close();
-				con.cerrarConeccion();
-				return true;
-			}else if(r>1) {
-				IOGeneral.pritln("CUIDADO, se afectó mas de una sola columna");
+				if(updateDireccion(cliente,con) && updateTelefono(cliente,con) && updatePasaporte(cliente,con) && updatePasajero(cliente,con)) {
+					con.getConeccion().commit();
+					con.cerrarConeccion();
+					return true;
+				}
 			}
 		}
+		con.getConeccion().rollback();
 		prep.close();
 		con.cerrarConeccion();
 		return false;
@@ -111,7 +113,7 @@ public class ClienteDAOImplSQL implements ClienteDAO {
 			prep = con.getConeccion().prepareStatement(query);
 			ResultSet rs = prep.executeQuery();
 			while(rs.next()) {
-				lista.add(new Cliente(rs.getString(2),rs.getString(3), rs.getInt(1), leerPasaporte(rs.getInt(1)), rs.getString(4), stringToFecha(rs.getString(5)), rs.getString(6), leerTelefono(rs.getInt(1)), leerPasajero(rs.getInt(1)), leerDireccion(rs.getInt(1))));
+				lista.add(new Cliente(rs.getString(2),rs.getString(3), rs.getInt(1), leerPasaporte(rs.getInt(1)), rs.getString(4), this.convertFromSQLDateToJAVADate(rs.getDate(5)), rs.getString(6), leerTelefono(rs.getInt(1)), leerPasajero(rs.getInt(1)), leerDireccion(rs.getInt(1))));
 				}
 			prep.close();
 			con.cerrarConeccion();
@@ -131,7 +133,7 @@ public class ClienteDAOImplSQL implements ClienteDAO {
 			prep.setInt(1, dni);
 			ResultSet rs = prep.executeQuery();
 			rs.next();
-			Cliente nuevo = new Cliente(rs.getString(2),rs.getString(3), rs.getInt(1), leerPasaporte(rs.getInt(1)), rs.getString(4), stringToFecha(rs.getString(5)), rs.getString(6), leerTelefono(rs.getInt(1)), leerPasajero(rs.getInt(1)), leerDireccion(rs.getInt(1)));
+			Cliente nuevo = new Cliente(rs.getString(2),rs.getString(3), rs.getInt(1), leerPasaporte(rs.getInt(1)), rs.getString(4), this.convertFromSQLDateToJAVADate(rs.getDate(5)), rs.getString(6), leerTelefono(rs.getInt(1)), leerPasajero(rs.getInt(1)), leerDireccion(rs.getInt(1)));
 			prep.close();
 			con.cerrarConeccion();
 			return nuevo;
@@ -213,8 +215,84 @@ public class ClienteDAOImplSQL implements ClienteDAO {
 		prep.close();
 		return false;
 	}
+	
+	
+	private boolean updateDireccion(Cliente cliente, Coneccion con) throws SQLException{
+		query = ("UPDATE Direccion SET Pais=?,Provincia=?,Ciudad=?,CodPostal=?,Calle= ?,Altura=? WHERE ID_Cliente=?");
+		prep = con.getConeccion().prepareStatement(query);
+		prep.setInt(1, cliente.getDireccion().getPais().getId());
+		if(cliente.getDireccion().getPais().getId()==9) {
+			prep.setInt(2, cliente.getDireccion().getProvincia().getId());
+		}else {
+			prep.setInt(2, -1);
+		}
+		prep.setString(3, cliente.getDireccion().getCiudad());
+		prep.setString(4, cliente.getDireccion().getCodPostal());
+		
+		prep.setString(5, cliente.getDireccion().getCalle());
+		prep.setString(6, cliente.getDireccion().getAltura());
+		prep.setInt(7, cliente.getDNI());
+		int r= prep.executeUpdate();
+		if(r==1) {
+			prep.close();
+			return true;
+		}
+		prep.close();
+		return false;
+	}
+	
+	private boolean updateTelefono(Cliente cliente, Coneccion con) throws SQLException{
+		query = ("UPDATE Telefono SET Personal=?,Laboral=?,Celular=? WHERE Cliente_ID=?");
+		prep = con.getConeccion().prepareStatement(query);
+		prep.setString(1, cliente.getTelefono().getNroPersonal());
+		prep.setString(2, cliente.getTelefono().getNroLaboral());
+		prep.setString(3, cliente.getTelefono().getNroCelular());
+		prep.setInt(4, cliente.getDNI());
+		int r= prep.executeUpdate();
+		if(r==1) {
+			prep.close();
+			return true;
+		}
+		prep.close();
+		return false;
+	}
+	private boolean updatePasaporte(Cliente cliente, Coneccion con) throws SQLException{
+		query = ("UPDATE Pasaporte SET NumPasaporte=?,AutoridadEmision=?,Pais=?,FechaEmision=?,FechaVenc= ? WHERE ID_Cliente=?");
+		prep = con.getConeccion().prepareStatement(query);
+		prep.setString(1, cliente.getPasaporte().getNroPasaporte());
+		prep.setString(2, cliente.getPasaporte().getAutoridademision());
+		prep.setInt(3, cliente.getPasaporte().getPais().getId());
+		prep.setDate(4, convertUtilToSql(cliente.getPasaporte().getEmision()));
+		prep.setDate(5, convertUtilToSql(cliente.getPasaporte().getVencimiento()));
+		prep.setInt(6, cliente.getDNI());
+		int r= prep.executeUpdate();
+		if(r==1) {
+			prep.close();
+			return true;
+		}
+		prep.close();
+		return false;
+	}
+	
+	private boolean updatePasajero(Cliente cliente, Coneccion con) throws SQLException{
+		query = ("UPDATE PasajeroFrecuente SET ID_Aerolinea=?,Numero=?,Categoria=? WHERE ID_Cliente=?");
+		prep = con.getConeccion().prepareStatement(query);
+		prep.setInt(1, cliente.getPasajeroFrecuente().getAerolinea());
+		prep.setString(2, cliente.getPasajeroFrecuente().getNumero());
+		prep.setString(3, cliente.getPasajeroFrecuente().getCatergoria());
+		prep.setInt(4, cliente.getDNI());
+		int r= prep.executeUpdate();
+		if(r==1) {
+			prep.close();
+			return true;
+		}
+		prep.close();
+		return false;
+	}
+	
+	
 	private Telefono leerTelefono(int dni)throws SQLException { // Cliente-Personal-Laboral-Celular
-		query = "SELECT * FROM Telefono WHERE ID_Cliente= ?";
+		query = "SELECT * FROM Telefono WHERE Cliente_ID= ?";
 		prep = con.getConeccion().prepareStatement(query);
 		prep.setInt(1, dni);
 		ResultSet rs = prep.executeQuery();
@@ -250,18 +328,6 @@ public class ClienteDAOImplSQL implements ClienteDAO {
 		return new PasajeroFrecuente(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4));
 	}
 	
-	
-	
-	@SuppressWarnings("deprecation")
-	private String fechaToString(Date fecha) {
-		return fecha.getYear()+"-"+fecha.getMonth()+"-"+fecha.getDay();
-	}
-	private Date stringToFecha(String fecha) {
-		String[] valores = fecha.split("-");
-		@SuppressWarnings("deprecation")
-		Date nuevo = new Date(Integer.parseInt(valores[0]), Integer.parseInt(valores[1]), Integer.parseInt(valores[2]));
-		return nuevo;
-	}
 	private java.sql.Date convertUtilToSql(java.util.Date uDate) {
 			        java.sql.Date sDate = new java.sql.Date(uDate.getTime());
 			        return sDate;

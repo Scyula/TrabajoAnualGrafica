@@ -28,6 +28,7 @@ public class LineaAerea_Datos_Vista extends JFrame {
 	private JLabel lblID_Asignado;
 	private JButton btnCancelar;
 	private JButton btnGuardar;
+	private JButton btnGuardarMod;
 
 	/**
 	 * @wbp.parser.constructor
@@ -130,7 +131,7 @@ public class LineaAerea_Datos_Vista extends JFrame {
 		JPanel panel = new JPanel();
 		contentPane.add(panel, BorderLayout.NORTH);
 		
-		JLabel lblNuevaLineaAerea = new JLabel("Nueva Linea Aerea");
+		JLabel lblNuevaLineaAerea = new JLabel("Modificacion Linea Aerea");
 		panel.add(lblNuevaLineaAerea);
 		
 		JPanel panel_1 = new JPanel();
@@ -179,9 +180,9 @@ public class LineaAerea_Datos_Vista extends JFrame {
 		JPanel panel_6 = new JPanel();
 		panel_2.add(panel_6);
 		
-		btnGuardar = new JButton("Guardar");
-		btnGuardar.addActionListener(new CapturaBtnLineaAerea_Datos(this));
-		panel_2.add(btnGuardar);
+		btnGuardarMod = new JButton("Guardar");
+		btnGuardarMod.addActionListener(new CapturaBtnLineaAerea_Datos(this));
+		panel_2.add(btnGuardarMod);
 		setVisible(true);
 	}
 
@@ -233,6 +234,12 @@ public class LineaAerea_Datos_Vista extends JFrame {
 		this.textNombre = textNombre;
 	}
 	
+	public JButton getBtnGuardarMod() {
+		return btnGuardarMod;
+	}
+	public void setBtnGuardarMod(JButton btnGuardarMod) {
+		this.btnGuardarMod = btnGuardarMod;
+	}
 	public void cancelaOperacion() {
 		JOptionPane.showMessageDialog(null, "La operacion se ha cancelado", "", JOptionPane.WARNING_MESSAGE);
 	}

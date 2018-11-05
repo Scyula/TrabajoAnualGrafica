@@ -33,11 +33,7 @@ public class DatosEstaticos {
 		lista.put(3, "Star Alliance");
 		return lista;
 	}
-
-	public static void setAerolineas(ArrayList<LineaAerea> aerolineas) {
-		DatosEstaticos.aerolineas = aerolineas;
-	}
-
+	
 	public static Hashtable<Integer, String> getPaises() {
 		return paises;
 	}
@@ -90,6 +86,19 @@ public class DatosEstaticos {
 			IOGeneral.pritln(e.getMessage());
 		}	
 		return null;
+	}
+
+	public static void actualizarAerolineas() {
+		try {
+			LineaAereaDAO lineaAerea = new LineaAereaDAOImplSQL();
+			aerolineas = lineaAerea.getAllLineaAerea();
+			for (LineaAerea linea : aerolineas) {
+				System.out.print(linea.toString());
+			}
+		} catch (SQLException e) {
+			IOGeneral.pritln(">>>>>Ocurrio un error al leer las aerolineas de la base de datos<<<<<");
+			IOGeneral.pritln(e.getMessage());
+		}		
 	}
 
 	

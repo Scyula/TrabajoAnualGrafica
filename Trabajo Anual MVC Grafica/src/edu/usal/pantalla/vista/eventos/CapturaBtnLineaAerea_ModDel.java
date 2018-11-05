@@ -19,10 +19,14 @@ public class CapturaBtnLineaAerea_ModDel implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource().equals(vista.getBtnModificar())) {
 			int index=vista.getList().getSelectedIndex();
-			vista.getControl().Modificar(vista.getModelo().getElementAt(index));
+			if(index!=-1) {
+				vista.getControl().Modificar(vista.getModelo().getElementAt(index));
+			}
 		}else if(e.getSource().equals(vista.getBtnEliminar())) {
 			int index=vista.getList().getSelectedIndex();
-			vista.getControl().Eliminar(vista.getModelo().getElementAt(index));
+			if(index!=-1) {
+				vista.getControl().Eliminar(vista.getModelo().getElementAt(index));
+			}
 		}else if(e.getSource().equals(vista.getBtnMenuPrincipal())) {
 			vista.getControl().getmPController().hacerVisibleMP();
 			vista.dispose();

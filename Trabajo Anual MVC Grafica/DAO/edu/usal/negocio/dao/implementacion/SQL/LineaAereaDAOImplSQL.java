@@ -81,14 +81,10 @@ public class LineaAereaDAOImplSQL implements LineaAereaDAO {
 	public ArrayList<LineaAerea> getAllLineaAerea() throws SQLException {
 		con = new Coneccion();
 		if(con.iniciarConeccion()) {
-			query = "SELECT count(*)  FROM Aerolinea;";
-			stm = con.getConeccion().createStatement();
-			ResultSet rs = stm.executeQuery(query);
-			rs.next();
 			ArrayList<LineaAerea> array = new ArrayList<LineaAerea>();
 			query = "SELECT *  FROM Aerolinea;";
 			stm = con.getConeccion().createStatement();
-			rs = stm.executeQuery(query);
+			ResultSet rs = stm.executeQuery(query);
 			
 			while(rs.next()) {
 				array.add(new LineaAerea(rs.getInt(1),rs.getString(3), rs.getInt(2), null));

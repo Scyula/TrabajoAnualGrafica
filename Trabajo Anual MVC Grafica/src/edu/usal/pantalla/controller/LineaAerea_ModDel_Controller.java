@@ -11,6 +11,7 @@ import edu.usal.negocio.dominio.Cliente;
 import edu.usal.negocio.dominio.LineaAerea;
 import edu.usal.pantalla.vista.Cliente_ModDel_Vista;
 import edu.usal.pantalla.vista.LineaAerea_ModDel_Vista;
+import edu.usal.util.DatosEstaticos;
 import edu.usal.util.IOGeneral;
 
 public class LineaAerea_ModDel_Controller {
@@ -63,6 +64,7 @@ public class LineaAerea_ModDel_Controller {
 				lineaaereadao = new LineaAereaDAOImplSQL();
 				if(lineaaereadao.deleteLineaAerea(lineaAerea)) {
 					menuModDel.exitoOperacion();
+					DatosEstaticos.actualizarAerolineas();
 				}else {
 					menuModDel.fracasoOperacion();
 				}
@@ -81,9 +83,8 @@ public class LineaAerea_ModDel_Controller {
 		int res = menuModDel.confirmarSeleccion(lineaAerea, "MODIFICACION");
 		if(res==JOptionPane.YES_OPTION) {
 			menuDatos = new LineaAerea_Datos_Controller(mPController, lineaAerea);
+			menuModDel.dispose();
 		}
-		menuModDel.dispose();
-		mPController.hacerVisibleMP();
 	}
 	
 }

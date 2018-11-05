@@ -43,7 +43,6 @@ public class AgregarAerolineasSQL {
 	private static ArrayList<LineaAerea> leer(){
 		ArrayList<LineaAerea> lista = new ArrayList<LineaAerea>();
 		try {
-			
 			File file= new File(PropertiesUtil.getPathTxt(), PropertiesUtil.getNameAllAeroLineas());
 			Scanner scanner= new Scanner(file);
 			while (scanner.hasNextLine()){

@@ -35,7 +35,7 @@ public class CapturaBtnMP implements ActionListener {
 		
 		if(e.getSource().equals(vista.getBtn_Vuelo_Nuevo())){
 			vista.getMpController().EjecutarSubmenuVuelo(1);
-		} else if(e.getSource().equals(vista.getBtn_Cliente_Ver())){
+		} else if(e.getSource().equals(vista.getBtn_Vuelo_Ver())){
 			vista.getMpController().EjecutarSubmenuVuelo(2);
 		}
 		

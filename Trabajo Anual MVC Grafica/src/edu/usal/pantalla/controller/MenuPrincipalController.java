@@ -37,22 +37,10 @@ public class MenuPrincipalController{
 			}
 		}
 		public void EjecutarSubmenuVuelo(int sb) {
-			if(sb==1) {//Nuevo Vuelo
-				this.menuPrincipal.setVisible(false);
-				menuDatosCliente = new Cliente_Datos_Controller(this);
-			}else if (sb==2) {//Modificar Vuelo
-				this.menuPrincipal.setVisible(false);
-				menuModCliente = new Cliente_ModDel_Controller(this);
-			}
+			
 		}
 		public void EjecutarSubmenuVenta(int sb) {
-			if(sb==1) {//Nuevo Venta
-				this.menuPrincipal.setVisible(false);
-				menuDatosCliente = new Cliente_Datos_Controller(this);
-			}else if (sb==2) {//Modificar Venta
-				this.menuPrincipal.setVisible(false);
-				menuModCliente = new Cliente_ModDel_Controller(this);
-			}
+			
 		}
 		
 		

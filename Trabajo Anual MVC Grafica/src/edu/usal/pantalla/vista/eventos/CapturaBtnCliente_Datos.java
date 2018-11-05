@@ -17,8 +17,12 @@ public class CapturaBtnCliente_Datos implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource().equals(vista.getBtnGuardar())) {
 			vista.getController().almacenarDatos(vista);
+			vista.getController().finalizarVentana();
 		}else if(e.getSource().equals(vista.getBtnCancelar())) {
 			vista.getController().getmPController().hacerVisibleMP();
+			vista.getController().finalizarVentana();
+		}else if(e.getSource().equals(vista.getBtnGuardarMod())) {
+			vista.getController().updateDatos(vista);
 			vista.getController().finalizarVentana();
 		}
 
