@@ -2,6 +2,7 @@ package edu.usal.pantalla.controller;
 
 import java.sql.SQLException;
 
+import edu.usal.negocio.dao.factory.LineaAereaFactory;
 import edu.usal.negocio.dao.implementacion.SQL.LineaAereaDAOImplSQL;
 import edu.usal.negocio.dao.interfaces.ClienteDAO;
 import edu.usal.negocio.dao.interfaces.LineaAereaDAO;
@@ -32,7 +33,7 @@ public class LineaAerea_Datos_Controller {
 
 	public void guardarDatos() {
 		try {
-			aerolineadao = new LineaAereaDAOImplSQL();	
+			aerolineadao = LineaAereaFactory.getLineaAereaDAO(DatosEstaticos.getSource());
 			if(aerolineadao.addLineaAerea(new LineaAerea(0, menu.getTextNombre().getText(), menu.getComboBoxAlianza().getSelectedIndex(),	 null))) {
 				menu.exitoOperacion();
 				DatosEstaticos.actualizarAerolineas();
@@ -49,7 +50,7 @@ public class LineaAerea_Datos_Controller {
 
 	public void updateDatos() {
 		try {
-			aerolineadao = new LineaAereaDAOImplSQL();	
+			aerolineadao = LineaAereaFactory.getLineaAereaDAO(DatosEstaticos.getSource());
 			if(aerolineadao.updateLineaAerea(new LineaAerea(Integer.parseInt(menu.getLblID_Asignado().getText()), menu.getTextNombre().getText(), menu.getComboBoxAlianza().getSelectedIndex(), null))) {
 					menu.exitoOperacion();
 					DatosEstaticos.actualizarAerolineas();

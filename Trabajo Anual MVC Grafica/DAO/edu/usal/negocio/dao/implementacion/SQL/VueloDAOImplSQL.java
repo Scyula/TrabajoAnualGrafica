@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -15,17 +14,12 @@ import edu.usal.negocio.dao.interfaces.ClienteDAO;
 import edu.usal.negocio.dao.interfaces.VueloDAO;
 import edu.usal.negocio.dominio.Aeropuerto;
 import edu.usal.negocio.dominio.Cliente;
-import edu.usal.negocio.dominio.Direccion;
 import edu.usal.negocio.dominio.LineaAerea;
 import edu.usal.negocio.dominio.Pais;
-import edu.usal.negocio.dominio.PasajeroFrecuente;
-import edu.usal.negocio.dominio.Pasaporte;
 import edu.usal.negocio.dominio.Provincia;
-import edu.usal.negocio.dominio.Telefono;
 import edu.usal.negocio.dominio.Vuelo;
 import edu.usal.util.Coneccion;
 import edu.usal.util.DatosEstaticos;
-import edu.usal.util.IOGeneral;
 
 public class VueloDAOImplSQL implements VueloDAO {
 	Coneccion con;

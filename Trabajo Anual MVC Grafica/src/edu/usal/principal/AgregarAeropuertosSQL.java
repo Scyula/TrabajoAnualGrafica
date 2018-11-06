@@ -1,6 +1,5 @@
 package edu.usal.principal;
 
-import java.io.EOFException;
 import java.io.File;
 import java.io.IOException;
 import java.sql.PreparedStatement;
@@ -9,12 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import edu.usal.negocio.dao.implementacion.Stream.LineaAereaDAOImplFileStream;
-import edu.usal.negocio.dao.interfaces.LineaAereaDAO;
 import edu.usal.negocio.dominio.Aeropuerto;
 import edu.usal.negocio.dominio.LineaAerea;
 import edu.usal.negocio.dominio.Pais;
 import edu.usal.negocio.dominio.Provincia;
+import edu.usal.negocio.dominio.Vuelo;
 import edu.usal.util.Coneccion;
 import edu.usal.util.IOGeneral;
 import edu.usal.util.PropertiesUtil;
@@ -64,8 +62,6 @@ public class AgregarAeropuertosSQL {
 				}
 				lista.add(nueva);
 			}
-		}catch(EOFException e){
-			
 		}catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -83,7 +79,7 @@ public class AgregarAeropuertosSQL {
 				LineaAerea nueva = new LineaAerea();
 				nueva.setAlianza(Integer.parseInt(straux[0]));
 				nueva.setNombre(straux[1]);
-				nueva.setVuelos(new ArrayList<String>());
+				nueva.setVuelos(new ArrayList<Vuelo>());
 				lista.add(nueva);
 			}
 		} catch (IOException e) {

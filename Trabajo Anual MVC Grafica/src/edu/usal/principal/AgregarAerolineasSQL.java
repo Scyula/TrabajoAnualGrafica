@@ -9,9 +9,10 @@ import java.util.List;
 import java.util.Scanner;
 
 import edu.usal.negocio.dao.implementacion.SQL.LineaAereaDAOImplSQL;
-import edu.usal.negocio.dao.implementacion.Stream.LineaAereaDAOImplFileStream;
+import edu.usal.negocio.dao.factory.LineaAereaFactory;
 import edu.usal.negocio.dao.interfaces.LineaAereaDAO;
 import edu.usal.negocio.dominio.LineaAerea;
+import edu.usal.negocio.dominio.Vuelo;
 import edu.usal.util.Coneccion;
 import edu.usal.util.IOGeneral;
 import edu.usal.util.PropertiesUtil;
@@ -75,9 +76,6 @@ public class AgregarAerolineasSQL {
 					
 			}
 			ref.add(aux);
-			if(aux.equals("AZ")) {
-System.out.println("aux");				
-			}
 			System.out.println(aux);
 			String query = ("UPDATE Aerolinea SET REF = ? WHERE ID_Aerolinea=?");
 			prep = con.getConeccion().prepareStatement(query);
@@ -111,20 +109,21 @@ System.out.println("aux");
 
 	private static void cargarLineas() {
 		try{
-			LineaAereaDAO lineaAerea = new LineaAereaDAOImplFileStream();
+			LineaAereaDAO lineaAerea = LineaAereaFactory.getLineaAereaDAO("SQL");
 			List<LineaAerea> lista = leer();
-			Coneccion con = new Coneccion();
-			con.iniciarConeccion();
-			PreparedStatement prep;
+//			Coneccion con = new Coneccion();
+//			con.iniciarConeccion();
+//			PreparedStatement prep;
 			for (LineaAerea linea : lista) {
-				String query = ("INSERT INTO Aerolinea VALUES (?,?,null)");
-				prep = con.getConeccion().prepareStatement(query);
-				prep.setInt(1, linea.getAlianza());
-				prep.setString(2, linea.getNombre());
-				IOGeneral.pritln(String.valueOf(prep.executeUpdate())+linea.getNombre());
-				prep.close();				
+				lineaAerea.addLineaAerea(linea);
+//				String query = ("INSERT INTO Aerolinea VALUES (?,?,null)");
+//				prep = con.getConeccion().prepareStatement(query);
+//				prep.setInt(1, linea.getAlianza());
+//				prep.setString(2, linea.getNombre());
+//				IOGeneral.pritln(String.valueOf(prep.executeUpdate())+linea.getNombre());
+//				prep.close();				
 			}
-			con.cerrarConeccion();
+//			con.cerrarConeccion();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -144,7 +143,7 @@ System.out.println("aux");
 				LineaAerea nueva = new LineaAerea();
 				nueva.setAlianza(Integer.parseInt(straux[0]));
 				nueva.setNombre(straux[1]);
-				nueva.setVuelos(new ArrayList<String>());
+				nueva.setVuelos(new ArrayList<Vuelo>());
 				lista.add(nueva);
 			}
 		} catch (IOException e) {

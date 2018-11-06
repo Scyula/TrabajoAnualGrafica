@@ -2,11 +2,9 @@ package edu.usal.pantalla.controller;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Hashtable;
 
 import javax.swing.ComboBoxModel;
-import javax.swing.JComboBox;
 
 import edu.usal.negocio.dao.factory.ClienteFactory;
 import edu.usal.negocio.dao.interfaces.ClienteDAO;
@@ -39,20 +37,6 @@ public class Cliente_Datos_Controller {
 		
 	}
 
-	/*public void pedirDNI() {
-		try {
-			clientedao = ClienteFactory.getClienteDAO(DatosEstaticos.getSource());
-			Cliente selec =clientedao.readCliente(mPController.getMenuVista().solicitarDNI(" modificar "));
-			if(selec.getDNI()==null) {
-				mPController.getMenuVista().clienteNoEncontrado();
-			}else {
-				menu = new Cliente_Datos_Vista(this, selec);
-			}
-		} catch (SQLException e) {
-			IOGeneral.pritln(">>>>>Error con la base de datos<<<<<");
-			IOGeneral.pritln(e.getMessage());
-		}
-	}*/
 	public void updateDatos(Cliente_Datos_Vista datos) {
 		System.out.println("Datos recibidos(update)");
 		clientedao = ClienteFactory.getClienteDAO(DatosEstaticos.getSource());

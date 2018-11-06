@@ -13,13 +13,13 @@ public class Coneccion {
 	
 	public boolean iniciarConeccion() throws SQLException {
 		try {
-			Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-			this.coneccion = DriverManager.getConnection("jdbc:sqlserver://127.0.0.1:49170;databaseName=TrabajoAnual", "sa", "agus123");	
-			return true;
+			Class.forName(PropertiesUtil.getDriver());
+		this.coneccion = DriverManager.getConnection(PropertiesUtil.getConSQL(),PropertiesUtil.getUser(),PropertiesUtil.getPassword());	
+		return true;
 		} catch (ClassNotFoundException e) {
-			IOGeneral.pritln("Error al cargar driver SQL.");
-			return false;
-		}		
+			IOGeneral.pritln("Error al buscar Driver\nMensaje: "+e.getMessage());
+		}
+		return false;	
 	}
 	
 	public boolean cerrarConeccion()  throws SQLException {

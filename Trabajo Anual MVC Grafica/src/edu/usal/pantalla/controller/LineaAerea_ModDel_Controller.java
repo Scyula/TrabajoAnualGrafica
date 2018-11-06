@@ -3,6 +3,8 @@ package edu.usal.pantalla.controller;
 import java.sql.SQLException;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
+
+import edu.usal.negocio.dao.factory.LineaAereaFactory;
 import edu.usal.negocio.dao.implementacion.SQL.ClienteDAOImplSQL;
 import edu.usal.negocio.dao.implementacion.SQL.LineaAereaDAOImplSQL;
 import edu.usal.negocio.dao.interfaces.ClienteDAO;
@@ -42,7 +44,7 @@ public class LineaAerea_ModDel_Controller {
 
 	public DefaultListModel<LineaAerea> pedirListaLineaAerea() {
 		try {
-			lineaaereadao = new LineaAereaDAOImplSQL();
+			lineaaereadao = LineaAereaFactory.getLineaAereaDAO(DatosEstaticos.getSource());
 			DefaultListModel<LineaAerea> lista = new DefaultListModel<LineaAerea>();
 			for(LineaAerea linea: lineaaereadao.getAllLineaAerea()) {
 				lista.addElement(linea);				
@@ -61,7 +63,7 @@ public class LineaAerea_ModDel_Controller {
 		int res = menuModDel.confirmarSeleccion(lineaAerea, "ELIMINACION");
 		if(res==JOptionPane.YES_OPTION) {
 			try {
-				lineaaereadao = new LineaAereaDAOImplSQL();
+				lineaaereadao = LineaAereaFactory.getLineaAereaDAO(DatosEstaticos.getSource());
 				if(lineaaereadao.deleteLineaAerea(lineaAerea)) {
 					menuModDel.exitoOperacion();
 					DatosEstaticos.actualizarAerolineas();

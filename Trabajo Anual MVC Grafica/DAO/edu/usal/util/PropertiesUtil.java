@@ -1,174 +1,77 @@
 package edu.usal.util;
 
 import java.util.Properties;
+
+
 import java.io.*;
 
 public class PropertiesUtil {
-	private static Properties config;
+	private static Properties config = cargarProperties();
 	
-	public static String getPathCliente()throws IOException, FileNotFoundException{
-		try{
+	private static Properties cargarProperties() {
 			config = new Properties();
-			config.load(ClassLoader.getSystemResourceAsStream("config.properties"));
+			try {
+				config.load(ClassLoader.getSystemResourceAsStream("config.properties"));
+				return config;
+			} catch (IOException e) {
+				IOGeneral.pritln("Error al leer el archivo properties\nMensaje: "+e.getMessage());
+			}
+			return null;
+	}
+	
+	public static String getPathCliente(){
 			return config.getProperty("pathCliente");
-		}catch(IOException e){
-			e.printStackTrace();
-		}
-		return null;
 	}
 	
-	public static String getNameClienteStream()throws IOException, FileNotFoundException{
-		try{
-			config = new Properties();
-			config.load(ClassLoader.getSystemResourceAsStream("config.properties"));
-			return config.getProperty("nameFileCliente");
-		}catch(IOException e){
-			e.printStackTrace();
-		}
-		return null;
-	}
-	public static String getNameAlianzas()throws IOException, FileNotFoundException{
-		try{
-			config = new Properties();
-			config.load(ClassLoader.getSystemResourceAsStream("config.properties"));
+	public static String getNameAlianzas(){
 			return config.getProperty("nameFileAlianzas");
-		}catch(IOException e){
-			e.printStackTrace();
-		}
-		return null;
 	}
-	public static String getNamePaises()throws IOException, FileNotFoundException{
-		try{
-			config = new Properties();
-			config.load(ClassLoader.getSystemResourceAsStream("config.properties"));
+	public static String getNamePaises(){
 			return config.getProperty("nameFilePaises");
-		}catch(IOException e){
-			e.printStackTrace();
-		}
-		return null;
 	}
-	public static String getNameProvincias()throws IOException, FileNotFoundException{
-		try{
-			config = new Properties();
-			config.load(ClassLoader.getSystemResourceAsStream("config.properties"));
+	public static String getNameProvincias(){
 			return config.getProperty("nameFileProvincias");
-		}catch(IOException e){
-			e.printStackTrace();
-		}
-		return null;
-	}
-	public static String getPathVenta()throws IOException, FileNotFoundException{
-		try{
-			config = new Properties();
-			config.load(ClassLoader.getSystemResourceAsStream("config.properties"));
-			return config.getProperty("pathVenta");
-		}catch(IOException e){
-			e.printStackTrace();
-		}
-		return null;
 	}
 	
-	public static String getNameVenta()throws IOException, FileNotFoundException{
-		try{
-			config = new Properties();
-			config.load(ClassLoader.getSystemResourceAsStream("config.properties"));
-			return config.getProperty("nameFileVenta");
-		}catch(IOException e){
-			e.printStackTrace();
-		}
-		return null;
-	}
-	public static String getPathVuelo()throws IOException, FileNotFoundException{
-		try{
-			config = new Properties();
-			config.load(ClassLoader.getSystemResourceAsStream("config.properties"));
-			return config.getProperty("pathVuelo");
-		}catch(IOException e){
-			e.printStackTrace();
-		}
-		return null;
-	}
-	
-	public static String getNameVuelo()throws IOException, FileNotFoundException{
-		try{
-			config = new Properties();
-			config.load(ClassLoader.getSystemResourceAsStream("config.properties"));
-			return config.getProperty("nameFileVuelo");
-		}catch(IOException e){
-			e.printStackTrace();
-		}
-		return null;
-	}
-	public static String getPathLineaAerea()throws IOException, FileNotFoundException{
-		try{
-			config = new Properties();
-			config.load(ClassLoader.getSystemResourceAsStream("config.properties"));
-			return config.getProperty("pathLineaAerea");
-		}catch(IOException e){
-			e.printStackTrace();
-		}
-		return null;
-	}
-	public static String getNameLineaAerea()throws IOException, FileNotFoundException{
-		try{
-			config = new Properties();
-			config.load(ClassLoader.getSystemResourceAsStream("config.properties"));
-			return config.getProperty("nameFileLineaAerea");
-		}catch(IOException e){
-			e.printStackTrace();
-		}
-		return null;
-	}
-	public static String getNameAllAeroLineas()throws IOException, FileNotFoundException{
-		try{
-			config = new Properties();
-			config.load(ClassLoader.getSystemResourceAsStream("config.properties"));
+	public static String getNameAllAeroLineas(){
 			return config.getProperty("nameFileAllAeroLineas");
-		}catch(IOException e){
-			e.printStackTrace();
-		}
-		return null;
 	}
-	public static String getNameAllAeropuertos()throws IOException, FileNotFoundException{
-		try{
-			config = new Properties();
-			config.load(ClassLoader.getSystemResourceAsStream("config.properties"));
+	public static String getNameAllAeropuertos(){
 			return config.getProperty("nameFileAllAeropuertos");
-		}catch(IOException e){
-			e.printStackTrace();
-		}
-		return null;
 	}
 	public static String getNamePathAeropuerto() {
-		try{
-			config = new Properties();
-			config.load(ClassLoader.getSystemResourceAsStream("config.properties"));
 			return config.getProperty("nameFileAeropuerto");
-		}catch(IOException e){
-			e.printStackTrace();
-		}
-		return null;
 	}
 
 	public static String getPathAeropuerto() {
-		try{
-			config = new Properties();
-			config.load(ClassLoader.getSystemResourceAsStream("config.properties"));
 			return config.getProperty("pathAeropuerto");
-		}catch(IOException e){
-			e.printStackTrace();
-		}
-		return null;
 	}
 
 	public static String getPathTxt() {
-		try{
-			config = new Properties();
-			config.load(ClassLoader.getSystemResourceAsStream("config.properties"));
 			return config.getProperty("pathTxt");
-		}catch(IOException e){
-			e.printStackTrace();
-		}
-		return null;
 	}
+	public static String getDriver() {
+			return config.getProperty("Driver");
+	}
+	public static String getConSQL() {
+		return ("jdbc:sqlserver://"+PropertiesUtil.getIP()+":"+
+		PropertiesUtil.getHost()+";databaseName="+PropertiesUtil.getDBName());
+	}
+	public static String getDBName() {
+				return config.getProperty("DBName");
+	}
+	
+	public static String getIP() {
+		return config.getProperty("IP");
+	}
+	public static String getHost() {
+		return config.getProperty("Host");
+	}
+	public static String getUser() {
+		return config.getProperty("User");
+	}
+	public static String getPassword() {
+		return config.getProperty("Password");
+	}
+	
 }

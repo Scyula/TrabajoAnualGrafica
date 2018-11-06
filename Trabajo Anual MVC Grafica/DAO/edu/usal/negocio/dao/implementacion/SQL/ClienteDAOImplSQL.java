@@ -3,9 +3,7 @@ package edu.usal.negocio.dao.implementacion.SQL;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -18,11 +16,9 @@ import edu.usal.negocio.dominio.Pasaporte;
 import edu.usal.negocio.dominio.Provincia;
 import edu.usal.negocio.dominio.Telefono;
 import edu.usal.util.Coneccion;
-import edu.usal.util.IOGeneral;
 
 public class ClienteDAOImplSQL implements ClienteDAO {
 	Coneccion con;
-	Statement stm;
 	PreparedStatement prep;
 	String query;
 	

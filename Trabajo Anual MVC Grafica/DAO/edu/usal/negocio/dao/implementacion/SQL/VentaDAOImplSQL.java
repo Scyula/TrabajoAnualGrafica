@@ -129,7 +129,7 @@ public class VentaDAOImplSQL implements VentaDAO {
 
 	
 	private Vuelo leerVuelo(String string) throws SQLException {
-		VueloDAO vuelo = VueloFactory.getVueloDAO();
+		VueloDAO vuelo = VueloFactory.getVueloDAO("SQL");
 		Vuelo leer = vuelo.readVuelo(string);
 		return leer;
 	}
@@ -143,7 +143,7 @@ public class VentaDAOImplSQL implements VentaDAO {
 
 
 	private LineaAerea leerAerolinea(int id)throws SQLException { 
-		LineaAereaDAO lineaaerea = LineaAereaFactory.getLineaAereaDAO();
+		LineaAereaDAO lineaaerea = LineaAereaFactory.getLineaAereaDAO("SQL");
 		LineaAerea leer = lineaaerea.readLineaAerea(id);
 		return leer;
 	}

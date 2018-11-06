@@ -3,10 +3,12 @@ package edu.usal.pantalla.controller;
 import java.sql.SQLException;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
-import edu.usal.negocio.dao.implementacion.SQL.ClienteDAOImplSQL;
+
+import edu.usal.negocio.dao.factory.ClienteFactory;
 import edu.usal.negocio.dao.interfaces.ClienteDAO;
 import edu.usal.negocio.dominio.Cliente;
 import edu.usal.pantalla.vista.Cliente_ModDel_Vista;
+import edu.usal.util.DatosEstaticos;
 import edu.usal.util.IOGeneral;
 
 public class Cliente_ModDel_Controller {
@@ -38,7 +40,7 @@ public class Cliente_ModDel_Controller {
 	public DefaultListModel<Cliente> pedirListaClientes() {
 		DefaultListModel<Cliente> lista = new DefaultListModel<Cliente>();
 		try {
-			clientedao = new ClienteDAOImplSQL();
+			clientedao = ClienteFactory.getClienteDAO(DatosEstaticos.getSource());
 			for(Cliente cliente: clientedao.getAllCliente()) {
 				lista.addElement(cliente);				
 			}
@@ -55,7 +57,7 @@ public class Cliente_ModDel_Controller {
 		int res = menuModDel.confirmarSeleccion(cliente, "ELIMINACION");
 		if(res==JOptionPane.YES_OPTION) {
 			try {
-				clientedao = new ClienteDAOImplSQL();
+				clientedao = ClienteFactory.getClienteDAO(DatosEstaticos.getSource());
 				if(clientedao.deleteCliente(cliente)) {
 					menuModDel.exitoOperacion();
 				}else {
