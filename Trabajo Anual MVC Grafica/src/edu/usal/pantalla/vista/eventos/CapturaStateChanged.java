@@ -4,6 +4,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
 import edu.usal.negocio.dominio.LineaAerea;
+import edu.usal.negocio.dominio.Pais;
 import edu.usal.pantalla.vista.Cliente_Datos_Vista;
 
 public class CapturaStateChanged implements ItemListener {
@@ -31,6 +32,14 @@ public class CapturaStateChanged implements ItemListener {
 			}else {
 				vista.getLbl_Alianza().setText("");
 			}
+		}else if(e.getSource().equals(vista.getComboBox_Pais())) {
+			Integer seleccion=((Pais)(vista.getComboBox_Pais().getSelectedItem())).getId();
+			if(seleccion==9) {
+				vista.getComboBox_Provincia().setEnabled(true);
+			}else {
+				vista.getComboBox_Provincia().setEnabled(false);
+			}
+			
 		}
 
 	}

@@ -89,8 +89,8 @@ public class LineaAereaDAOImplSQL implements LineaAereaDAO {
 			ResultSet rs = stm.executeQuery(query);
 			
 			while(rs.next()) {
-				array.add(new LineaAerea(rs.getInt(1),rs.getString(3), rs.getInt(2), leerVuelos(rs.getInt(1))));
-				
+				//array.add(new LineaAerea(rs.getInt(1),rs.getString(3), rs.getInt(2), leerVuelos(rs.getInt(1))));
+				array.add(new LineaAerea(rs.getInt(1),rs.getString(3), rs.getInt(2), null));
 			}
 			rs.close();
 			con.cerrarConeccion();

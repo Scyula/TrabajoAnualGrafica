@@ -36,19 +36,18 @@ public class Cliente_ModDel_Controller {
 
 
 	public DefaultListModel<Cliente> pedirListaClientes() {
+		DefaultListModel<Cliente> lista = new DefaultListModel<Cliente>();
 		try {
 			clientedao = new ClienteDAOImplSQL();
-			DefaultListModel<Cliente> lista = new DefaultListModel<Cliente>();
 			for(Cliente cliente: clientedao.getAllCliente()) {
 				lista.addElement(cliente);				
 			}
-			return lista;
 		} catch (SQLException e) {
 			IOGeneral.pritln(">>>>>Error con la base de datos<<<<<");
 			IOGeneral.pritln(e.getMessage());
 		}
 		
-		return null;
+		return lista;
 	}
 
 

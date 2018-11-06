@@ -149,11 +149,13 @@ public class Cliente_Datos_Vista extends JFrame {
 		getContentPane().add(textTelPersonal);
 		
 		comboBox_Pais = new JComboBox<Pais>();
+		comboBox_Pais.addItemListener(new CapturaStateChanged(this));
 		comboBox_Pais.setBounds(14, 468, 208, 20);
 		comboBox_Pais.setModel(new DefaultComboBoxModel<Pais>(vista.obtenerListaPaises()));
 		getContentPane().add(comboBox_Pais);
 		
 		comboBox_Provincia = new JComboBox<Provincia>();
+		comboBox_Provincia.setEnabled(false);
 		comboBox_Provincia.setBounds(242, 468, 208, 20);
 		comboBox_Provincia.setModel(new DefaultComboBoxModel<Provincia>(vista.obtenerListaProvincias()));
 		getContentPane().add(comboBox_Provincia);
@@ -218,7 +220,7 @@ public class Cliente_Datos_Vista extends JFrame {
 		getContentPane().add(comboBox_Aerolinea);
 		
 		lblNombre = new JLabel("Nombre");
-		lblNombre.setBounds(96, 176, 37, 16);
+		lblNombre.setBounds(96, 176, 57, 16);
 		getContentPane().add(lblNombre);
 		
 		lblApellido = new JLabel("Apellido");
@@ -256,7 +258,7 @@ public class Cliente_Datos_Vista extends JFrame {
 		getContentPane().add(lblCiudad);
 		
 		lblCiudad_1 = new JLabel("Ciudad");
-		lblCiudad_1.setBounds(96, 537, 37, 16);
+		lblCiudad_1.setBounds(96, 537, 57, 16);
 		getContentPane().add(lblCiudad_1);
 		
 		lblCodigoPostal = new JLabel("Codigo Postal");
@@ -264,7 +266,7 @@ public class Cliente_Datos_Vista extends JFrame {
 		getContentPane().add(lblCodigoPostal);
 		
 		lblCalle = new JLabel("Calle");
-		lblCalle.setBounds(107, 587, 26, 16);
+		lblCalle.setBounds(107, 587, 56, 16);
 		getContentPane().add(lblCalle);
 		
 		lblAltura = new JLabel("Altura");
@@ -391,9 +393,6 @@ public Cliente_Datos_Vista(Cliente_Datos_Controller vista, Cliente c) {
 	setTitle("Modificacion de Cliente");
 	getContentPane().setLayout(null);
 	
-	lbl_Alianza = new JLabel("");
-	lbl_Alianza.setBounds(691, 492, 122, 14);
-	getContentPane().add(lbl_Alianza);
 	
 	textNombre = new JTextField();
 	textNombre.setText(c.getNombre());
@@ -448,18 +447,20 @@ public Cliente_Datos_Vista(Cliente_Datos_Controller vista, Cliente c) {
 	textTelPersonal.setText(c.getTelefono().getNroPersonal());
 	getContentPane().add(textTelPersonal);
 	
-	comboBox_Pais = new JComboBox<Pais>();
-	DefaultComboBoxModel<Pais> modelo2 = new DefaultComboBoxModel<Pais>(vista.obtenerListaPaises());
-	comboBox_Pais.setModel(modelo2);
-	comboBox_Pais.setBounds(14, 468, 208, 20);
-	comboBox_Pais.setSelectedIndex(vista.obtenerIndexPais(comboBox_Pais.getModel(),c));
-	getContentPane().add(comboBox_Pais);
-	
 	comboBox_Provincia = new JComboBox<Provincia>();
+	comboBox_Provincia.setEnabled(false);
 	comboBox_Provincia.setBounds(242, 468, 208, 20);
 	comboBox_Provincia.setModel(new DefaultComboBoxModel<Provincia>(vista.obtenerListaProvincias()));
 	comboBox_Provincia.setSelectedIndex(vista.obtenerIndexProvincia(comboBox_Provincia.getModel(),c));
 	getContentPane().add(comboBox_Provincia);
+	
+	comboBox_Pais = new JComboBox<Pais>();
+	DefaultComboBoxModel<Pais> modelo2 = new DefaultComboBoxModel<Pais>(vista.obtenerListaPaises());
+	comboBox_Pais.setModel(modelo2);
+	comboBox_Pais.setBounds(14, 468, 208, 20);
+	comboBox_Pais.addItemListener(new CapturaStateChanged(this));
+	comboBox_Pais.setSelectedIndex(vista.obtenerIndexPais(comboBox_Pais.getModel(),c));
+	getContentPane().add(comboBox_Pais);
 	
 	textCiudad = new JTextField();
 	textCiudad.setColumns(10);
@@ -525,16 +526,22 @@ public Cliente_Datos_Vista(Cliente_Datos_Controller vista, Cliente c) {
 	textCategoria.setBounds(743, 386, 199, 22);
 	textCategoria.setText(c.getPasajeroFrecuente().getCatergoria());
 	getContentPane().add(textCategoria);
+
 	
 	comboBox_Aerolinea = new JComboBox<LineaAerea>();
-	comboBox_Aerolinea.addItemListener(new CapturaStateChanged(this));
 	comboBox_Aerolinea.setModel(new DefaultComboBoxModel<LineaAerea>(vista.obtenerListaAerolinea()));
-	comboBox_Aerolinea.setBounds(686, 446, 233, 22);
 	comboBox_Aerolinea.setSelectedIndex(vista.obtenerIndexAerolinea(comboBox_Aerolinea.getModel(), c));
+	
+	lbl_Alianza = new JLabel(vista.alianza(((LineaAerea) comboBox_Aerolinea.getModel().getSelectedItem()).getAlianza()));
+	lbl_Alianza.setBounds(691, 492, 122, 14);
+	getContentPane().add(lbl_Alianza);
+	
+	comboBox_Aerolinea.setBounds(686, 446, 233, 22);
+	comboBox_Aerolinea.addItemListener(new CapturaStateChanged(this));
 	getContentPane().add(comboBox_Aerolinea);
 	
 	lblNombre = new JLabel("Nombre");
-	lblNombre.setBounds(96, 176, 37, 16);
+	lblNombre.setBounds(96, 176, 62, 16);
 	getContentPane().add(lblNombre);
 	
 	lblApellido = new JLabel("Apellido");
@@ -572,7 +579,7 @@ public Cliente_Datos_Vista(Cliente_Datos_Controller vista, Cliente c) {
 	getContentPane().add(lblCiudad);
 	
 	lblCiudad_1 = new JLabel("Ciudad");
-	lblCiudad_1.setBounds(96, 537, 37, 16);
+	lblCiudad_1.setBounds(96, 537, 72, 16);
 	getContentPane().add(lblCiudad_1);
 	
 	lblCodigoPostal = new JLabel("Codigo Postal");
@@ -580,7 +587,7 @@ public Cliente_Datos_Vista(Cliente_Datos_Controller vista, Cliente c) {
 	getContentPane().add(lblCodigoPostal);
 	
 	lblCalle = new JLabel("Calle");
-	lblCalle.setBounds(107, 587, 26, 16);
+	lblCalle.setBounds(107, 587, 61, 16);
 	getContentPane().add(lblCalle);
 	
 	lblAltura = new JLabel("Altura");
@@ -663,7 +670,7 @@ public Cliente_Datos_Vista(Cliente_Datos_Controller vista, Cliente c) {
 	textAlianza.setEnabled(false);
 	textAlianza.setEditable(false);
 	textAlianza.setBounds(686, 489, 127, 20);
-	getContentPane().add(textAlianza);
+//	getContentPane().add(textAlianza);
 	textAlianza.setColumns(10);
 	
 	JSeparator separator = new JSeparator();
@@ -992,8 +999,7 @@ public Cliente_Datos_Vista(Cliente_Datos_Controller vista, Cliente c) {
 	public void setComboBox_Aerolinea(JComboBox<LineaAerea> comboBox_Aerolinea) {
 		this.comboBox_Aerolinea = comboBox_Aerolinea;
 	}
-	
-	
+
 
 	public JButton getBtnGuardarMod() {
 		return btnGuardarMod;

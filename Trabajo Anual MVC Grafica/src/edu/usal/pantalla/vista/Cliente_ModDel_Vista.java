@@ -36,7 +36,7 @@ public class Cliente_ModDel_Vista extends JFrame {
 	
 
 	public Cliente_ModDel_Vista(Cliente_ModDel_Controller controller) {
-		this.control=controller;
+		this.control = controller;
 		setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
 		
         addWindowListener(new java.awt.event.WindowAdapter() {

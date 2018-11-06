@@ -147,7 +147,9 @@ public class Cliente_Datos_Controller {
 		return pasa;
 	}
 	private PasajeroFrecuente obtenerPasajeroFrecuente(Cliente_Datos_Vista datos) {
-		return new PasajeroFrecuente(((LineaAerea)datos.getComboBox_Aerolinea().getSelectedItem()).getAlianza(), ((LineaAerea)datos.getComboBox_Aerolinea().getSelectedItem()).getId(), datos.getTextNroPasajero().getText(), datos.getTextCategoria().getText());
+		return new PasajeroFrecuente(((LineaAerea)datos.getComboBox_Aerolinea().getSelectedItem()).getAlianza(), 
+				((LineaAerea)datos.getComboBox_Aerolinea().getSelectedItem()).getId(), 
+				datos.getTextNroPasajero().getText(), datos.getTextCategoria().getText());
 	}
 	
 	public Pais[] obtenerListaPaises() {	
@@ -234,6 +236,18 @@ public class Cliente_Datos_Controller {
 			}
 		}
 		return -1;
+	}
+
+	public String alianza(int alianza) {
+		if(alianza==1) {
+			return "Skyteam";
+		}else if (alianza==2) {
+			return "Oneworld";
+		}else if (alianza==3) {
+			return "Star Alliance";
+		}else {
+			return "";
+		}
 	}
 	
 }
