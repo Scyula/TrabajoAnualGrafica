@@ -11,14 +11,13 @@ public class LineaAerea implements Serializable{
 	private int id;
 	private String nombre;
 	private int alianza;
-	private ArrayList<String> vuelos;
+	private ArrayList<Vuelo> vuelos;
 	
 	public LineaAerea(){
-		ArrayList<String> vuelos = new ArrayList<String>();
 	}
 	
 	
-	public LineaAerea(int id ,String nombre, int alianza, ArrayList<String> vuelos) {
+	public LineaAerea(int id ,String nombre, int alianza, ArrayList<Vuelo> vuelos) {
 		super();
 		this.id = id;
 		this.nombre = nombre;
@@ -49,10 +48,10 @@ public class LineaAerea implements Serializable{
 	public void setAlianza(int alianza) {
 		this.alianza = alianza;
 	}
-	public ArrayList<String> getVuelos() {
+	public ArrayList<Vuelo> getVuelos() {
 		return vuelos;
 	}
-	public void setVuelos(ArrayList<String> vuelos) {
+	public void setVuelos(ArrayList<Vuelo> vuelos) {
 		this.vuelos = vuelos;
 	}
 

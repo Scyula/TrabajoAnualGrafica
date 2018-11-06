@@ -5,10 +5,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.List;
 
+import edu.usal.negocio.dao.factory.VueloFactory;
 import edu.usal.negocio.dao.interfaces.LineaAereaDAO;
+import edu.usal.negocio.dao.interfaces.VueloDAO;
 import edu.usal.negocio.dominio.LineaAerea;
+import edu.usal.negocio.dominio.Vuelo;
 import edu.usal.util.Coneccion;
 
 public class LineaAereaDAOImplSQL implements LineaAereaDAO {
@@ -77,7 +79,7 @@ public class LineaAereaDAOImplSQL implements LineaAereaDAO {
 		return false;
 	}
 
-	@Override
+	
 	public ArrayList<LineaAerea> getAllLineaAerea() throws SQLException {
 		con = new Coneccion();
 		if(con.iniciarConeccion()) {
@@ -87,7 +89,7 @@ public class LineaAereaDAOImplSQL implements LineaAereaDAO {
 			ResultSet rs = stm.executeQuery(query);
 			
 			while(rs.next()) {
-				array.add(new LineaAerea(rs.getInt(1),rs.getString(3), rs.getInt(2), null));
+				array.add(new LineaAerea(rs.getInt(1),rs.getString(3), rs.getInt(2), leerVuelos(rs.getInt(1))));
 				
 			}
 			rs.close();
@@ -97,5 +99,45 @@ public class LineaAereaDAOImplSQL implements LineaAereaDAO {
 		}
 		return null;
 	}
+
+	private ArrayList<Vuelo> leerVuelos(int id) throws SQLException {
+		ArrayList<Vuelo> lista = new ArrayList<Vuelo>();
+		VueloDAO vuelos = VueloFactory.getVueloDAO();
+		con = new Coneccion();
+		if(con.iniciarConeccion()) {
+			query = "SELECT Vuelo.ID_Vuelo FROM Aerolinea INNER JOIN Vuelo ON Vuelo.ID_Aerolinea=Aerolinea.ID_Aerolinea WHERE ID_Aerolinea=?";
+			prep = con.getConeccion().prepareStatement(query);
+			prep.setInt(1,id);
+			ResultSet rs = prep.executeQuery();
+			while(rs.next()) {
+				lista.add(vuelos.readVuelo(rs.getString(1)));
+				}
+			prep.close();
+			con.cerrarConeccion();
+			return lista;
+		}
+		prep.close();
+		con.cerrarConeccion();
+		return lista;
+	}
+
+	
+	public LineaAerea readLineaAerea(int id) throws SQLException {
+		con = new Coneccion();
+		if(con.iniciarConeccion()) {
+			query = "SELECT * FROM Aerolinea WHERE ID_Aerolinea= ?";
+			prep = con.getConeccion().prepareStatement(query);
+			prep.setInt(1, id);
+			ResultSet rs = prep.executeQuery();
+			rs.next();
+			LineaAerea leer=  new LineaAerea(rs.getInt(1),rs.getString(3), rs.getInt(2), leerVuelos(rs.getInt(1)));
+			rs.close();
+			prep.close();
+			con.cerrarConeccion();
+			return leer;
+		}
+		return null;		
+	}
+
 
 }

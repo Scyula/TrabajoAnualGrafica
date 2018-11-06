@@ -136,11 +136,24 @@ public class VueloDAOImplSQL implements VueloDAO {
 	
 
 
-	private List<Cliente> leerClientes(String string) {
+	private List<Cliente> leerClientes(String string) throws SQLException {
 		List<Cliente> lista = new ArrayList<Cliente>();
 		ClienteDAO clientes = new ClienteDAOImplSQL();
-		
-		
+		con = new Coneccion();
+		if(con.iniciarConeccion()) {
+			query = "SELECT c.DNI FROM Venta v INNER JOIN Cliente c ON v.ID_Cliente=c.DNI WHERE ID_Vuelo=?";
+			prep = con.getConeccion().prepareStatement(query);
+			prep.setString(1,string);
+			ResultSet rs = prep.executeQuery();
+			while(rs.next()) {
+				lista.add(clientes.readCliente(rs.getInt(1)));
+				}
+			prep.close();
+			con.cerrarConeccion();
+			return lista;
+		}
+		prep.close();
+		con.cerrarConeccion();
 		return lista;
 	}
 
