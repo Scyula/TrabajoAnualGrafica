@@ -142,12 +142,7 @@ public class VueloDAOImplSQL implements VueloDAO {
 			while(rs.next()) {
 				lista.add(clientes.readCliente(rs.getInt(1)));
 				}
-			prep.close();
-			con.cerrarConeccion();
-			return lista;
 		}
-		prep.close();
-		con.cerrarConeccion();
 		return lista;
 	}
 

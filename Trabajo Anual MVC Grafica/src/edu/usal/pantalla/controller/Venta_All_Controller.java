@@ -10,7 +10,7 @@ import edu.usal.negocio.dao.interfaces.ClienteDAO;
 import edu.usal.negocio.dao.interfaces.VentaDAO;
 import edu.usal.negocio.dominio.Cliente;
 import edu.usal.negocio.dominio.Venta;
-import edu.usal.pantalla.vista.Cliente_ModDel_Vista;
+import edu.usal.pantalla.vista.Cliente_All_Vista;
 import edu.usal.pantalla.vista.Venta_All_Vista;
 import edu.usal.util.DatosEstaticos;
 import edu.usal.util.IOGeneral;

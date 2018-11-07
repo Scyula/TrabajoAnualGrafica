@@ -1,41 +1,40 @@
 package edu.usal.pantalla.vista;
 
 import java.awt.BorderLayout;
-import java.awt.EventQueue;
+import java.awt.GridLayout;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-
-import edu.usal.negocio.dominio.Cliente;
-import edu.usal.pantalla.controller.Cliente_ModDel_Controller;
-import edu.usal.pantalla.vista.eventos.CapturaBtnCliente_ModDel;
-
-import javax.swing.JLabel;
-import javax.swing.SwingConstants;
-import javax.swing.JList;
-import javax.swing.JOptionPane;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
-import java.awt.GridLayout;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
 
-public class Cliente_ModDel_Vista extends JFrame {
+import edu.usal.negocio.dominio.Vuelo;
+import edu.usal.pantalla.controller.Vuelo_All_Controller;
+import edu.usal.pantalla.vista.eventos.CapturaBtnVuelo_All;
+
+public class Vuelo_All_Vista extends JFrame {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private Cliente_ModDel_Controller control;
-	DefaultListModel<Cliente> modelo;
+	private Vuelo_All_Controller control;
+	private DefaultListModel<Vuelo> modelo;
 	private JButton btnModificar;
 	private JButton btnEliminar;
 	private JButton btnMenuPrincipal;
-	JList<Cliente> list;
+	private JList<Vuelo> list;
+	private JButton btnMostrarClientes;
 	
 
-	public Cliente_ModDel_Vista(Cliente_ModDel_Controller controller) {
+	public Vuelo_All_Vista(Vuelo_All_Controller controller) {
 		this.control = controller;
 		setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
 		
@@ -55,20 +54,23 @@ public class Cliente_ModDel_Vista extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
 		
-		JLabel lblSeleccioneUnaCliente = new JLabel("Seleccione una cliente para la operacion");
-		lblSeleccioneUnaCliente.setHorizontalAlignment(SwingConstants.CENTER);
-		contentPane.add(lblSeleccioneUnaCliente, BorderLayout.NORTH);
-		modelo = control.pedirListaClientes();
+		JLabel lblSeleccioneUnVuelo = new JLabel("Seleccione un vuelo para la operacion");
+		lblSeleccioneUnVuelo.setHorizontalAlignment(SwingConstants.CENTER);
+		contentPane.add(lblSeleccioneUnVuelo, BorderLayout.NORTH);
+		modelo = control.pedirListaVuelos();
 		
 		
 		JPanel panel = new JPanel();
 		contentPane.add(panel, BorderLayout.SOUTH);
 		panel.setLayout(new GridLayout(0, 6, 0, 0));
 		
+		JPanel panel_5 = new JPanel();
+		panel.add(panel_5);
+		
 		btnMenuPrincipal = new JButton("Volver al Menu Principal");
+		panel_5.add(btnMenuPrincipal);
 		btnMenuPrincipal.setHorizontalAlignment(SwingConstants.LEFT);
-		btnMenuPrincipal.addActionListener(new CapturaBtnCliente_ModDel(this));
-		panel.add(btnMenuPrincipal);
+		btnMenuPrincipal.addActionListener(new CapturaBtnVuelo_All(this));
 		
 		JPanel panel_1 = new JPanel();
 		panel.add(panel_1);
@@ -76,40 +78,50 @@ public class Cliente_ModDel_Vista extends JFrame {
 		JPanel panel_2 = new JPanel();
 		panel.add(panel_2);
 		
+		JPanel panel_8 = new JPanel();
+		panel.add(panel_8);
+		
+		btnMostrarClientes = new JButton("Mostrar clientes del vuelo");
+		btnMostrarClientes.addActionListener(new CapturaBtnVuelo_All(this));
+		panel_8.add(btnMostrarClientes);
+		
 		JPanel panel_3 = new JPanel();
 		panel.add(panel_3);
 		
 		btnModificar = new JButton("Modificar");
-		btnModificar.addActionListener(new CapturaBtnCliente_ModDel(this));
-		panel.add(btnModificar);
+		panel_3.add(btnModificar);
+		btnModificar.addActionListener(new CapturaBtnVuelo_All(this));
+		
+		JPanel panel_4 = new JPanel();
+		panel.add(panel_4);
 		
 		btnEliminar = new JButton("Eliminar");
-		btnEliminar.addActionListener(new CapturaBtnCliente_ModDel(this));
-		panel.add(btnEliminar);
+		panel_4.add(btnEliminar);
+		btnEliminar.addActionListener(new CapturaBtnVuelo_All(this));
 		
 		JScrollPane scrollPane = new JScrollPane();
 		contentPane.add(scrollPane, BorderLayout.CENTER);
 		
-		list = new JList<Cliente>();
+		list = new JList<Vuelo>();
 		scrollPane.setViewportView(list);
-		modelo= control.pedirListaClientes();
+		modelo= control.pedirListaVuelos();
 		list.setModel(modelo);
 		setVisible(true);
 	}
 
-	public Cliente_ModDel_Controller getControl() {
+	public Vuelo_All_Controller getControl() {
 		return control;
 	}
 
-	public void setControl(Cliente_ModDel_Controller control) {
+	public void setControl(Vuelo_All_Controller control) {
 		this.control = control;
 	}
 
-	public JList<Cliente> getList() {
+	public JList<Vuelo> getList() {
 		return list;
 	}
 
-	public void setList(JList<Cliente> list) {
+	public void setList(JList<Vuelo> list) {
 		this.list = list;
 	}
 
@@ -137,11 +149,20 @@ public class Cliente_ModDel_Vista extends JFrame {
 		this.btnMenuPrincipal = btnMenuPrincipal;
 	}
 
-	public DefaultListModel<Cliente> getModelo() {
+	public DefaultListModel<Vuelo> getModelo() {
 		return modelo;
 	}
 
-	public void setModelo(DefaultListModel<Cliente> modelo) {
+	
+	public JButton getBtnMostrarClientes() {
+		return btnMostrarClientes;
+	}
+
+	public void setBtnMostrarClientes(JButton btnMostrarClientes) {
+		this.btnMostrarClientes = btnMostrarClientes;
+	}
+
+	public void setModelo(DefaultListModel<Vuelo> modelo) {
 		this.modelo = modelo;
 	}	
 	public void cancelaOperacion() {
@@ -159,8 +180,8 @@ public class Cliente_ModDel_Vista extends JFrame {
             System.exit(0);
     } 
 	
-	public int confirmarSeleccion(Cliente cliente,String causa) {
-		return JOptionPane.showConfirmDialog(null, ("Desea seleccionar para su "+causa+" a\n Apellido: "+cliente.getApellido()+"\nNombre: "+cliente.getNombre()+"\nDNI: ["+cliente.getDNI()+"]"), "Confirmacion de seleccion", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+	public int confirmarSeleccion(Vuelo vuelo,String causa) {
+		return JOptionPane.showConfirmDialog(null, ("Desea seleccionar para su "+causa+" a\n ID: "+vuelo.getId_vuelo()), "Confirmacion de seleccion", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 	}
 
 }

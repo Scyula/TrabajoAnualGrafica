@@ -143,6 +143,15 @@ public class Vuelo implements Serializable{
 	public void setClientes(List<Cliente> clientes) {
 		this.clientes = clientes;
 	}
+
+
+	@Override
+	public String toString() {
+		return "ID_vuelo=" + id_vuelo + "     Aerolinea=" + aerolinea.getNombre() + "     Cantidad de asientos=" + cantAsientos
+				+ "     Asientos disponibles=" + asientosDisponibles + "     Aeropuerto de salida=" + aeroSalida.getCiudad() + "     Aeropuerto de llegada="
+				+ aeroLlegada.getCiudad() + "     Fecha y hora de salida=" + fechaHoraSalida + "     Fecha y hora de llegada=" + fechaHoraLlegada
+				+ "     Tiempo de vuelo=" + tiempoVuelo;
+	}
 	
 	
 	

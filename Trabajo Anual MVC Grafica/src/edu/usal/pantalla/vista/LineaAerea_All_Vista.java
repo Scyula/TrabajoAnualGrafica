@@ -4,42 +4,43 @@ import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import edu.usal.negocio.dominio.Cliente;
-import edu.usal.negocio.dominio.Venta;
-import edu.usal.pantalla.controller.Cliente_All_Controller;
-import edu.usal.pantalla.controller.Venta_All_Controller;
-import edu.usal.pantalla.vista.eventos.CapturaBtnCliente_ModDel;
-import edu.usal.pantalla.vista.eventos.CapturaBtnVenta_All;
+import edu.usal.negocio.dominio.LineaAerea;
+import edu.usal.pantalla.controller.LineaAerea_All_Controller;
+import edu.usal.pantalla.vista.eventos.CapturaBtnLineaAerea_ModDel;
 
-import javax.swing.JLabel;
-import javax.swing.SwingConstants;
-import javax.swing.JList;
-import javax.swing.JOptionPane;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import java.awt.GridLayout;
+import javax.swing.JList;
+import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 
-public class Venta_All_Vista extends JFrame {
+public class LineaAerea_All_Vista extends JFrame {
 
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 1L;
+	LineaAerea_All_Controller control;
 	private JPanel contentPane;
-	private Venta_All_Controller control;
-	DefaultListModel<Venta> modelo;
+	DefaultListModel<LineaAerea> modelo;
 	private JButton btnModificar;
 	private JButton btnEliminar;
 	private JButton btnMenuPrincipal;
-	JList<Venta> list;
+	private JPanel panel_1;
+	private JScrollPane scrollPane;
+	private JList<LineaAerea> list;
+	private JPanel panel_3;
 	
 
-	public Venta_All_Vista(Venta_All_Controller controller) {
-		this.control = controller;
+	
+	public LineaAerea_All_Vista(LineaAerea_All_Controller lineaAerea_ModDel_Controller) {
+		setTitle("Ver Aerolineas");
+		this.control = lineaAerea_ModDel_Controller;
+		
 		setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
 		
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -48,104 +49,126 @@ public class Venta_All_Vista extends JFrame {
                 close();
             }
         });
-        setBounds(100, 100, 954, 565);
+		setBounds(100, 100, 352, 525);
 		setLocationRelativeTo(null);
-		
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
-		
-		JLabel lblSeleccioneUnaCliente = new JLabel("Seleccione una venta para la operacion");
-		lblSeleccioneUnaCliente.setHorizontalAlignment(SwingConstants.CENTER);
-		contentPane.add(lblSeleccioneUnaCliente, BorderLayout.NORTH);
-		
+		setContentPane(contentPane);
 		
 		JPanel panel = new JPanel();
-		contentPane.add(panel, BorderLayout.SOUTH);
-		panel.setLayout(new GridLayout(0, 6, 0, 0));
+		contentPane.add(panel, BorderLayout.NORTH);
 		
-		btnMenuPrincipal = new JButton("Volver al Menu Principal");
-		btnMenuPrincipal.setHorizontalAlignment(SwingConstants.LEFT);
-		btnMenuPrincipal.addActionListener(new CapturaBtnVenta_All(this));
-		panel.add(btnMenuPrincipal);
-		
-		JPanel panel_1 = new JPanel();
-		panel.add(panel_1);
+		JLabel lblSeleccioneUnaAerolinea = new JLabel("Seleccione una Aerolinea");
+		panel.add(lblSeleccioneUnaAerolinea);
 		
 		JPanel panel_2 = new JPanel();
-		panel.add(panel_2);
+		contentPane.add(panel_2, BorderLayout.SOUTH);
+		panel_2.setLayout(new GridLayout(0, 1, 0, 0));
 		
-		JPanel panel_3 = new JPanel();
-		panel.add(panel_3);
+		panel_1 = new JPanel();
+		panel_2.add(panel_1);
+		panel_1.setLayout(new GridLayout(0, 3, 0, 0));
+		
+		panel_3 = new JPanel();
+		panel_1.add(panel_3);
 		
 		btnModificar = new JButton("Modificar");
-		btnModificar.addActionListener(new CapturaBtnVenta_All(this));
-		panel.add(btnModificar);
+		btnModificar.addActionListener(new CapturaBtnLineaAerea_ModDel(this));
+		panel_1.add(btnModificar);
 		
 		btnEliminar = new JButton("Eliminar");
-		btnEliminar.addActionListener(new CapturaBtnVenta_All(this));
-		panel.add(btnEliminar);
+		panel_1.add(btnEliminar);
+		btnEliminar.addActionListener(new CapturaBtnLineaAerea_ModDel(this));
 		
-		JScrollPane scrollPane = new JScrollPane();
+		btnMenuPrincipal = new JButton("Volver al menu principal");
+		btnMenuPrincipal.addActionListener(new CapturaBtnLineaAerea_ModDel(this));
+		panel_2.add(btnMenuPrincipal);
+		
+		scrollPane = new JScrollPane();
 		contentPane.add(scrollPane, BorderLayout.CENTER);
 		
-		list = new JList<Venta>();
+		list = new JList<LineaAerea>();
 		scrollPane.setViewportView(list);
-		modelo= control.pedirListaVentas();
+		modelo = control.pedirListaLineaAerea();
 		list.setModel(modelo);
 		setVisible(true);
 	}
-
-	public Venta_All_Controller getControl() {
+	
+	
+	
+	public LineaAerea_All_Controller getControl() {
 		return control;
 	}
 
-	public void setControl(Venta_All_Controller control) {
+
+
+	public void setControl(LineaAerea_All_Controller control) {
 		this.control = control;
 	}
 
-	public JList<Venta> getList() {
+
+
+	public JList<LineaAerea> getList() {
 		return list;
 	}
 
-	public void setList(JList<Venta> list) {
+
+
+	public void setList(JList<LineaAerea> list) {
 		this.list = list;
 	}
+
+
+
+	public DefaultListModel<LineaAerea> getModelo() {
+		return modelo;
+	}
+
+
+
+	public void setModelo(DefaultListModel<LineaAerea> modelo) {
+		this.modelo = modelo;
+	}
+
+
 
 	public JButton getBtnModificar() {
 		return btnModificar;
 	}
 
+
+
 	public void setBtnModificar(JButton btnModificar) {
 		this.btnModificar = btnModificar;
 	}
+
+
 
 	public JButton getBtnEliminar() {
 		return btnEliminar;
 	}
 
+
+
 	public void setBtnEliminar(JButton btnEliminar) {
 		this.btnEliminar = btnEliminar;
 	}
+
+
 
 	public JButton getBtnMenuPrincipal() {
 		return btnMenuPrincipal;
 	}
 
+
+
 	public void setBtnMenuPrincipal(JButton btnMenuPrincipal) {
 		this.btnMenuPrincipal = btnMenuPrincipal;
 	}
 
-	public DefaultListModel<Venta> getModelo() {
-		return modelo;
-	}
 
-	public void setModelo(DefaultListModel<Venta> modelo) {
-		this.modelo = modelo;
-	}	
+
 	public void cancelaOperacion() {
 		JOptionPane.showMessageDialog(null, "La operacion se ha cancelado", "", JOptionPane.WARNING_MESSAGE);
 	}
@@ -161,10 +184,8 @@ public class Venta_All_Vista extends JFrame {
             System.exit(0);
     } 
 	
-	public int confirmarSeleccion(Venta venta,String causa) {
-		return JOptionPane.showConfirmDialog(null, ("¿Desea seleccionar para su "+causa+" la siguiente venta?\n ID: ["+venta.getId_venta()+
-				"]\nCliente: "+venta.getCliente().getApellido()+", "+venta.getCliente().getNombre()+"\nDNI: ["+venta.getCliente().getDNI()+"]"
-				+"\nMonto: ["+venta.getTotalPagar()+"]"), "Confirmacion de seleccion", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+	public int confirmarSeleccion(LineaAerea lineaAerea,String causa) {
+		return JOptionPane.showConfirmDialog(null, ("Desea seleccionar para su "+causa+" a\n Aerolinea: "+lineaAerea.getNombre()+"\nAlianza: "+lineaAerea.getAlianza()+"\nID: ["+lineaAerea.getId()+"]"), "Confirmacion de seleccion", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 	}
-
+	
 }

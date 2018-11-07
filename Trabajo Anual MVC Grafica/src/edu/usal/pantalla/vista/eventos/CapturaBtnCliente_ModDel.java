@@ -3,14 +3,14 @@ package edu.usal.pantalla.vista.eventos;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import edu.usal.pantalla.vista.Cliente_ModDel_Vista;
+import edu.usal.pantalla.vista.Cliente_All_Vista;
 import edu.usal.pantalla.vista.Cliente_Datos_Vista;
 
 public class CapturaBtnCliente_ModDel implements ActionListener {
 
-	Cliente_ModDel_Vista vista;
+	Cliente_All_Vista vista;
 	
-	public CapturaBtnCliente_ModDel(Cliente_ModDel_Vista vista) {
+	public CapturaBtnCliente_ModDel(Cliente_All_Vista vista) {
 		this.vista = vista;
 	}
 

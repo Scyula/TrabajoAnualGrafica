@@ -7,20 +7,20 @@ import javax.swing.JOptionPane;
 import edu.usal.negocio.dao.factory.ClienteFactory;
 import edu.usal.negocio.dao.interfaces.ClienteDAO;
 import edu.usal.negocio.dominio.Cliente;
-import edu.usal.pantalla.vista.Cliente_ModDel_Vista;
+import edu.usal.pantalla.vista.Cliente_All_Vista;
 import edu.usal.util.DatosEstaticos;
 import edu.usal.util.IOGeneral;
 
-public class Cliente_ModDel_Controller {
+public class Cliente_All_Controller {
 		
-	Cliente_ModDel_Vista menuModDel;
+	Cliente_All_Vista menuModDel;
 	Cliente_Datos_Controller menuDatos;
 	MenuPrincipalController mPController;
 	private ClienteDAO clientedao;
 	
-	public Cliente_ModDel_Controller(MenuPrincipalController menuPrincipalController) {
+	public Cliente_All_Controller(MenuPrincipalController menuPrincipalController) {
 		this.mPController= menuPrincipalController;
-		menuModDel = new Cliente_ModDel_Vista(this);
+		menuModDel = new Cliente_All_Vista(this);
 	}
 	
 

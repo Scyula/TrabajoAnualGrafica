@@ -3,15 +3,15 @@ package edu.usal.pantalla.vista.eventos;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import edu.usal.pantalla.vista.Cliente_ModDel_Vista;
-import edu.usal.pantalla.vista.LineaAerea_ModDel_Vista;
+import edu.usal.pantalla.vista.Cliente_All_Vista;
+import edu.usal.pantalla.vista.LineaAerea_All_Vista;
 import edu.usal.pantalla.vista.Cliente_Datos_Vista;
 
 public class CapturaBtnLineaAerea_ModDel implements ActionListener {
 
-	LineaAerea_ModDel_Vista vista;
+	LineaAerea_All_Vista vista;
 	
-	public CapturaBtnLineaAerea_ModDel(LineaAerea_ModDel_Vista vista) {
+	public CapturaBtnLineaAerea_ModDel(LineaAerea_All_Vista vista) {
 		this.vista = vista;
 	}
 
