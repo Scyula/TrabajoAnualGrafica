@@ -111,7 +111,7 @@ public class VueloDAOImplSQL implements VueloDAO {
 		List <Vuelo> lista = new ArrayList<Vuelo>();
 		con = new Coneccion();
 		if(con.iniciarConeccion()) {
-			query = "SELECT * FROM Vuelo WHERE ID_Vuelo=?";
+			query = "SELECT * FROM Vuelo";
 			prep = con.getConeccion().prepareStatement(query);
 			ResultSet rs = prep.executeQuery();
 			while(rs.next()) {
@@ -135,7 +135,7 @@ public class VueloDAOImplSQL implements VueloDAO {
 		ClienteDAO clientes = new ClienteDAOImplSQL();
 		con = new Coneccion();
 		if(con.iniciarConeccion()) {
-			query = "SELECT c.DNI FROM Venta v INNER JOIN Cliente c ON v.ID_Cliente=c.DNI WHERE ID_Vuelo=?";
+			query = "SELECT c.DNI FROM Ventas v INNER JOIN Cliente c ON v.ID_Cliente=c.DNI WHERE ID_Vuelo=?";
 			prep = con.getConeccion().prepareStatement(query);
 			prep.setString(1,string);
 			ResultSet rs = prep.executeQuery();
@@ -157,6 +157,7 @@ public class VueloDAOImplSQL implements VueloDAO {
 		if(con.iniciarConeccion()) {
 			query = "SELECT * FROM Vuelo WHERE ID_Vuelo=?";
 			prep = con.getConeccion().prepareStatement(query);
+			prep.setString(1, id);
 			ResultSet rs = prep.executeQuery();
 			rs.next();
 			Vuelo leer = new Vuelo(rs.getString(1), leerAerolinea(rs.getInt(2)), rs.getInt(3), rs.getInt(4), leerAeropuerto(rs.getString(5)), leerAeropuerto(rs.getString(6)),

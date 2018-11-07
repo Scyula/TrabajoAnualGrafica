@@ -105,7 +105,7 @@ public class LineaAereaDAOImplSQL implements LineaAereaDAO {
 		VueloDAO vuelos = VueloFactory.getVueloDAO("SQL");
 		con = new Coneccion();
 		if(con.iniciarConeccion()) {
-			query = "SELECT Vuelo.ID_Vuelo FROM Aerolinea INNER JOIN Vuelo ON Vuelo.ID_Aerolinea=Aerolinea.ID_Aerolinea WHERE ID_Aerolinea=?";
+			query = "SELECT v.ID_Vuelo FROM Aerolinea a INNER JOIN Vuelo v ON v.ID_Aerolinea=a.ID_Aerolinea WHERE a.ID_Aerolinea=?";
 			prep = con.getConeccion().prepareStatement(query);
 			prep.setInt(1,id);
 			ResultSet rs = prep.executeQuery();

@@ -33,7 +33,7 @@ public class VentaDAOImplSQL implements VentaDAO {
 		con = new Coneccion();
 		if(con.iniciarConeccion()) {
 			con.getConeccion().setAutoCommit(false);
-			query = ("INSERT INTO Venta VALUES (?,?,?,?,?,?,?,?)");
+			query = ("INSERT INTO Ventas VALUES (?,?,?,?,?,?,?,?)");
 			prep = con.getConeccion().prepareStatement(query);
 			prep.setInt(1,venta.getCliente().getDNI());
 			prep.setInt(2, venta.getLineaAerea().getId());
@@ -62,7 +62,7 @@ public class VentaDAOImplSQL implements VentaDAO {
 		con = new Coneccion();
 		if(con.iniciarConeccion()) {
 			con.getConeccion().setAutoCommit(false);
-			query = ("UPDATE Venta SET ID_Cliente=?,ID_Aerolinea=?,ID_Vuelo=?,FechaHoraVenta=?,MedioPago=?,Cuotas=?,Cantidad=?,Cantidad=?,Total=? WHERE ID_Venta=?;");
+			query = ("UPDATE Ventas SET ID_Cliente=?,ID_Aerolinea=?,ID_Vuelo=?,FechaHoraVenta=?,MedioPago=?,Cuotas=?,Cantidad=?,Cantidad=?,Total=? WHERE ID_Venta=?;");
 			prep = con.getConeccion().prepareStatement(query);
 			prep.setInt(1,venta.getCliente().getDNI());
 			prep.setInt(2, venta.getLineaAerea().getId());
@@ -91,7 +91,7 @@ public class VentaDAOImplSQL implements VentaDAO {
 	public boolean deleteVentas(Venta venta)  throws SQLException {
 		con = new Coneccion();
 		if(con.iniciarConeccion()) {
-			query = ("DELETE FROM Venta WHERE ID_Venta=?;");
+			query = ("DELETE FROM Ventas WHERE ID_Venta=?;");
 			prep = con.getConeccion().prepareStatement(query);
 			prep.setInt(1,venta.getId_venta());
 			int r = prep.executeUpdate();
@@ -111,7 +111,7 @@ public class VentaDAOImplSQL implements VentaDAO {
 		List <Venta> lista = new ArrayList<Venta>();
 		con = new Coneccion();
 		if(con.iniciarConeccion()) {
-			query = "SELECT * FROM Vuelo WHERE ID_Vuelo=?";
+			query = "SELECT * FROM Ventas";
 			prep = con.getConeccion().prepareStatement(query);
 			ResultSet rs = prep.executeQuery();
 			while(rs.next()) {
@@ -166,7 +166,7 @@ public class VentaDAOImplSQL implements VentaDAO {
 	public Venta readVenta() throws SQLException {
 		con = new Coneccion();
 		if(con.iniciarConeccion()) {
-			query = "SELECT * FROM Vuelo WHERE ID_Vuelo=?";
+			query = "SELECT * FROM Ventas WHERE ID_Venta=?";
 			prep = con.getConeccion().prepareStatement(query);
 			ResultSet rs = prep.executeQuery();
 			rs.next();

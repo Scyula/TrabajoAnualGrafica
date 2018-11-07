@@ -92,9 +92,6 @@ public class DatosEstaticos {
 		try {
 			LineaAereaDAO lineaAerea = new LineaAereaDAOImplSQL();
 			aerolineas = lineaAerea.getAllLineaAerea();
-			for (LineaAerea linea : aerolineas) {
-				System.out.print(linea.toString());
-			}
 		} catch (SQLException e) {
 			IOGeneral.pritln(">>>>>Ocurrio un error al leer las aerolineas de la base de datos<<<<<");
 			IOGeneral.pritln(e.getMessage());

@@ -103,6 +103,13 @@ public class Venta {
 	public void setCuotas(int cuotas) {
 		this.cuotas = cuotas;
 	}
-		
+
+	@Override
+	public String toString() {
+		return "Venta [id_venta=" + id_venta + ", cliente=" + cliente.getDNI() + ", vuelo=" + vuelo.getId_vuelo() + ", lineaAerea="
+				+ lineaAerea.getNombre() + ", fechaHoraVenta=" + fechaHoraVenta + ", formaPago=" + formaPago + ", cuotas=" + cuotas
+				+ ", totalPagar=" + totalPagar + ", cant_vuelos=" + cant_vuelos + "]";
+	}
+	
 	
 }

@@ -7,12 +7,12 @@ import edu.usal.negocio.dominio.LineaAerea;
 import edu.usal.negocio.dominio.Pais;
 import edu.usal.pantalla.vista.Cliente_Datos_Vista;
 
-public class CapturaStateChanged implements ItemListener {
+public class CapturaItemCliente implements ItemListener {
 	Cliente_Datos_Vista vista;
 	
 	
 	
-	public CapturaStateChanged(Cliente_Datos_Vista vista) {
+	public CapturaItemCliente(Cliente_Datos_Vista vista) {
 		super();
 		this.vista = vista;
 	}

@@ -17,7 +17,7 @@ import edu.usal.negocio.dominio.Pais;
 import edu.usal.negocio.dominio.Provincia;
 import edu.usal.pantalla.controller.Cliente_Datos_Controller;
 import edu.usal.pantalla.vista.eventos.CapturaBtnCliente_Datos;
-import edu.usal.pantalla.vista.eventos.CapturaStateChanged;
+import edu.usal.pantalla.vista.eventos.CapturaItemCliente;
 
 import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
@@ -149,7 +149,7 @@ public class Cliente_Datos_Vista extends JFrame {
 		getContentPane().add(textTelPersonal);
 		
 		comboBox_Pais = new JComboBox<Pais>();
-		comboBox_Pais.addItemListener(new CapturaStateChanged(this));
+		comboBox_Pais.addItemListener(new CapturaItemCliente(this));
 		comboBox_Pais.setBounds(14, 468, 208, 20);
 		comboBox_Pais.setModel(new DefaultComboBoxModel<Pais>(vista.obtenerListaPaises()));
 		getContentPane().add(comboBox_Pais);
@@ -214,7 +214,7 @@ public class Cliente_Datos_Vista extends JFrame {
 		getContentPane().add(textCategoria);
 		
 		comboBox_Aerolinea = new JComboBox<LineaAerea>();
-		comboBox_Aerolinea.addItemListener(new CapturaStateChanged(this));
+		comboBox_Aerolinea.addItemListener(new CapturaItemCliente(this));
 		comboBox_Aerolinea.setModel(new DefaultComboBoxModel<LineaAerea>(vista.obtenerListaAerolinea()));
 		comboBox_Aerolinea.setBounds(686, 446, 233, 22);
 		getContentPane().add(comboBox_Aerolinea);
@@ -458,7 +458,7 @@ public Cliente_Datos_Vista(Cliente_Datos_Controller vista, Cliente c) {
 	DefaultComboBoxModel<Pais> modelo2 = new DefaultComboBoxModel<Pais>(vista.obtenerListaPaises());
 	comboBox_Pais.setModel(modelo2);
 	comboBox_Pais.setBounds(14, 468, 208, 20);
-	comboBox_Pais.addItemListener(new CapturaStateChanged(this));
+	comboBox_Pais.addItemListener(new CapturaItemCliente(this));
 	comboBox_Pais.setSelectedIndex(vista.obtenerIndexPais(comboBox_Pais.getModel(),c));
 	getContentPane().add(comboBox_Pais);
 	
@@ -537,7 +537,7 @@ public Cliente_Datos_Vista(Cliente_Datos_Controller vista, Cliente c) {
 	getContentPane().add(lbl_Alianza);
 	
 	comboBox_Aerolinea.setBounds(686, 446, 233, 22);
-	comboBox_Aerolinea.addItemListener(new CapturaStateChanged(this));
+	comboBox_Aerolinea.addItemListener(new CapturaItemCliente(this));
 	getContentPane().add(comboBox_Aerolinea);
 	
 	lblNombre = new JLabel("Nombre");
