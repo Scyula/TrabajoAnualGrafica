@@ -161,7 +161,7 @@ public class VueloDAOImplSQL implements VueloDAO {
 			ResultSet rs = prep.executeQuery();
 			rs.next();
 			Vuelo leer = new Vuelo(rs.getString(1), leerAerolinea(rs.getInt(2)), rs.getInt(3), rs.getInt(4), leerAeropuerto(rs.getString(5)), leerAeropuerto(rs.getString(6)),
-						timestampToDate(rs.getTimestamp(7)), timestampToDate(rs.getTimestamp(7)), rs.getString(8), leerClientes(rs.getString(1)));
+						timestampToDate(rs.getTimestamp(7)), timestampToDate(rs.getTimestamp(8)), rs.getString(9), leerClientes(rs.getString(1)));
 			prep.close();
 			con.cerrarConeccion();
 			return leer;

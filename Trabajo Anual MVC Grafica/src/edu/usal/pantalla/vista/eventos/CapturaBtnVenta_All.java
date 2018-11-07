@@ -19,13 +19,13 @@ public class CapturaBtnVenta_All implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource().equals(vista.getBtnModificar())) {
 			int index=vista.getList().getSelectedIndex();
-			if(index!=-1) {
+			if(index>-1) {
 				vista.getControl().Modificar(vista.getModelo().getElementAt(index));
 				vista.dispose();
 			}
 		}else if(e.getSource().equals(vista.getBtnEliminar())) {
 			int index=vista.getList().getSelectedIndex();
-			if(index!=-1) {
+			if(index>-1) {
 				vista.getControl().Eliminar(vista.getModelo().getElementAt(index));
 				vista.dispose();
 			}

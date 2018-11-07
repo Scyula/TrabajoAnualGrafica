@@ -64,6 +64,8 @@ public class Venta_All_Controller {
 				ventadao = VentaFactory.getVentaDAO(DatosEstaticos.getSource());
 				if(ventadao.deleteVentas(venta)) {
 					menuModDel.exitoOperacion();
+					mPController.hacerVisibleMP();
+					this.finalizarVentana();
 				}else {
 					menuModDel.fracasoOperacion();
 				}
@@ -79,7 +81,9 @@ public class Venta_All_Controller {
 	public void Modificar(Venta venta) {
 		int res = menuModDel.confirmarSeleccion(venta, "MODIFICACION");
 		if(res==JOptionPane.YES_OPTION) {
-			menuDatos = new Venta_Datos_Controller(mPController, venta);
+			this.menuModDel.dispose();
+			this.menuDatos = new Venta_Datos_Controller(mPController, venta);
+			
 		}
 	}
 	

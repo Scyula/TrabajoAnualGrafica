@@ -34,16 +34,19 @@ public class Venta_Datos_Controller {
 	Venta_Datos_Vista menu;
 	MenuPrincipalController mPController;
 	private VentaDAO ventadao;
-	private Venta venta = new Venta(); 
+	private Venta venta; 
 	
 	public Venta_Datos_Controller(MenuPrincipalController menuPrincipalController) {
+		this.venta = new Venta();
 		this.mPController= menuPrincipalController;
-		menu = new Venta_Datos_Vista(this);
+		this.menu = new Venta_Datos_Vista(this);
 	}
 	
-	public Venta_Datos_Controller(MenuPrincipalController menuPrincipalController, Venta venta) {
+	public Venta_Datos_Controller(MenuPrincipalController menuPrincipalController, Venta modificar) {
+		this.venta=modificar;
 		this.mPController= menuPrincipalController;
-		menu = new Venta_Datos_Vista(this , venta);
+		this.menu = new Venta_Datos_Vista(this , modificar);
+		this.menu.cargarDatos(modificar);
 	}
 
 	public void updateDatos(Venta_Datos_Vista datos) {
@@ -145,7 +148,6 @@ public class Venta_Datos_Controller {
 	private boolean cumpleañosCliente() {
 		Date fecha= new Date();
 		fecha.setYear(fecha.getYear()-18);
-		fecha.setYear(fecha.getYear()-18);
 		 if(fecha.compareTo(this.venta.getCliente().getFechaNac())==1) {
 			 return true;
 		 }
@@ -173,8 +175,9 @@ public class Venta_Datos_Controller {
 		double valor;
 		switch(buscar) {
 		case 12: 
-		case 24: valor = (Double.parseDouble(menu.getTextValor().getText())*1.1);
-			default: valor = Double.parseDouble(menu.getTextValor().getText());
+		case 24: valor = formatearDecimales((Double.parseDouble(menu.getTextValor().getText())*1.1));
+		break;
+			default: valor = formatearDecimales(Double.parseDouble(menu.getTextValor().getText()));
 		}
 		this.venta.setCuotas(buscar);
 		menu.getTextTotalPagar().setText(String.valueOf(valor));
@@ -182,6 +185,9 @@ public class Venta_Datos_Controller {
 			menu.errorOperacion("El valor debe ser un numero decimal");
 		}
 	}
+	public static Double formatearDecimales(Double numero) {
+		return Math.round(numero * Math.pow(10, 3)) / Math.pow(10, 3);
+		}
 
 	public void buscarCliente() {
 		ClienteDAO clientedao = ClienteFactory.getClienteDAO("SQL");
@@ -206,23 +212,23 @@ public class Venta_Datos_Controller {
 	}
 	
 	public void ingresarDatosCliente(Cliente buscar){
-		menu.getTextNombre().setText(buscar.getNombre());
-		menu.getTextApellido().setText(buscar.getApellido());
-		menu.getTextDNI().setText(String.valueOf(buscar.getDNI()));
-		menu.getTextEmail().setText(buscar.getEmail());
-		menu.getTextFechaNac().setText(generarTextoFecha(buscar.getFechaNac()));
+		this.menu.getTextNombre().setText(buscar.getNombre());
+		this.menu.getTextApellido().setText(buscar.getApellido());
+		this.menu.getTextDNI().setText(String.valueOf(buscar.getDNI()));
+		this.menu.getTextEmail().setText(buscar.getEmail());
+		this.menu.getTextFechaNac().setText(generarTextoFecha(buscar.getFechaNac()));
 	}
 	
 
 	private String generarTextoFecha(Date fechaNac) {
 		if(fechaNac!=null) {
-			return fechaNac.getDate()+"-"+(fechaNac.getMonth()+1)+fechaNac.getYear();
+			return fechaNac.getDate()+"-"+(fechaNac.getMonth()+1)+"-"+fechaNac.getYear();
 		}
 		return "No tiene";
 	}
 	private String generarTextoFechaHora(Date fecha) {
 		if(fecha!=null) {
-			return fecha.getDate()+"-"+(fecha.getMonth()+1)+fecha.getYear()+"  "+fecha.getHours()+":"+fecha.getMinutes();
+			return fecha.getDate()+"-"+(fecha.getMonth()+1)+"-"+(fecha.getYear())+"  "+fecha.getHours()+":"+fecha.getMinutes();
 		}
 		return "No tiene";
 	}
@@ -254,32 +260,38 @@ public class Venta_Datos_Controller {
 		this.venta.setLineaAerea(buscar.getAerolinea());;
 		this.venta.setVuelo(buscar);
 	}
+	
 
 	public void habilitarCuotas() {
 		this.venta.setFormaPago("Tarjeta");
-		this.venta.setCuotas(1);
 		menu.getComboBox_Cuotas().setEnabled(true);
 		menu.getTextTotalPagar().setText(menu.getTextValor().getText());
 	}
 	
 	public void asignarDatos(Venta venta) {
+		menu.getTextTotalPagar().setText(String.valueOf(venta.getTotalPagar()));
+		menu.getTextValor().setText(String.valueOf(venta.getTotalPagar()));
+		
 		if(venta.getFormaPago().equals("Tarjeta")) {
 			menu.getRdbtnTarjeta().setSelected(true);
 			menu.getComboBox_Cuotas().setEnabled(true);
-			switch(venta.getCuotas()) {
-			case 1:menu.getComboBox_Cuotas().setSelectedIndex(0);
-			break;
-			case 3:menu.getComboBox_Cuotas().setSelectedIndex(1);
-			break;
-			case 6:menu.getComboBox_Cuotas().setSelectedIndex(2);
-			break;
-			case 12:menu.getComboBox_Cuotas().setSelectedIndex(3);
-			menu.getTextValor().setText(String.valueOf(venta.getTotalPagar()/1.1));
-			break;
-			case 24:menu.getComboBox_Cuotas().setSelectedIndex(4);
-			menu.getTextValor().setText(String.valueOf(venta.getTotalPagar()/1.1));
-				break;
-			default: 
+			int c =venta.getCuotas();
+			if(c==1) {
+				menu.getComboBox_Cuotas().setSelectedIndex(0);
+			}
+			if(c==3) {
+				menu.getComboBox_Cuotas().setSelectedIndex(1);
+			}
+			if(c==6) {
+				menu.getComboBox_Cuotas().setSelectedIndex(2);
+			}
+			if(c==12) {
+				menu.getComboBox_Cuotas().setSelectedIndex(3);
+				menu.getTextValor().setText(String.valueOf(venta.getTotalPagar()/1.1));
+			}
+			if(c==24) {
+				menu.getComboBox_Cuotas().setSelectedIndex(4);
+				menu.getTextValor().setText(String.valueOf(venta.getTotalPagar()/1.1));
 			}
 		}
 		if(venta.getFormaPago().equals("Efectivo")){

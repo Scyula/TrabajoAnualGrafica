@@ -50,6 +50,7 @@ public class Venta_Datos_Vista extends JFrame {
 	private JButton btnCancelar;
 	private JButton btnBuscarCliente;
 	private JButton btnBuscarVuelo;
+	private JButton btnGuardarMod;
 	private JButton btnGuardar;
 	
 	
@@ -399,10 +400,10 @@ public class Venta_Datos_Vista extends JFrame {
 		btnCancelar.addActionListener(new CapturaBtnVenta_Datos(this));
 		getContentPane().add(btnBuscarVuelo);
 		
-		btnGuardar = new JButton("Guardar");
-		btnGuardar.setBounds(376, 599, 89, 23);
+		btnGuardarMod = new JButton("Guardar");
+		btnGuardarMod.setBounds(376, 599, 89, 23);
 		btnCancelar.addActionListener(new CapturaBtnVenta_Datos(this));
-		getContentPane().add(btnGuardar);
+		getContentPane().add(btnGuardarMod);
 		
 		textBuscarDNI = new JTextField();
 		textBuscarDNI.setBounds(31, 117, 86, 20);
@@ -421,76 +422,65 @@ public class Venta_Datos_Vista extends JFrame {
 		
 		textNombreVenta = new JTextField();
 		textNombreVenta.setEditable(false);
-		textNombreVenta.setEnabled(false);
 		textNombreVenta.setBounds(441, 93, 136, 20);
 		getContentPane().add(textNombreVenta);
 		textNombreVenta.setColumns(10);
 		
 		textApellido = new JTextField();
-		textApellido.setEnabled(false);
 		textApellido.setEditable(false);
 		textApellido.setColumns(10);
 		textApellido.setBounds(441, 116, 136, 20);
 		getContentPane().add(textApellido);
 		
 		textDNI = new JTextField();
-		textDNI.setEnabled(false);
 		textDNI.setEditable(false);
 		textDNI.setColumns(10);
 		textDNI.setBounds(441, 141, 136, 20);
 		getContentPane().add(textDNI);
 		
 		textFechaNac = new JTextField();
-		textFechaNac.setEnabled(false);
 		textFechaNac.setEditable(false);
 		textFechaNac.setColumns(10);
 		textFechaNac.setBounds(441, 166, 136, 20);
 		getContentPane().add(textFechaNac);
 		
 		textEmail = new JTextField();
-		textEmail.setEnabled(false);
 		textEmail.setEditable(false);
 		textEmail.setColumns(10);
 		textEmail.setBounds(441, 191, 136, 20);
 		getContentPane().add(textEmail);
 		
 		textID_Vuelo = new JTextField();
-		textID_Vuelo.setEnabled(false);
 		textID_Vuelo.setEditable(false);
 		textID_Vuelo.setColumns(10);
 		textID_Vuelo.setBounds(441, 264, 136, 20);
 		getContentPane().add(textID_Vuelo);
 		
 		textAerolinea = new JTextField();
-		textAerolinea.setEnabled(false);
 		textAerolinea.setEditable(false);
 		textAerolinea.setColumns(10);
 		textAerolinea.setBounds(441, 287, 136, 20);
 		getContentPane().add(textAerolinea);
 		
 		textAeropuertoSalida = new JTextField();
-		textAeropuertoSalida.setEnabled(false);
 		textAeropuertoSalida.setEditable(false);
 		textAeropuertoSalida.setColumns(10);
 		textAeropuertoSalida.setBounds(441, 312, 136, 20);
 		getContentPane().add(textAeropuertoSalida);
 		
 		textAeropuertoLlegada = new JTextField();
-		textAeropuertoLlegada.setEnabled(false);
 		textAeropuertoLlegada.setEditable(false);
 		textAeropuertoLlegada.setColumns(10);
 		textAeropuertoLlegada.setBounds(441, 337, 136, 20);
 		getContentPane().add(textAeropuertoLlegada);
 		
 		textFechaSalida = new JTextField();
-		textFechaSalida.setEnabled(false);
 		textFechaSalida.setEditable(false);
 		textFechaSalida.setColumns(10);
 		textFechaSalida.setBounds(441, 362, 136, 20);
 		getContentPane().add(textFechaSalida);
 		
 		textFechaLlegada = new JTextField();
-		textFechaLlegada.setEnabled(false);
 		textFechaLlegada.setEditable(false);
 		textFechaLlegada.setColumns(10);
 		textFechaLlegada.setBounds(441, 386, 136, 20);
@@ -525,11 +515,6 @@ public class Venta_Datos_Vista extends JFrame {
 		comboBox_Cuotas.addItemListener(new CapturaItemVenta(this));
 		comboBox_Cuotas.setBounds(300, 491, 53, 20);
 		getContentPane().add(comboBox_Cuotas);
-		
-				
-		getController().ingresarDatosCliente(venta.getCliente());
-		getController().ingresarDatosVuelo(venta.getVuelo());
-		getController().asignarDatos(venta);
 		
 		JLabel lblIngreseLosDatos = new JLabel("Mostrando los datos de la venta para su modificacion");
 		lblIngreseLosDatos.setHorizontalAlignment(SwingConstants.CENTER);
@@ -656,7 +641,8 @@ public class Venta_Datos_Vista extends JFrame {
 		JLabel lblTotalAPagar = new JLabel("TOTAL A PAGAR");
 		lblTotalAPagar.setBounds(31, 566, 82, 14);
 		getContentPane().add(lblTotalAPagar);
-		this.setVisible(true);
+
+		
 		}
 
 	
@@ -933,6 +919,15 @@ public class Venta_Datos_Vista extends JFrame {
 		this.comboBox_Cuotas = comboBox_Cuotas;
 	}
 
+	
+
+	public JButton getBtnGuardarMod() {
+		return btnGuardarMod;
+	}
+
+	public void setBtnGuardarMod(JButton btnGuardarMod) {
+		this.btnGuardarMod = btnGuardarMod;
+	}
 
 	public void cancelaOperacion() {
 		JOptionPane.showMessageDialog(null, "La operacion se ha cancelado", "", JOptionPane.WARNING_MESSAGE);
@@ -977,5 +972,15 @@ public class Venta_Datos_Vista extends JFrame {
 			return true;
 		}
 		return false;
+	}
+
+	public void cargarDatos(Venta venta) {
+
+		getController().ingresarDatosCliente(venta.getCliente());
+		getController().ingresarDatosVuelo(venta.getVuelo());
+		getController().asignarDatos(venta);
+		
+		this.setVisible(true);
+		
 	} 
 }
