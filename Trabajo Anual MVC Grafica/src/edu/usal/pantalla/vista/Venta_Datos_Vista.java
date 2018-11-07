@@ -402,7 +402,7 @@ public class Venta_Datos_Vista extends JFrame {
 		
 		btnGuardarMod = new JButton("Guardar");
 		btnGuardarMod.setBounds(376, 599, 89, 23);
-		btnCancelar.addActionListener(new CapturaBtnVenta_Datos(this));
+		btnGuardarMod.addActionListener(new CapturaBtnVenta_Datos(this));
 		getContentPane().add(btnGuardarMod);
 		
 		textBuscarDNI = new JTextField();
@@ -418,6 +418,7 @@ public class Venta_Datos_Vista extends JFrame {
 		textValor = new JTextField();
 		textValor.setColumns(10);
 		textValor.setBounds(31, 491, 109, 20);
+		textValor.addActionListener(new CapturaBtnVenta_Datos(this));
 		getContentPane().add(textValor);
 		
 		textNombreVenta = new JTextField();
@@ -494,7 +495,6 @@ public class Venta_Datos_Vista extends JFrame {
 		
 		textTotalPagar = new JTextField();
 		textTotalPagar.setText(String.valueOf(venta.getTotalPagar()));
-		textTotalPagar.setEnabled(false);
 		textTotalPagar.setEditable(false);
 		textTotalPagar.setBounds(123, 563, 112, 20);
 		getContentPane().add(textTotalPagar);

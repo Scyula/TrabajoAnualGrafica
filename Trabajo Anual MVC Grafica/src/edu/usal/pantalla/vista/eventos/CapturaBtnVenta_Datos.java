@@ -26,7 +26,9 @@ public class CapturaBtnVenta_Datos implements ActionListener {
 		}else if(e.getSource().equals(vista.getBtnBuscarVuelo())) {
 			vista.getController().buscarVuelo();
 		}else if (e.getSource().equals(vista.getBtnGuardarMod())) {
-			vista.getController().almacenarDatos();
+			vista.getController().almacenarDatosMod();
+		}else if(e.getSource().equals(vista.getTextValor())) {
+			vista.getController().actualizarValor();
 		}
 
 	}

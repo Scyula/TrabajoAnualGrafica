@@ -269,34 +269,66 @@ public class Venta_Datos_Controller {
 	}
 	
 	public void asignarDatos(Venta venta) {
-		menu.getTextTotalPagar().setText(String.valueOf(venta.getTotalPagar()));
-		menu.getTextValor().setText(String.valueOf(venta.getTotalPagar()));
 		
+		if(venta.getFormaPago().equals("Efectivo")) {
+
+			menu.getTextValor().setText(String.valueOf(venta.getTotalPagar()));
+			menu.getTextTotalPagar().setText(String.valueOf(venta.getTotalPagar()));
+			menu.getRdbtnEfectivo().setSelected(true);
+		}
 		if(venta.getFormaPago().equals("Tarjeta")) {
 			menu.getRdbtnTarjeta().setSelected(true);
-			menu.getComboBox_Cuotas().setEnabled(true);
-			int c =venta.getCuotas();
+			int c = venta.getCuotas();
 			if(c==1) {
+				menu.getTextValor().setText(String.valueOf(venta.getTotalPagar()));
 				menu.getComboBox_Cuotas().setSelectedIndex(0);
 			}
 			if(c==3) {
+				menu.getTextValor().setText(String.valueOf(venta.getTotalPagar()));
 				menu.getComboBox_Cuotas().setSelectedIndex(1);
 			}
 			if(c==6) {
+				menu.getTextValor().setText(String.valueOf(venta.getTotalPagar()));
 				menu.getComboBox_Cuotas().setSelectedIndex(2);
 			}
 			if(c==12) {
+				menu.getTextValor().setText(String.valueOf((venta.getTotalPagar()/1.1)));
 				menu.getComboBox_Cuotas().setSelectedIndex(3);
-				menu.getTextValor().setText(String.valueOf(venta.getTotalPagar()/1.1));
 			}
 			if(c==24) {
-				menu.getComboBox_Cuotas().setSelectedIndex(4);
 				menu.getTextValor().setText(String.valueOf(venta.getTotalPagar()/1.1));
+				menu.getComboBox_Cuotas().setSelectedIndex(4);
 			}
+					
 		}
-		if(venta.getFormaPago().equals("Efectivo")){
-			menu.getRdbtnEfectivo().setSelected(true);
-		}
+//		menu.getTextValor().setText(String.valueOf(venta.getTotalPagar()));
+//		menu.getTextTotalPagar().setText(String.valueOf(venta.getTotalPagar()));
+//		
+//		if(venta.getFormaPago().equals("Tarjeta")) {
+//			menu.getRdbtnTarjeta().setSelected(true);
+//			menu.getComboBox_Cuotas().setEnabled(true);
+//			int c =venta.getCuotas();
+//			if(c==1) {
+//				menu.getComboBox_Cuotas().setSelectedIndex(0);
+//			}
+//			if(c==3) {
+//				menu.getComboBox_Cuotas().setSelectedIndex(1);
+//			}
+//			if(c==6) {
+//				menu.getComboBox_Cuotas().setSelectedIndex(2);
+//			}
+//			if(c==12) {
+//				menu.getComboBox_Cuotas().setSelectedIndex(3);
+//				menu.getTextValor().setText(String.valueOf(venta.getTotalPagar()/1.1));
+//			}
+//			if(c==24) {
+//				menu.getComboBox_Cuotas().setSelectedIndex(4);
+//				menu.getTextValor().setText(String.valueOf(venta.getTotalPagar()/1.1));
+//			}
+//		}
+//		if(venta.getFormaPago().equals("Efectivo")){
+//			menu.getRdbtnEfectivo().setSelected(true);
+//		}
 	}
 	
 	public void cancelarCuotas() {
@@ -304,6 +336,70 @@ public class Venta_Datos_Controller {
 		this.venta.setCuotas(1);
 		menu.getComboBox_Cuotas().setEnabled(false);
 		menu.getTextTotalPagar().setText(menu.getTextValor().getText());
+	}
+
+	public void almacenarDatosMod() {
+		try {
+			System.out.println("Proceso comenzado(alta)");
+			if(corroborarDatosMod()) {
+				ventadao = VentaFactory.getVentaDAO(DatosEstaticos.getSource());
+				if(ventadao.updateVenta(venta)) {
+					menu.exitoOperacion();
+				}else {
+					menu.errorOperacion("No se pudo guardar la venta");
+				}
+				menu.dispose();
+				mPController.hacerVisibleMP();
+			}
+			
+		} catch (SQLException e) {
+			menu.errorBaseDatos(e.getMessage());
+
+		} 	
+		IOGeneral.pritln(">>>>>Proceso terminado<<<<<");
+		
+	}
+
+	private boolean corroborarDatosMod() {
+		if(this.venta.getCliente()!=null) {
+			if(this.venta.getVuelo()!=null) {
+				try {
+					this.venta.setTotalPagar(Double.parseDouble(menu.getTextTotalPagar().getText()));
+					if(comprobarFechas()) {
+						return true;
+					}
+				}catch(NumberFormatException e) {
+					menu.errorOperacion("El valor debe ser un numero decimal");
+				}
+			}else {
+				menu.errorOperacion("Debe seleccionar un vuelo");
+			}
+		}else {
+			menu.errorOperacion("Debe seleccionar un cliente");
+		}
+		return false;
+	}
+
+	public void actualizarValor() {
+		try {
+			Double valor = (Double.parseDouble(menu.getTextValor().getText()));
+		if(menu.getRdbtnEfectivo().isSelected()) {
+			
+			menu.getTextTotalPagar().setText(String.valueOf(valor));
+		}
+		if(menu.getRdbtnTarjeta().isSelected()) {
+			int c = Integer.valueOf((String) menu.getComboBox_Cuotas().getSelectedItem());
+			if(c==1||c==3||c==6) {
+				menu.getTextValor().setText(String.valueOf(venta.getTotalPagar()));
+			}
+			if(c==12||c==24) {
+				menu.getTextValor().setText(String.valueOf((venta.getTotalPagar()*1.1)));
+			}
+		}
+		}catch (NumberFormatException e) {
+			menu.errorOperacion("El valor solo debe contener numeros");
+		}
+		
 	}
 	
 }
