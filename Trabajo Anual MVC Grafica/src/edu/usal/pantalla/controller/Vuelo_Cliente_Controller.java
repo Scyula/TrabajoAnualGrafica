@@ -7,6 +7,7 @@ import javax.swing.JOptionPane;
 import edu.usal.negocio.dao.factory.ClienteFactory;
 import edu.usal.negocio.dao.interfaces.ClienteDAO;
 import edu.usal.negocio.dominio.Cliente;
+import edu.usal.negocio.dominio.Vuelo;
 import edu.usal.pantalla.vista.Cliente_All_Vista;
 import edu.usal.pantalla.vista.Vuelo_Cliente_Vista;
 import edu.usal.util.DatosEstaticos;
@@ -17,8 +18,10 @@ public class Vuelo_Cliente_Controller {
 	Vuelo_Cliente_Vista menuModDel;
 	Vuelo_All_Controller mPController;
 	private ClienteDAO clientedao;
+	Vuelo vuelo;
 	
-	public Vuelo_Cliente_Controller(Vuelo_All_Controller vuelo_All_Controller) {
+	public Vuelo_Cliente_Controller(Vuelo_All_Controller vuelo_All_Controller, Vuelo vuelo) {
+		this.vuelo= vuelo;
 		this.mPController= vuelo_All_Controller;
 		menuModDel = new Vuelo_Cliente_Vista(this);
 	}
@@ -39,17 +42,14 @@ public class Vuelo_Cliente_Controller {
 
 	public DefaultListModel<Cliente> pedirListaClientes() {
 		DefaultListModel<Cliente> lista = new DefaultListModel<Cliente>();
-		try {
-			clientedao = ClienteFactory.getClienteDAO(DatosEstaticos.getSource());
-			for(Cliente cliente: clientedao.getAllCliente()) {
+			
+		if(!vuelo.getClientes().isEmpty()) {
+			for(Cliente cliente: vuelo.getClientes()) {
 				lista.addElement(cliente);				
-			}
-		} catch (SQLException e) {
-			IOGeneral.pritln(">>>>>Error con la base de datos<<<<<");
-			IOGeneral.pritln(e.getMessage());
+			}		
 		}
 		
-		return lista;
+			return lista;
 	}
 
 

@@ -43,5 +43,15 @@ public class Aeropuerto implements Serializable {
 	}
 	public Aeropuerto() {
 	}
+	@Override
+	public String toString() {
+		if(ciudad.equals("Seleccione un Aeropuerto")) {
+			return "Seleccione un Aeropuerto";
+		}
+		return idAeropuerto + " >> " + ciudad + " >> " + provincia.getId()
+				+ " >> " + pais.getId() ;
+	}
+	
+	
 		
 }

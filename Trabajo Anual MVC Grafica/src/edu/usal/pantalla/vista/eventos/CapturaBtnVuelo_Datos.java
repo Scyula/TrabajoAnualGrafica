@@ -16,14 +16,14 @@ public class CapturaBtnVuelo_Datos implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource().equals(vista.getBtnGuardar())) {
-			vista.getController().almacenarDatos(vista);
-			vista.getController().finalizarVentana();
+			vista.getVista().almacenarDatos(vista);
+			vista.getVista().finalizarVentana();
 		}else if(e.getSource().equals(vista.getBtnCancelar())) {
-			vista.getController().getmPController().hacerVisibleMP();
-			vista.getController().finalizarVentana();
+			vista.getVista().getmPController().hacerVisibleMP();
+			vista.getVista().finalizarVentana();
 		}else if(e.getSource().equals(vista.getBtnGuardarMod())) {
-			vista.getController().updateDatos(vista);
-			vista.getController().finalizarVentana();
+			vista.getVista().updateDatos(vista);
+			vista.getVista().finalizarVentana();
 		}
 
 	}

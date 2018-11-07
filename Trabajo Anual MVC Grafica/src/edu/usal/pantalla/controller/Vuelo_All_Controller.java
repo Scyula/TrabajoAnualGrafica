@@ -88,7 +88,7 @@ public class Vuelo_All_Controller {
 		int res = menuModDel.confirmarSeleccion(vuelo, "MOSTRAR CLIENTES");
 		if(res==JOptionPane.YES_OPTION) {
 			menuModDel.setVisible(false);
-			Vuelo_Cliente_Controller mostrar = new Vuelo_Cliente_Controller(this);
+			Vuelo_Cliente_Controller mostrar = new Vuelo_Cliente_Controller(this, vuelo);
 			
 			
 		}else {

@@ -1,14 +1,32 @@
 package edu.usal.negocio.dao.implementacion.SQL;
 
+import java.io.InputStream;
+import java.io.Reader;
+import java.math.BigDecimal;
+import java.net.URL;
+import java.sql.Array;
+import java.sql.Blob;
 import java.sql.CallableStatement;
+import java.sql.Clob;
+import java.sql.Connection;
+import java.sql.NClob;
+import java.sql.ParameterMetaData;
 import java.sql.PreparedStatement;
+import java.sql.Ref;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.RowId;
 import java.sql.SQLException;
+import java.sql.SQLWarning;
+import java.sql.SQLXML;
 import java.sql.Statement;
+import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import edu.usal.negocio.dao.interfaces.ClienteDAO;
 import edu.usal.negocio.dao.interfaces.VueloDAO;
@@ -30,8 +48,8 @@ public class VueloDAOImplSQL implements VueloDAO {
 	
 	public boolean addVuelo(Vuelo vuelo)  throws SQLException {
 		con = new Coneccion();
+		CallableStatement cal = null ;
 		if(con.iniciarConeccion()) {
-			CallableStatement cal;
 			con.getConeccion().setAutoCommit(false);
 			query = ("EXEC Alta_Vuelo ?,?,?,?,?,?,?,?");
 			cal = con.getConeccion().prepareCall(query);
@@ -43,16 +61,16 @@ public class VueloDAOImplSQL implements VueloDAO {
 			cal.setTimestamp(6, dateToTimestamp(vuelo.getFechaHoraSalida()));
 			cal.setTimestamp(7, dateToTimestamp(vuelo.getFechaHoraLlegada()));
 			cal.setString(8, vuelo.getTiempoVuelo());
-			int r = prep.executeUpdate();
+			int r = cal.executeUpdate();
 			if(r==1) {
 				con.getConeccion().commit();
-				prep.close();
+				cal.close();
 				con.cerrarConeccion();
 				return true;
 			}
 		}
 		con.getConeccion().rollback();
-		prep.close();
+		cal.close();
 		con.cerrarConeccion();
 		return false;
 	}

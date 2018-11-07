@@ -2,13 +2,16 @@ package edu.usal.pantalla.controller;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Hashtable;
 import java.util.List;
 
 import javax.swing.ComboBoxModel;
 
+import edu.usal.negocio.dao.factory.AeropuertoFactory;
 import edu.usal.negocio.dao.factory.ClienteFactory;
 import edu.usal.negocio.dao.factory.VueloFactory;
+import edu.usal.negocio.dao.interfaces.AeropuertoDAO;
 import edu.usal.negocio.dao.interfaces.ClienteDAO;
 import edu.usal.negocio.dao.interfaces.VueloDAO;
 import edu.usal.negocio.dominio.Aeropuerto;
@@ -24,6 +27,7 @@ import edu.usal.pantalla.vista.Cliente_Datos_Vista;
 import edu.usal.pantalla.vista.Vuelo_Datos_Vista;
 import edu.usal.util.DatosEstaticos;
 import edu.usal.util.IOGeneral;
+@SuppressWarnings("deprecation")
 
 public class Vuelo_Datos_Controller {
 	Vuelo_Datos_Vista menu;
@@ -94,45 +98,32 @@ public class Vuelo_Datos_Controller {
 	private Vuelo leerVuelo(Vuelo_Datos_Vista datos) {
 		Vuelo vuelo = new Vuelo();
 		vuelo.setAerolinea((LineaAerea)datos.getComboBox_Aerolinea().getSelectedItem());
-		vuelo.setCantAsientos(Integer.valueOf(datos.getTextCantAsientos().getText()));
-		vuelo.setAeroSalida(obtenerAeroSalida(datos));
-		vuelo.setAeroLlegada(obtenerAeroLlegada(datos));
-		vuelo.setFechaHoraSalida(datos.getFechaSalida().getDate());
-		vuelo.setFechaHoraLlegada(datos.getFechaLlegada().getDate());
+		vuelo.setCantAsientos(Integer.parseInt(datos.getTextCantidadAsientos().getText()));
+		vuelo.setAeroSalida((Aeropuerto)datos.getComboBox_AeropuertoSalida().getSelectedItem());
+		vuelo.setAeroLlegada((Aeropuerto)datos.getComboBox_AeropuertoLlegada().getSelectedItem());
+		vuelo.setFechaHoraSalida(obtenerFechaSalida(datos));
+		vuelo.setFechaHoraLlegada(obtenerFechaLlegada(datos));
 		vuelo.setTiempoVuelo(datos.getTextTiempoVuelo().getText());
-		
+		vuelo.setAsientosDisponibles(vuelo.getCantAsientos());
 		return vuelo;
 	}
-	
-/*	
-	private Direccion obtenerDireccion(Cliente_Datos_Vista datos) {
-		Direccion direc = new Direccion();
-		direc.setPais((Pais)datos.getComboBox_Pais().getSelectedItem());
-		if(direc.getPais().getId()==9) {
-			direc.setProvincia((Provincia)datos.getComboBox_Provincia().getSelectedItem());
-		}else {
-			direc.setProvincia(new Provincia(-1, ""));
-		}
-		direc.setCiudad(datos.getTextCiudad().getText());
-		direc.setCodPostal(datos.getTextCodPostal().getText());
-		direc.setCalle(datos.getTextCalle().getText());
-		direc.setAltura(datos.getTextAltura().getText());
-		return direc;
-	}*/
-/*	private Pasaporte obtenerPasaporte(Cliente_Datos_Vista datos) {
-		Pasaporte pasa = new Pasaporte();
-		pasa.setAutoridademision(datos.getTextAutoridadEmision().getText());
-		pasa.setNroPasaporte(datos.getTextNroPasaporte().getText());
-		pasa.setPais((Pais)datos.getComboBox_PaisEmision().getSelectedItem());
-		pasa.setEmision(datos.getEmisionPasaport().getDate());
-		pasa.setVencimiento(datos.getVencPasaport().getDate());
-		return pasa;
-	}*/
-	/*private PasajeroFrecuente obtenerPasajeroFrecuente(Cliente_Datos_Vista datos) {
-		return new PasajeroFrecuente(((LineaAerea)datos.getComboBox_Aerolinea().getSelectedItem()).getAlianza(), 
-				((LineaAerea)datos.getComboBox_Aerolinea().getSelectedItem()).getId(), 
-				datos.getTextNroPasajero().getText(), datos.getTextCategoria().getText());
-	}*/
+		
+private Date obtenerFechaLlegada(Vuelo_Datos_Vista datos) {
+		Date fecha = new Date();
+		fecha= datos.getDateLlegada().getDate();
+		fecha.setHours(datos.getComboBox_HoraLlegada().getSelectedIndex());
+		fecha.setMinutes(datos.getComboBox_MinutosLlegada().getSelectedIndex());
+		return fecha;
+	}
+
+private Date obtenerFechaSalida(Vuelo_Datos_Vista datos) {
+		Date fecha = new Date();
+		fecha= datos.getDateSalida().getDate();
+		fecha.setHours(datos.getComboBox_HoraSalida().getSelectedIndex());
+		fecha.setMinutes(datos.getComboBox_MinutosSalida().getSelectedIndex());
+		return fecha;
+	}
+
 	
 	public Pais[] obtenerListaPaises() {	
 		Hashtable<Integer, String> lista= DatosEstaticos.getPaises();
@@ -155,23 +146,6 @@ public class Vuelo_Datos_Controller {
 		modelo[lista.size()] = new Provincia(0,lista.get(0));
 		return modelo;
 }
-	
-/*	public Aeropuerto[] obtenerListaAeropuertos(Vuelo_Datos_Vista datos) {
-		List<Aeropuerto> lista= DatosEstaticos.getAeropuertos();
-		Aeropuerto[] modelo = new Aeropuerto[(lista.size()+1)];
-		int i=0;
-		modelo[i]= new Aeropuerto();
-		modelo[i].setPais((Pais)datos.getComboBox_Pais().getSelectedItem());
-		modelo[i].setProvincia((Provincia)datos.getComboBox_Provincia().getSelectedItem());
-		modelo[i].setCiudad("Seleccione una Ciudad");
-
-		for (i=1;i<lista.size();i++) {
-			modelo[i]=lista.get(i-1);
-		}
-		modelo[i]=lista.get(i-1);
-		return modelo;
-}*/
-
 
 	public LineaAerea[] obtenerListaAerolinea() {
 		/*LineaAerea[] lista = DatosEstaticos.getAerolineas();
@@ -193,39 +167,32 @@ public class Vuelo_Datos_Controller {
 		modelo[i]=lista.get(i-1);
 		return modelo;
 	}
+	
 	public void finalizarVentana() {
 				menu.dispose();
 	}
 
-	public int obtenerIndexPais(ComboBoxModel<Pais> comboBoxModel, Vuelo v) {
-		Pais buscar = v.getAeroSalida().getPais();
-		for (int i=1; i<comboBoxModel.getSize();i++) {
-			if(comboBoxModel.getElementAt(i).getId()==buscar.getId()) {
-				return i;
-			}
+	public Aeropuerto[] obtenerListaAeropuerto() {
+		try {
+		AeropuertoDAO aerodao = AeropuertoFactory.getAeropuertoDAO(DatosEstaticos.getSource());
+		List<Aeropuerto> lista;
+			lista = aerodao.getAllAeropuerto();
+		Aeropuerto[] modelo = new Aeropuerto[(lista.size()+1)];
+		int i=0;
+		modelo[i]= new Aeropuerto();
+		modelo[i].setCiudad("Seleccione un Aeropuerto");
+		for (i=1;i<lista.size();i++) {
+			modelo[i]=lista.get(i-1);
 		}
-		return -1;
-	}
-
-	public int obtenerIndexProvincia(ComboBoxModel<Provincia> comboBoxModel, Vuelo v) {
-		Provincia buscar = v.getAeroSalida().getProvincia();
-		for (int i=1; i<comboBoxModel.getSize();i++) {
-			if(comboBoxModel.getElementAt(i).getId()==buscar.getId()) {
-				return i;
-			}
+		modelo[i]=lista.get(i-1);
+		return modelo;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		return -1;
+		return null;
 	}
-
-	public int obtenerIndexPaisEmision(ComboBoxModel<Pais> comboBoxModel, Vuelo v) {
-		Pais buscar = v.getAeroSalida().getPais();
-		for (int i=1; i<comboBoxModel.getSize();i++) {
-			if(comboBoxModel.getElementAt(i).getId()==buscar.getId()) {
-				return i;
-			}
-		}
-		return -1;
-	}
+	
 
 	public int obtenerIndexAerolinea(ComboBoxModel<LineaAerea> comboBoxModel, Vuelo v) {
 		int buscar = v.getAerolinea().getId();
@@ -236,33 +203,17 @@ public class Vuelo_Datos_Controller {
 		}
 		return -1;
 	}
-
-	public String alianza(int alianza) {
-		if(alianza==1) {
-			return "Skyteam";
-		}else if (alianza==2) {
-			return "Oneworld";
-		}else if (alianza==3) {
-			return "Star Alliance";
-		}else {
-			return "";
+	
+	public int obtenerIndexAeropuerto(ComboBoxModel<Aeropuerto> comboBoxModel, Aeropuerto aeropuerto) {
+		String buscar = aeropuerto.getIdAeropuerto();
+		for (int i=1; i<comboBoxModel.getSize();i++) {
+			if(comboBoxModel.getElementAt(i).getIdAeropuerto().equalsIgnoreCase(buscar)) {
+				return i;
+			}
 		}
+		return -1;
 	}
+
 	
-	private Aeropuerto obtenerAeroLlegada(Vuelo_Datos_Vista datos) {
-		Aeropuerto aero = new Aeropuerto();
-		aero.setCiudad(datos.getTextCiudadLlegada().getText());
-		aero.setProvincia((Provincia)datos.getComboBox_ProvinciaLlegada().getSelectedItem());
-		aero.setPais((Pais)datos.getComboBox_PaisLlegada().getSelectedItem());
-		return aero;
-	}
-	
-	private Aeropuerto obtenerAeroSalida(Vuelo_Datos_Vista datos) {
-		Aeropuerto aero = new Aeropuerto();
-		aero.setCiudad(datos.getTextCiudadSalida().getText());
-		aero.setProvincia((Provincia)datos.getComboBox_ProvinciaSalida().getSelectedItem());
-		aero.setPais((Pais)datos.getComboBox_PaisSalida().getSelectedItem());
-		return aero;
-	}
 	
 }
