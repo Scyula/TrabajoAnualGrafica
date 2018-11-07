@@ -33,7 +33,7 @@ public class VentaDAOImplSQL implements VentaDAO {
 		con = new Coneccion();
 		if(con.iniciarConeccion()) {
 			con.getConeccion().setAutoCommit(false);
-			query = ("INSERT INTO Ventas VALUES (?,?,?,?,?,?,?,?)");
+			query = ("INSERT INTO Ventas VALUES (?,?,?,?,?,?,?)");
 			prep = con.getConeccion().prepareStatement(query);
 			prep.setInt(1,venta.getCliente().getDNI());
 			prep.setInt(2, venta.getLineaAerea().getId());
@@ -41,8 +41,7 @@ public class VentaDAOImplSQL implements VentaDAO {
 			prep.setTimestamp(4, dateToTimestamp(venta.getFechaHoraVenta()));
 			prep.setString(5, venta.getFormaPago());
 			prep.setInt(6, venta.getCuotas());
-			prep.setInt(7, venta.getCant_vuelos());
-			prep.setDouble(8, venta.getTotalPagar());
+			prep.setDouble(7, venta.getTotalPagar());
 			int r = prep.executeUpdate();
 			if(r==1) {
 				con.getConeccion().commit();
@@ -62,7 +61,7 @@ public class VentaDAOImplSQL implements VentaDAO {
 		con = new Coneccion();
 		if(con.iniciarConeccion()) {
 			con.getConeccion().setAutoCommit(false);
-			query = ("UPDATE Ventas SET ID_Cliente=?,ID_Aerolinea=?,ID_Vuelo=?,FechaHoraVenta=?,MedioPago=?,Cuotas=?,Cantidad=?,Cantidad=?,Total=? WHERE ID_Venta=?;");
+			query = ("UPDATE Ventas SET ID_Cliente=?,ID_Aerolinea=?,ID_Vuelo=?,FechaHoraVenta=?,MedioPago=?,Cuotas=?,Total=? WHERE ID_Venta=?;");
 			prep = con.getConeccion().prepareStatement(query);
 			prep.setInt(1,venta.getCliente().getDNI());
 			prep.setInt(2, venta.getLineaAerea().getId());
@@ -70,9 +69,8 @@ public class VentaDAOImplSQL implements VentaDAO {
 			prep.setTimestamp(4, dateToTimestamp(venta.getFechaHoraVenta()));
 			prep.setString(5, venta.getFormaPago());
 			prep.setInt(6, venta.getCuotas());
-			prep.setInt(7, venta.getCant_vuelos());
-			prep.setDouble(8, venta.getTotalPagar());
-			prep.setInt(9, venta.getId_venta());
+			prep.setDouble(7, venta.getTotalPagar());
+			prep.setInt(8, venta.getId_venta());
 			int r = prep.executeUpdate();
 			if(r==1) {
 				con.getConeccion().commit();
@@ -116,7 +114,7 @@ public class VentaDAOImplSQL implements VentaDAO {
 			ResultSet rs = prep.executeQuery();
 			while(rs.next()) {
 				lista.add(new Venta(rs.getInt(1), leerCliente(rs.getInt(2)), leerVuelo(rs.getString(4)), leerAerolinea(rs.getInt(3)), 
-						timestampToDate(rs.getTimestamp(5)), rs.getString(6), rs.getInt(7), rs.getDouble(9), rs.getInt(8)));
+						timestampToDate(rs.getTimestamp(5)), rs.getString(6), rs.getInt(7), rs.getDouble(8)));
 				}
 			prep.close();
 			con.cerrarConeccion();
@@ -171,7 +169,7 @@ public class VentaDAOImplSQL implements VentaDAO {
 			ResultSet rs = prep.executeQuery();
 			rs.next();
 			Venta leer = new Venta(rs.getInt(1), leerCliente(rs.getInt(2)), leerVuelo(rs.getString(4)), leerAerolinea(rs.getInt(3)), 
-					timestampToDate(rs.getTimestamp(5)), rs.getString(6), rs.getInt(7), rs.getDouble(9), rs.getInt(8));
+					timestampToDate(rs.getTimestamp(5)), rs.getString(6), rs.getInt(7), rs.getDouble(8));
 			
 			prep.close();
 			con.cerrarConeccion();

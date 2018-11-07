@@ -12,14 +12,13 @@ public class Venta {
 	private String formaPago;
 	private int cuotas;
 	private Double totalPagar;
-	private int cant_vuelos;
 	
 	public Venta(){
 
 	}
 
 	public Venta(int id_venta, Cliente cliente, Vuelo vuelo, LineaAerea lineaAerea, Date fechaHoraVenta,
-			String formaPago, int cuotas, Double totalPagar, int cant_vuelos) {
+			String formaPago, int cuotas, Double totalPagar) {
 		super();
 		this.id_venta = id_venta;
 		this.cliente = cliente;
@@ -29,7 +28,6 @@ public class Venta {
 		this.formaPago = formaPago;
 		this.cuotas = cuotas;
 		this.totalPagar = totalPagar;
-		this.cant_vuelos = cant_vuelos;
 	}
 
 	public int getId_venta() {
@@ -88,14 +86,6 @@ public class Venta {
 		this.totalPagar = totalPagar;
 	}
 
-	public int getCant_vuelos() {
-		return cant_vuelos;
-	}
-
-	public void setCant_vuelos(int cant_vuelos) {
-		this.cant_vuelos = cant_vuelos;
-	}
-
 	public int getCuotas() {
 		return cuotas;
 	}
@@ -108,7 +98,7 @@ public class Venta {
 	public String toString() {
 		return "Venta [id_venta=" + id_venta + ", cliente=" + cliente.getDNI() + ", vuelo=" + vuelo.getId_vuelo() + ", lineaAerea="
 				+ lineaAerea.getNombre() + ", fechaHoraVenta=" + fechaHoraVenta + ", formaPago=" + formaPago + ", cuotas=" + cuotas
-				+ ", totalPagar=" + totalPagar + ", cant_vuelos=" + cant_vuelos + "]";
+				+ ", totalPagar=" + totalPagar + "]";
 	}
 	
 	

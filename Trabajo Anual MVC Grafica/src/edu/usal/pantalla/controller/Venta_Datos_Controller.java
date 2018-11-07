@@ -74,7 +74,8 @@ public class Venta_Datos_Controller {
 				ventadao = VentaFactory.getVentaDAO(DatosEstaticos.getSource());
 				VueloDAO vuelodao = VueloFactory.getVueloDAO(DatosEstaticos.getSource());
 				this.venta.getVuelo().setAsientosDisponibles(this.venta.getVuelo().getAsientosDisponibles()-1);
-				if(ventadao.addVenta(venta)||vuelodao.updateVuelo(this.venta.getVuelo())) {
+				
+				if(ventadao.addVenta(venta)&&vuelodao.updateVuelo(this.venta.getVuelo())) {
 					menu.exitoOperacion();
 				}else {
 					menu.errorOperacion("No se pudo guardar la venta");
@@ -115,7 +116,8 @@ public class Venta_Datos_Controller {
 	}
 
 	private boolean comprobarFechas() {
-		if(cumpleañosCliente()||FechaEmision()||fechaVencimiento(this.venta.getVuelo().getFechaHoraLlegada())) {
+		if(cumpleañosCliente()&&FechaEmision()&&fechaVencimiento(this.venta.getVuelo().getFechaHoraLlegada())) {
+			this.venta.setFechaHoraVenta(new Date());
 			return true;
 		}
 		return false;
@@ -171,7 +173,7 @@ public class Venta_Datos_Controller {
 		double valor;
 		switch(buscar) {
 		case 12: 
-		case 24: valor = Double.parseDouble(menu.getTextValor().getText())*1.1;
+		case 24: valor = (Double.parseDouble(menu.getTextValor().getText())*1.1);
 			default: valor = Double.parseDouble(menu.getTextValor().getText());
 		}
 		this.venta.setCuotas(buscar);
