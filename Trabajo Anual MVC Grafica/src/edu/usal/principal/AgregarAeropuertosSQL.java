@@ -60,6 +60,7 @@ public class AgregarAeropuertosSQL {
 				}else {
 					nueva.setProvincia(new Provincia (0,null));
 				}
+				System.out.println(nueva.getIdAeropuerto());
 				lista.add(nueva);
 			}
 		}catch (IOException e) {

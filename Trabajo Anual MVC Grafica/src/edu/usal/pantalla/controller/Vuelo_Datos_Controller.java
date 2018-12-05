@@ -31,15 +31,15 @@ import edu.usal.util.IOGeneral;
 
 public class Vuelo_Datos_Controller {
 	Vuelo_Datos_Vista menu;
-	MenuPrincipalController mPController;
+	MenuPrincipalControllerTabla mPController;
 	private VueloDAO vuelodao;
 	
-	public Vuelo_Datos_Controller(MenuPrincipalController menuPrincipalController) {
+	public Vuelo_Datos_Controller(MenuPrincipalControllerTabla menuPrincipalController) {
 		this.mPController= menuPrincipalController;
 		menu = new Vuelo_Datos_Vista(this);
 	}
 	
-	public Vuelo_Datos_Controller(MenuPrincipalController menuPrincipalController, Vuelo vuelo) {
+	public Vuelo_Datos_Controller(MenuPrincipalControllerTabla menuPrincipalController, Vuelo vuelo) {
 		this.mPController= menuPrincipalController;
 		menu = new Vuelo_Datos_Vista(this , vuelo);
 		
@@ -87,11 +87,11 @@ public class Vuelo_Datos_Controller {
 		IOGeneral.pritln(">>>>>Proceso terminado<<<<<");
 	}
 
-	public MenuPrincipalController getmPController() {
+	public MenuPrincipalControllerTabla getmPController() {
 		return mPController;
 	}
 
-	public void setmPController(MenuPrincipalController mPController) {
+	public void setmPController(MenuPrincipalControllerTabla mPController) {
 		this.mPController = mPController;
 	}
 	

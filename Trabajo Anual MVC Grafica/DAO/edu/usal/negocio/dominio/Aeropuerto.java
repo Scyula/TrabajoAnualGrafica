@@ -45,11 +45,18 @@ public class Aeropuerto implements Serializable {
 	}
 	@Override
 	public String toString() {
+		String devuelve = "Seleccione un Aeropuerto";
+		String aux="";
+		
 		if(ciudad.equals("Seleccione un Aeropuerto")) {
-			return "Seleccione un Aeropuerto";
-		}
-		return idAeropuerto + " >> " + ciudad + " >> " + provincia.getId()
-				+ " >> " + pais.getId() ;
+		}else {
+			if(provincia.getId()==0) {
+			}else {
+				aux= provincia.getNombre();
+			}
+			devuelve= ciudad+",["+idAeropuerto+"]  "+pais.getNombre()+"-"+aux;
+			}
+		return devuelve;
 	}
 	
 	

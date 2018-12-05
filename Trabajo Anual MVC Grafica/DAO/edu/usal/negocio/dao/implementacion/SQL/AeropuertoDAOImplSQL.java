@@ -22,7 +22,7 @@ public class AeropuertoDAOImplSQL implements AeropuertoDAO {
 		List <Aeropuerto> lista = new ArrayList<Aeropuerto>();
 		con = new Coneccion();
 		if(con.iniciarConeccion()) {
-			query = "SELECT * FROM Aeropuerto";
+			query = "SELECT * FROM Aeropuerto ORDER BY Ciudad";
 			prep = con.getConeccion().prepareStatement(query);
 			ResultSet rs = prep.executeQuery();
 			while(rs.next()) {

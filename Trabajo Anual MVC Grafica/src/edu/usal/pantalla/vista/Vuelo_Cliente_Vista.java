@@ -1,16 +1,13 @@
 package edu.usal.pantalla.vista;
 
 import java.awt.BorderLayout;
-import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import edu.usal.negocio.dominio.Cliente;
-import edu.usal.pantalla.controller.Cliente_All_Controller;
 import edu.usal.pantalla.controller.Vuelo_Cliente_Controller;
-import edu.usal.pantalla.vista.eventos.CapturaBtnCliente_ModDel;
 import edu.usal.pantalla.vista.eventos.CapturaBtnVuelo_Cliente;
 
 import javax.swing.JLabel;

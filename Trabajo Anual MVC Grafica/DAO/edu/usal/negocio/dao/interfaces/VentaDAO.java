@@ -11,7 +11,7 @@ public interface VentaDAO {
 	public boolean updateVenta(Venta venta) throws SQLException;
 	public boolean deleteVentas(Venta  venta) throws SQLException;
 	public List<Venta> getAllVenta() throws SQLException;
-	public Venta readVenta() throws SQLException;
+	public Venta readVenta(int id) throws SQLException;
 	
 	
 }

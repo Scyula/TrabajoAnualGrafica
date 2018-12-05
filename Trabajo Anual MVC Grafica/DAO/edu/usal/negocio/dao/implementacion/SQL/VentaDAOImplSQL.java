@@ -160,12 +160,12 @@ public class VentaDAOImplSQL implements VentaDAO {
         return null;
     }
 
-	@Override
-	public Venta readVenta() throws SQLException {
+	public Venta readVenta(int id) throws SQLException {
 		con = new Coneccion();
 		if(con.iniciarConeccion()) {
 			query = "SELECT * FROM Ventas WHERE ID_Venta=?";
 			prep = con.getConeccion().prepareStatement(query);
+			prep.setInt(0, id);
 			ResultSet rs = prep.executeQuery();
 			rs.next();
 			Venta leer = new Venta(rs.getInt(1), leerCliente(rs.getInt(2)), leerVuelo(rs.getString(4)), leerAerolinea(rs.getInt(3)), 

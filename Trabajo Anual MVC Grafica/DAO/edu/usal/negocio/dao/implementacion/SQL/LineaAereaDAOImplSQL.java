@@ -12,6 +12,7 @@ import edu.usal.negocio.dao.interfaces.VueloDAO;
 import edu.usal.negocio.dominio.LineaAerea;
 import edu.usal.negocio.dominio.Vuelo;
 import edu.usal.util.Coneccion;
+import edu.usal.util.IOGeneral;
 
 public class LineaAereaDAOImplSQL implements LineaAereaDAO {
 	Coneccion con;
@@ -23,12 +24,15 @@ public class LineaAereaDAOImplSQL implements LineaAereaDAO {
 	public boolean addLineaAerea(LineaAerea lineaAerea) throws SQLException {
 		con = new Coneccion();
 		if(con.iniciarConeccion()) {
-			query = "INSERT INTO Aerolinea VALUES (?,?,null)";
+			query = "INSERT INTO Aerolinea VALUES (?,?,?)";
 			prep = con.getConeccion().prepareStatement(query);
 			prep.setInt(1, lineaAerea.getAlianza());
 			prep.setString(2, lineaAerea.getNombre());
+			prep.setString(3, AsignarREF(lineaAerea.getNombre(), con));
 			int r = prep.executeUpdate();
 			if(r==1) {
+				
+				
 				prep.close();
 				con.cerrarConeccion();
 				return true;
@@ -113,11 +117,9 @@ public class LineaAereaDAOImplSQL implements LineaAereaDAO {
 				lista.add(vuelos.readVuelo(rs.getString(1)));
 				}
 			prep.close();
-			con.cerrarConeccion();
 			return lista;
 		}
 		prep.close();
-		con.cerrarConeccion();
 		return lista;
 	}
 
@@ -139,5 +141,68 @@ public class LineaAereaDAOImplSQL implements LineaAereaDAO {
 		return null;		
 	}
 
+	private String AsignarREF( String nom, Coneccion con ) throws SQLException {
+		ArrayList<String> ref = leerRefExistentes(con);
+		String[] nombre = nom.split(" ");
+		char[] primero = nombre[0].toCharArray();
+		String aux = "";
+		if(nombre.length>1) {
+			boolean queda = false;
+			while(!queda) {
+				char[] segundo = nombre[1].toCharArray();
+				for(int i=0;i<primero.length;i++) {
+					for(int j=0;j<segundo.length;j++) {
+						aux= String.valueOf(Character.toString(primero[i]).toUpperCase()+Character.toString(segundo[j]).toUpperCase());
+						queda = comprobar(aux,ref);
+						if(queda==true) {
+							break;
+						}
+					}
+					if(queda==true) {
+						break;
+					}
+				}
+			}
+		}else {
+			boolean queda = false;
+			while(!queda) {
+				for(int i=0;i<primero.length-1;i++) {
+					for(int j=1;j<primero.length-1;j++) {
+						aux= String.valueOf(Character.toString(primero[i]).toUpperCase()+Character.toString(primero[j]).toUpperCase());
+						queda = comprobar(aux,ref);	
+						if(queda) {
+							break;
+						}
+					}	
+					if(queda) {
+						break;
+					}
+				}
+			}
+		}
+		IOGeneral.pritln(aux);
+		return aux;
+	}
+
+	private boolean comprobar(String aux, ArrayList<String> ref) {
+		for (String string : ref) {
+			if(string.equalsIgnoreCase(aux)) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	private ArrayList<String> leerRefExistentes(Coneccion con) throws SQLException {
+		ArrayList<String> lista = new ArrayList<String>();
+		String query = ("SELECT REF FROM Aerolinea");
+		PreparedStatement prep = con.getConeccion().prepareStatement(query);
+		ResultSet rs = prep.executeQuery();
+		while(rs.next()) {
+			lista.add(rs.getString(1));
+		}
+		prep.close();
+		return lista;
+	}
 
 }

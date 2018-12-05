@@ -23,18 +23,17 @@ import edu.usal.util.IOGeneral;
 public class Cliente_Datos_Controller {
 		
 	Cliente_Datos_Vista menu;
-	MenuPrincipalController mPController;
+	MenuPrincipalControllerTabla mPController;
 	private ClienteDAO clientedao;
 	
-	public Cliente_Datos_Controller(MenuPrincipalController menuPrincipalController) {
-		this.mPController= menuPrincipalController;
+	public Cliente_Datos_Controller(MenuPrincipalControllerTabla menuPrincipalControllerTabla) {
+		this.mPController= menuPrincipalControllerTabla;
 		menu = new Cliente_Datos_Vista(this);
 	}
 	
-	public Cliente_Datos_Controller(MenuPrincipalController menuPrincipalController, Cliente cliente) {
+	public Cliente_Datos_Controller(MenuPrincipalControllerTabla menuPrincipalController, Cliente cliente) {
 		this.mPController= menuPrincipalController;
 		menu = new Cliente_Datos_Vista(this , cliente);
-		
 	}
 
 	public void updateDatos(Cliente_Datos_Vista datos) {
@@ -52,7 +51,6 @@ public class Cliente_Datos_Controller {
 			IOGeneral.pritln(">>>>>Error con la base de datos<<<<<");
 			IOGeneral.pritln(e.getMessage());
 		} finally {
-			menu.dispose();
 			mPController.hacerVisibleMP();
 		}
 		IOGeneral.pritln(">>>>>Proceso terminado<<<<<");
@@ -73,17 +71,16 @@ public class Cliente_Datos_Controller {
 			IOGeneral.pritln(">>>>>Error con la base de datos<<<<<");
 			IOGeneral.pritln(e.getMessage());
 		} finally {
-			menu.dispose();
 			mPController.hacerVisibleMP();
 		}
 		IOGeneral.pritln(">>>>>Proceso terminado<<<<<");
 	}
 
-	public MenuPrincipalController getmPController() {
+	public MenuPrincipalControllerTabla getmPController() {
 		return mPController;
 	}
 
-	public void setmPController(MenuPrincipalController mPController) {
+	public void setmPController(MenuPrincipalControllerTabla mPController) {
 		this.mPController = mPController;
 	}
 	
@@ -175,7 +172,9 @@ public class Cliente_Datos_Controller {
 		for (i=1;i<lista.size();i++) {
 			modelo[i]=lista.get(i-1);
 		}
-		modelo[i]=lista.get(i-1);
+		if(!lista.isEmpty()) {
+			modelo[i]=lista.get(i-1);
+		}
 		return modelo;
 	}
 	public void finalizarVentana() {

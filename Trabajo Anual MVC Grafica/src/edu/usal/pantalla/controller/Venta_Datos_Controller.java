@@ -1,11 +1,7 @@
 package edu.usal.pantalla.controller;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.Hashtable;
-
-import javax.swing.ComboBoxModel;
 
 import edu.usal.negocio.dao.factory.ClienteFactory;
 import edu.usal.negocio.dao.factory.VentaFactory;
@@ -14,16 +10,8 @@ import edu.usal.negocio.dao.interfaces.ClienteDAO;
 import edu.usal.negocio.dao.interfaces.VentaDAO;
 import edu.usal.negocio.dao.interfaces.VueloDAO;
 import edu.usal.negocio.dominio.Cliente;
-import edu.usal.negocio.dominio.Direccion;
-import edu.usal.negocio.dominio.LineaAerea;
-import edu.usal.negocio.dominio.Pais;
-import edu.usal.negocio.dominio.PasajeroFrecuente;
-import edu.usal.negocio.dominio.Pasaporte;
-import edu.usal.negocio.dominio.Provincia;
-import edu.usal.negocio.dominio.Telefono;
 import edu.usal.negocio.dominio.Venta;
 import edu.usal.negocio.dominio.Vuelo;
-import edu.usal.pantalla.vista.Cliente_Datos_Vista;
 import edu.usal.pantalla.vista.Venta_Datos_Vista;
 import edu.usal.util.DatosEstaticos;
 import edu.usal.util.IOGeneral;
@@ -32,17 +20,17 @@ import edu.usal.util.IOGeneral;
 public class Venta_Datos_Controller {
 		
 	Venta_Datos_Vista menu;
-	MenuPrincipalController mPController;
+	MenuPrincipalControllerTabla mPController;
 	private VentaDAO ventadao;
 	private Venta venta; 
 	
-	public Venta_Datos_Controller(MenuPrincipalController menuPrincipalController) {
+	public Venta_Datos_Controller(MenuPrincipalControllerTabla menuPrincipalController) {
 		this.venta = new Venta();
 		this.mPController= menuPrincipalController;
 		this.menu = new Venta_Datos_Vista(this);
 	}
 	
-	public Venta_Datos_Controller(MenuPrincipalController menuPrincipalController, Venta modificar) {
+	public Venta_Datos_Controller(MenuPrincipalControllerTabla menuPrincipalController, Venta modificar) {
 		this.venta=modificar;
 		this.mPController= menuPrincipalController;
 		this.menu = new Venta_Datos_Vista(this , modificar);
@@ -155,11 +143,11 @@ public class Venta_Datos_Controller {
 		return false;
 	}
 
-	public MenuPrincipalController getmPController() {
+	public MenuPrincipalControllerTabla getmPController() {
 		return mPController;
 	}
 
-	public void setmPController(MenuPrincipalController mPController) {
+	public void setmPController(MenuPrincipalControllerTabla mPController) {
 		this.mPController = mPController;
 	}
 	
