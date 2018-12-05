@@ -2,6 +2,7 @@ package edu.usal.pantalla.controller;
 
 import java.awt.Component;
 import java.sql.SQLException;
+import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.table.TableCellRenderer;
@@ -60,7 +61,7 @@ public class MenuPrincipalControllerTabla{
 		public void seleccionClientes() {
 			try {
 				datos = new ActualizarDatos();
-				this.menuPrincipal.getTable().setModel(datos.clientes(this.menuPrincipal.getTable()));
+				this.menuPrincipal.getTable().setModel(datos.clientes());
 				this.calcularEspacio();
 
 				this.menuPrincipal.getPanel_Agregar().removeAll();
@@ -139,7 +140,7 @@ public class MenuPrincipalControllerTabla{
 		public void seleccionAerolinea() {
 			try {
 				datos = new ActualizarDatos();
-				this.menuPrincipal.getTable().setModel(datos.aerolineas(this.menuPrincipal.getTable()));
+				this.menuPrincipal.getTable().setModel(datos.aerolineas());
 				this.calcularEspacio();
 				
 				this.menuPrincipal.getPanel_Agregar().removeAll();
@@ -246,7 +247,7 @@ public class MenuPrincipalControllerTabla{
 		public void seleccionVuelos() {
 			try {
 				datos = new ActualizarDatos();
-				this.menuPrincipal.getTable().setModel(datos.vuelos(this.menuPrincipal.getTable()));
+				this.menuPrincipal.getTable().setModel(datos.vuelos());
 				
 				this.menuPrincipal.getPanel_Agregar().removeAll();
 				this.menuPrincipal.getPanel_Eliminar().removeAll();
@@ -326,7 +327,7 @@ public class MenuPrincipalControllerTabla{
 		public void seleccionVenta() {
 			try {
 				datos = new ActualizarDatos();
-				this.menuPrincipal.getTable().setModel(datos.ventas(this.menuPrincipal.getTable()));
+				this.menuPrincipal.getTable().setModel(datos.ventas());
 				
 				this.menuPrincipal.getPanel_Agregar().removeAll();
 				this.menuPrincipal.getPanel_Eliminar().removeAll();
@@ -351,14 +352,14 @@ public class MenuPrincipalControllerTabla{
 
 		public void nuevoVenta() {
 			this.menuPrincipal.setVisible(false);
-			menuDatosVuelo = new Vuelo_Datos_Controller(this);
+			menuDatosVenta = new Venta_Datos_Controller(this);
 			seleccionVenta();	
 		}
 
 		public void modVenta() {
 			Venta select = buscarVenta();
 			if(select==null) {
-				this.menuPrincipal.fracasoOperacion("La seleccion de la aerolinea");
+				this.menuPrincipal.fracasoOperacion("La seleccion de la venta");
 			}else {
 				if(this.menuPrincipal.confirmarSeleccion(select, "(MODIFICACION)")){
 					this.menuPrincipal.setVisible(false);
@@ -374,7 +375,7 @@ public class MenuPrincipalControllerTabla{
 		public void delVenta() {
 			Venta select = buscarVenta();
 			if(select==null) {
-				this.menuPrincipal.fracasoOperacion("La seleccion de la aerolinea");
+				this.menuPrincipal.fracasoOperacion("La seleccion de la venta");
 			}else {
 				if(this.menuPrincipal.confirmarSeleccion(select, "(ELIMINACION)")){
 					oper.eliminar(this, select);
@@ -388,7 +389,7 @@ public class MenuPrincipalControllerTabla{
 		private Venta buscarVenta() {
 			try {
 				VentaDAO linea = VentaFactory.getVentaDAO(DatosEstaticos.getSource());
-				return linea.readVenta((int) this.menuPrincipal.getTable().getModel().getValueAt(this.menuPrincipal.getTable().getSelectedRow(), 0));	
+				return linea.readVenta(Integer.valueOf((String)this.menuPrincipal.getTable().getModel().getValueAt(this.menuPrincipal.getTable().getSelectedRow(), 0)));	
 				} catch (SQLException e) {
 					IOGeneral.pritln(">>>>>Error con la base de datos<<<<<");
 					IOGeneral.pritln(e.getMessage());
@@ -397,5 +398,17 @@ public class MenuPrincipalControllerTabla{
 					IOGeneral.pritln(e.getMessage());
 				}
 				return null;
+		}
+
+		public void verVuelosAerolinea() {
+			LineaAerea linea = buscarAerolinea();
+			menuPrincipal.setVisible(false);
+			LineaAerea_Vuelo_Controller aeroVuelos = new LineaAerea_Vuelo_Controller(this,linea);
+		}
+
+		public void verClientesVuelo() {
+			Vuelo vuelo = buscarVuelo();
+			menuPrincipal.setVisible(false);
+			Vuelo_Cliente_Controller vueloCliente = new Vuelo_Cliente_Controller(this, vuelo);
 		}
 }

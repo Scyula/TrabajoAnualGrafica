@@ -59,15 +59,12 @@ public class CapturaBtnMP_Tabla implements ActionListener {
 			
 			
 			if(e.getSource().equals(vista.getBtnAddVuelo())) {
-
 				vista.getMpController().nuevoVuelo();
 			}
 			if(e.getSource().equals(vista.getBtnModVuelo())) {
-
 				vista.getMpController().modVuelo();
 			}
 			if(e.getSource().equals(vista.getBtnDelVuelo())) {
-
 				vista.getMpController().delVuelo();
 			}
 			if(e.getSource().equals(vista.getBtnVerClientes())) {
@@ -78,15 +75,12 @@ public class CapturaBtnMP_Tabla implements ActionListener {
 			
 			
 			if(e.getSource().equals(vista.getBtnAddVenta())) {
-
 				vista.getMpController().nuevoVenta();
 			}
 			if(e.getSource().equals(vista.getBtnModVenta())) {
-
 				vista.getMpController().modVenta();
 			}
 			if(e.getSource().equals(vista.getBtnDelVenta())) {
-
 				vista.getMpController().delVenta();
 			}
 			

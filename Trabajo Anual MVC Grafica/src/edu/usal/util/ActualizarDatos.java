@@ -24,7 +24,7 @@ import edu.usal.negocio.dominio.Vuelo;
 
 public class ActualizarDatos {
 	
-	public TableModel clientes(JTable tabla) throws SQLException {
+	public TableModel clientes() throws SQLException {
 		Vector<String> columnNames = new Vector<String>();
 	    columnNames.addElement("Nombre");
 	    columnNames.addElement("Apellido");
@@ -56,7 +56,7 @@ public class ActualizarDatos {
 		return fechaNac.getDate()+"-"+(fechaNac.getMonth()+1)+"-"+(fechaNac.getYear()+1900);
 	}
 
-	public TableModel aerolineas(JTable table) throws SQLException {
+	public TableModel aerolineas() throws SQLException {
 		Vector<String> columnNames = new Vector<String>();
 	    columnNames.addElement("ID");
 	    columnNames.addElement("Nombre");
@@ -89,7 +89,7 @@ public class ActualizarDatos {
 		}else {return "";}
 	}
 
-	public TableModel vuelos(JTable table) throws SQLException {
+	public TableModel vuelos() throws SQLException {
 		Vector<String> columnNames = new Vector<String>();
 	    columnNames.addElement("ID");
 	    columnNames.addElement("Aerolinea");
@@ -129,7 +129,7 @@ public class ActualizarDatos {
 		return fechaNac.getDate()+"-"+(fechaNac.getMonth()+1)+"-"+(fechaNac.getYear()+1900)+" "+fechaNac.getHours()+":"+fechaNac.getMinutes();
 	}
 
-	public TableModel ventas(JTable table) throws SQLException {
+	public TableModel ventas() throws SQLException {
 		Vector<String> columnNames = new Vector<String>();
 	    columnNames.addElement("ID");
 	    columnNames.addElement("Vuelo");
@@ -156,6 +156,66 @@ public class ActualizarDatos {
 			    aux.addElement(obtenerFechaHora(vent.getFechaHoraVenta()));
 			    aux.addElement(String.valueOf(vent.getFormaPago()));
 			    aux.addElement(String.valueOf(vent.getCuotas()));
+			    rowData.add(aux);
+			}
+		}
+		TableModel tabla1 = new DefaultTableModel(rowData,columnNames);
+		return tabla1;
+	}
+	
+	public TableModel vuelosAero(LineaAerea linea) {
+		Vector<String> columnNames = new Vector<String>();
+	    columnNames.addElement("ID");
+	    columnNames.addElement("Aerolinea");
+	    columnNames.addElement("Aero Salida");
+	    columnNames.addElement("Fecha y Hora Salida");
+	    columnNames.addElement("Aero Llegada");
+	    columnNames.addElement("Fecha y Hora Llegada");
+	    columnNames.addElement("Asientos");
+	    columnNames.addElement("Disponibles");
+	    columnNames.addElement("Tiempo Vuelo");
+	    
+	    List<Vuelo> lista = linea.getVuelos();
+	     
+	    Vector<Vector> rowData = new Vector<Vector>();
+		if(!lista.isEmpty()) {	
+			for (Vuelo vue : lista) {
+				Vector<String> aux = new Vector<String>();
+			    aux.addElement(vue.getId_vuelo());
+			    aux.addElement(vue.getAerolinea().getNombre());
+			    aux.addElement(vue.getAeroSalida().getCiudad());
+			    aux.addElement(obtenerFechaHora(vue.getFechaHoraSalida()));
+			    aux.addElement(vue.getAeroLlegada().getCiudad());
+			    aux.addElement(obtenerFechaHora(vue.getFechaHoraLlegada()));
+			    aux.addElement(String.valueOf(vue.getCantAsientos()));
+			    aux.addElement(String.valueOf(vue.getCantAsientos()));
+			    aux.addElement(vue.getTiempoVuelo());
+			    rowData.add(aux);
+			}
+		}
+		TableModel tabla1 = new DefaultTableModel(rowData,columnNames);
+		return tabla1;
+	}
+	
+	public TableModel clientesVuelo(Vuelo vuelo){
+		Vector<String> columnNames = new Vector<String>();
+	    columnNames.addElement("Nombre");
+	    columnNames.addElement("Apellido");
+	    columnNames.addElement("DNI");
+	    columnNames.addElement("Fecha");
+	    columnNames.addElement("E-mail");
+	    
+		List<Cliente> lista = vuelo.getClientes();
+		
+		Vector<Vector> rowData = new Vector<Vector>();
+		if(!lista.isEmpty()) {	
+			for (Cliente cliente : lista) {
+				Vector<String> aux = new Vector<String>();
+			    aux.addElement(cliente.getNombre());
+			    aux.addElement(cliente.getApellido());
+			    aux.addElement(String.valueOf(cliente.getDNI()));
+			    aux.addElement(obtenerFecha(cliente.getFechaNac()));
+			    aux.addElement(cliente.getEmail());
 			    rowData.add(aux);
 			}
 		}

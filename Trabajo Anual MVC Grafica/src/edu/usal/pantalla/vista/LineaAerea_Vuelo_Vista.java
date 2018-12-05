@@ -5,9 +5,11 @@ import java.awt.BorderLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 
 import edu.usal.negocio.dominio.Cliente;
-import edu.usal.negocio.dominio.Vuelo;
+import edu.usal.negocio.dominio.LineaAerea;
+import edu.usal.pantalla.controller.LineaAerea_Vuelo_Controller;
 import edu.usal.pantalla.controller.Vuelo_Cliente_Controller;
 import edu.usal.pantalla.vista.eventos.CapturaBtnVuelo_Cliente;
 
@@ -20,20 +22,22 @@ import javax.swing.JButton;
 import java.awt.GridLayout;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 
-public class Vuelo_Cliente_Vista extends JFrame {
+public class LineaAerea_Vuelo_Vista extends JFrame {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private Vuelo_Cliente_Controller control;
+	private LineaAerea_Vuelo_Controller control;
 	private JButton btnVolver;
+	private JButton btnVerPasajeros;
 	private JTable table;
 	
 
-	public Vuelo_Cliente_Vista(Vuelo_Cliente_Controller controller,Vuelo vuelo) {
+	public LineaAerea_Vuelo_Vista(LineaAerea_Vuelo_Controller controller, LineaAerea linea) {
 		this.control = controller;
 		setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
 		
@@ -60,7 +64,7 @@ public class Vuelo_Cliente_Vista extends JFrame {
 		
 		btnVolver = new JButton("Volver");
 		btnVolver.setHorizontalAlignment(SwingConstants.LEFT);
-		btnVolver.addActionListener(new CapturaBtnVuelo_Cliente(this));
+		btnVolver.addActionListener(new CapturaBtnAeroLinea_Vuelo(this));
 		panel.add(btnVolver);
 		
 		JPanel panel_1 = new JPanel();
@@ -72,35 +76,42 @@ public class Vuelo_Cliente_Vista extends JFrame {
 		JPanel panel_3 = new JPanel();
 		panel.add(panel_3);
 		
+		btnVerPasajeros = new JButton("Ver Pasajeros");
+		btnVerPasajeros.addActionListener(new CapturaBtnAeroLinea_Vuelo(this));
+		panel.add(btnVerPasajeros);
+		
 		JScrollPane scrollPane = new JScrollPane();
 		contentPane.add(scrollPane, BorderLayout.CENTER);
 		
 		table = new JTable();
+		table.setModel(new DefaultTableModel(new Object[][] {},new String[] {} ));
+		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrollPane.setViewportView(table);
 		
 		JPanel panel_4 = new JPanel();
 		contentPane.add(panel_4, BorderLayout.NORTH);
-		panel_4.setLayout(new GridLayout(2, 1, 0, 0));
+		panel_4.setLayout(new GridLayout(2, 0, 0, 0));
 		
-		JLabel lblMostrandoClientesDel = new JLabel("Mostrando clientes del vuelo:");
-		panel_4.add(lblMostrandoClientesDel);
-		lblMostrandoClientesDel.setHorizontalAlignment(SwingConstants.CENTER);
+		JLabel label = new JLabel("Mostrando vuelos de la Aerolinea:");
+		label.setHorizontalAlignment(SwingConstants.CENTER);
+		panel_4.add(label);
 		
-		JLabel lblNewLabel = new JLabel(vuelo.getId_vuelo());
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		panel_4.add(lblNewLabel);
+		JLabel lblNombreAero = new JLabel(linea.getNombre());
+		lblNombreAero.setHorizontalAlignment(SwingConstants.CENTER);
+		panel_4.add(lblNombreAero);
+		
 		setVisible(true);
 	}
 
 	
 	
-	public Vuelo_Cliente_Controller getControl() {
+	public LineaAerea_Vuelo_Controller getControl() {
 		return control;
 	}
 
 
 
-	public void setControl(Vuelo_Cliente_Controller control) {
+	public void setControl(LineaAerea_Vuelo_Controller control) {
 		this.control = control;
 	}
 
@@ -110,14 +121,8 @@ public class Vuelo_Cliente_Vista extends JFrame {
 		return btnVolver;
 	}
 
-
-
-	public void setBtnVolver(JButton btnMenuPrincipal) {
-		this.btnVolver = btnMenuPrincipal;
-	}
-
 	
-	
+
 	public JTable getTable() {
 		return table;
 	}
@@ -130,10 +135,41 @@ public class Vuelo_Cliente_Vista extends JFrame {
 
 
 
+	public void setBtnVolver(JButton btnMenuPrincipal) {
+		this.btnVolver = btnMenuPrincipal;
+	}
+	
+	
+
+	public JButton getBtnVerPasajeros() {
+		return btnVerPasajeros;
+	}
+
+
+
+	public void setBtnVerPasajeros(JButton btnVerPasajeros) {
+		this.btnVerPasajeros = btnVerPasajeros;
+	}
+
+
+
+	public void cancelaOperacion() {
+		JOptionPane.showMessageDialog(null, "La operacion se ha cancelado", "", JOptionPane.WARNING_MESSAGE);
+	}
+	public void exitoOperacion() {
+		JOptionPane.showMessageDialog(null, "La operacion se ha completado con exito", "", JOptionPane.INFORMATION_MESSAGE);
+	}
+	public void fracasoOperacion() {
+		JOptionPane.showMessageDialog(null, "La operacion no se pudo realizar", "", JOptionPane.WARNING_MESSAGE);
+	}
 	private void close(){
         if (JOptionPane.showConfirmDialog(null, "¿Desea realmente salir del sistema?",
                 "Salir del sistema", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
             System.exit(0);
     } 
 	
+	public int confirmarSeleccion(Cliente cliente,String causa) {
+		return JOptionPane.showConfirmDialog(null, ("Desea seleccionar para su "+causa+" a\n Apellido: "+cliente.getApellido()+"\nNombre: "+cliente.getNombre()+"\nDNI: ["+cliente.getDNI()+"]"), "Confirmacion de seleccion", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+	}
+
 }
