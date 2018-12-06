@@ -33,6 +33,7 @@ public class LineaAerea_Datos_Controller {
 			if(aerolineadao.addLineaAerea(new LineaAerea(0, menu.getTextNombre().getText(), menu.getComboBoxAlianza().getSelectedIndex(),	 null))) {
 				menu.exitoOperacion();
 				DatosEstaticos.actualizarAerolineas();
+				mPController.seleccionAerolinea();
 			}else {
 				menu.fracasoOperacion();
 			}
@@ -41,6 +42,7 @@ public class LineaAerea_Datos_Controller {
 			IOGeneral.pritln(e.getMessage());
 		}
 		menu.dispose();
+		mPController.seleccionAerolinea();
 		mPController.hacerVisibleMP();
 	}
 
@@ -50,6 +52,7 @@ public class LineaAerea_Datos_Controller {
 			if(aerolineadao.updateLineaAerea(new LineaAerea(Integer.parseInt(menu.getLblID_Asignado().getText()), menu.getTextNombre().getText(), menu.getComboBoxAlianza().getSelectedIndex(), null))) {
 					menu.exitoOperacion();
 					DatosEstaticos.actualizarAerolineas();
+					mPController.seleccionAerolinea();
 			}else {
 				menu.fracasoOperacion();
 			}
@@ -58,6 +61,7 @@ public class LineaAerea_Datos_Controller {
 			IOGeneral.pritln(e.getMessage());
 		}
 		menu.dispose();
+		mPController.seleccionAerolinea();
 		mPController.hacerVisibleMP();
 	}
 	public void cerrarVentana() {

@@ -18,13 +18,14 @@ import edu.usal.util.DatosEstaticos;
 
 public class OperacionesController {
 
-	public void eliminar(MenuPrincipalControllerTabla menuPrincipalControllerTabla, LineaAerea select) {
+	public void eliminar(MenuPrincipalControllerTabla control, LineaAerea select) {
 		try {
 			LineaAereaDAO linea = LineaAereaFactory.getLineaAereaDAO(DatosEstaticos.getSource());
 			if(linea.deleteLineaAerea(select)) {
-				menuPrincipalControllerTabla.getMenuPrincipal().exitoOperacion();
+				control.getMenuPrincipal().exitoOperacion();
+				control.seleccionAerolinea();
 			}else {
-				menuPrincipalControllerTabla.getMenuPrincipal().fracasoOperacion("No se pudo eliminar la aerolinea");				
+				control.getMenuPrincipal().fracasoOperacion("No se pudo eliminar la aerolinea");				
 			}
 			
 		} catch (SQLException e) {
@@ -34,13 +35,14 @@ public class OperacionesController {
 		
 	}
 
-	public void eliminar(MenuPrincipalControllerTabla menuPrincipalControllerTabla, Cliente select) {
+	public void eliminar(MenuPrincipalControllerTabla control, Cliente select) {
 		try {
 			ClienteDAO linea = ClienteFactory.getClienteDAO(DatosEstaticos.getSource());
 			if(linea.deleteCliente(select)) {
-				menuPrincipalControllerTabla.getMenuPrincipal().exitoOperacion();
+				control.getMenuPrincipal().exitoOperacion();
+				control.seleccionClientes();
 			}else {
-				menuPrincipalControllerTabla.getMenuPrincipal().fracasoOperacion("No se pudo eliminar el cliente");				
+				control.getMenuPrincipal().fracasoOperacion("No se pudo eliminar el cliente");				
 			}
 			
 		} catch (SQLException e) {
@@ -49,13 +51,14 @@ public class OperacionesController {
 		}
 	}
 
-	public void eliminar(MenuPrincipalControllerTabla menuPrincipalControllerTabla, Vuelo select) {
+	public void eliminar(MenuPrincipalControllerTabla control, Vuelo select) {
 		try {
 			VueloDAO linea = VueloFactory.getVueloDAO(DatosEstaticos.getSource());
 			if(linea.deleteVuelo(select)) {
-				menuPrincipalControllerTabla.getMenuPrincipal().exitoOperacion();
+				control.getMenuPrincipal().exitoOperacion();
+				control.seleccionVuelos();
 			}else {
-				menuPrincipalControllerTabla.getMenuPrincipal().fracasoOperacion("No se pudo eliminar el vuelo");				
+				control.getMenuPrincipal().fracasoOperacion("No se pudo eliminar el vuelo");				
 			}
 			
 		} catch (SQLException e) {
@@ -64,13 +67,14 @@ public class OperacionesController {
 		}
 	}
 
-	public void eliminar(MenuPrincipalControllerTabla menuPrincipalControllerTabla, Venta select) {
+	public void eliminar(MenuPrincipalControllerTabla control, Venta select) {
 		try {
 			VentaDAO linea = VentaFactory.getVentaDAO(DatosEstaticos.getSource());
 			if(linea.deleteVentas(select)) {
-				menuPrincipalControllerTabla.getMenuPrincipal().exitoOperacion();
+				control.getMenuPrincipal().exitoOperacion();
+				control.seleccionVenta();
 			}else {
-				menuPrincipalControllerTabla.getMenuPrincipal().fracasoOperacion("No se pudo eliminar el vuelo");				
+				control.getMenuPrincipal().fracasoOperacion("No se pudo eliminar el vuelo");				
 			}
 			
 		} catch (SQLException e) {

@@ -7,33 +7,22 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JSeparator;
 import javax.swing.JTextField;
 
 import edu.usal.negocio.dominio.Cliente;
-import edu.usal.negocio.dominio.LineaAerea;
-import edu.usal.negocio.dominio.Pais;
-import edu.usal.negocio.dominio.Provincia;
 import edu.usal.negocio.dominio.Venta;
 import edu.usal.negocio.dominio.Vuelo;
-import edu.usal.pantalla.controller.Cliente_Datos_Controller;
 import edu.usal.pantalla.controller.Venta_Datos_Controller;
-import edu.usal.pantalla.vista.eventos.CapturaBtnCliente_Datos;
 import edu.usal.pantalla.vista.eventos.CapturaBtnVenta_Datos;
-import edu.usal.pantalla.vista.eventos.CapturaItemCliente;
 import edu.usal.pantalla.vista.eventos.CapturaItemVenta;
 
-import java.awt.event.ItemListener;
-import java.awt.event.ItemEvent;
 import java.awt.Font;
 import javax.swing.SwingConstants;
-import com.toedter.calendar.JDateChooser;
-import java.awt.Component;
-import javax.swing.Box;
 import javax.swing.ButtonGroup;
 import javax.swing.JRadioButton;
-import javax.swing.JFormattedTextField;
+import java.awt.GridLayout;
+import javax.swing.JPanel;
+import java.awt.BorderLayout;
 
 public class Venta_Datos_Vista extends JFrame {
 	
@@ -44,9 +33,7 @@ public class Venta_Datos_Vista extends JFrame {
 
 	
 	Venta_Datos_Controller vista;
-	
-	private JPanel contentPane;
-	
+		
 	private JButton btnCancelar;
 	private JButton btnBuscarCliente;
 	private JButton btnBuscarVuelo;
@@ -66,17 +53,18 @@ public class Venta_Datos_Vista extends JFrame {
 	private JTextField textAeropuertoSalida;
 	private JTextField textAeropuertoLlegada;
 	private JTextField textFechaSalida;
-	private JTextField textValor;
 	private JTextField textFechaLlegada;
-	private JTextField textTotalPagar;
+
+	JRadioButton rdbtnEfectivo;
+	JRadioButton rdbtnTarjeta;
+	JComboBox<String> comboBox_Cuotas;
 	
 	private ButtonGroup botones;
-	private JRadioButton rdbtnTarjeta;
-	private JRadioButton rdbtnEfectivo;
-	
-	private JComboBox<String> comboBox_Cuotas;
+	private JTextField textValor;
+	private JTextField textTotalPagar;
 	
 	public Venta_Datos_Vista(Venta_Datos_Controller vista) {
+
 
 		this.vista = vista;
 		setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -87,279 +75,741 @@ public class Venta_Datos_Vista extends JFrame {
 	            close();
 	        }
 	    });
-		setBounds(5, 53, 603, 673);
+		setBounds(5, 53, 960, 688);
 		setLocationRelativeTo(null);
 		
 		
 		setTitle("Nueva Venta");
-		getContentPane().setLayout(null);
-		
-		btnCancelar = new JButton("Cancelar");
-		btnCancelar.addActionListener(new CapturaBtnVenta_Datos(this));
-		btnCancelar.setBounds(481, 598, 97, 25);
-		getContentPane().add(btnCancelar);
-		
-		btnBuscarCliente = new JButton("Buscar");
-		btnBuscarCliente.setBounds(149, 116, 89, 23);
-		btnBuscarCliente.addActionListener(new CapturaBtnVenta_Datos(this));
-		getContentPane().add(btnBuscarCliente);
-		
-		btnBuscarVuelo = new JButton("Buscar");
-		btnBuscarVuelo.setBounds(149, 287, 89, 23);
-		btnBuscarVuelo.addActionListener(new CapturaBtnVenta_Datos(this));
-		getContentPane().add(btnBuscarVuelo);
-		
-		btnGuardar = new JButton("Guardar");
-		btnGuardar.setBounds(376, 599, 89, 23);
-		btnGuardar.addActionListener(new CapturaBtnVenta_Datos(this));
-		getContentPane().add(btnGuardar);
-		
-		textBuscarDNI = new JTextField();
-		textBuscarDNI.setBounds(31, 117, 86, 20);
-		getContentPane().add(textBuscarDNI);
-		textBuscarDNI.setColumns(10);
-		
-		textBuscarVuelo = new JTextField();
-		textBuscarVuelo.setColumns(10);
-		textBuscarVuelo.setBounds(31, 288, 86, 20);
-		getContentPane().add(textBuscarVuelo);
-		
-		textValor = new JTextField();
-		textValor.setColumns(10);
-		textValor.setBounds(31, 491, 109, 20);
-		getContentPane().add(textValor);
-		
-		textNombreVenta = new JTextField();
-		textNombreVenta.setEditable(false);
-		textNombreVenta.setEnabled(false);
-		textNombreVenta.setBounds(441, 93, 136, 20);
-		getContentPane().add(textNombreVenta);
-		textNombreVenta.setColumns(10);
-		
-		textApellido = new JTextField();
-		textApellido.setEnabled(false);
-		textApellido.setEditable(false);
-		textApellido.setColumns(10);
-		textApellido.setBounds(441, 116, 136, 20);
-		getContentPane().add(textApellido);
-		
-		textDNI = new JTextField();
-		textDNI.setEnabled(false);
-		textDNI.setEditable(false);
-		textDNI.setColumns(10);
-		textDNI.setBounds(441, 141, 136, 20);
-		getContentPane().add(textDNI);
-		
-		textFechaNac = new JTextField();
-		textFechaNac.setEnabled(false);
-		textFechaNac.setEditable(false);
-		textFechaNac.setColumns(10);
-		textFechaNac.setBounds(441, 166, 136, 20);
-		getContentPane().add(textFechaNac);
-		
-		textEmail = new JTextField();
-		textEmail.setEnabled(false);
-		textEmail.setEditable(false);
-		textEmail.setColumns(10);
-		textEmail.setBounds(441, 191, 136, 20);
-		getContentPane().add(textEmail);
-		
-		textID_Vuelo = new JTextField();
-		textID_Vuelo.setEnabled(false);
-		textID_Vuelo.setEditable(false);
-		textID_Vuelo.setColumns(10);
-		textID_Vuelo.setBounds(441, 264, 136, 20);
-		getContentPane().add(textID_Vuelo);
-		
-		textAerolinea = new JTextField();
-		textAerolinea.setEnabled(false);
-		textAerolinea.setEditable(false);
-		textAerolinea.setColumns(10);
-		textAerolinea.setBounds(441, 287, 136, 20);
-		getContentPane().add(textAerolinea);
-		
-		textAeropuertoSalida = new JTextField();
-		textAeropuertoSalida.setEnabled(false);
-		textAeropuertoSalida.setEditable(false);
-		textAeropuertoSalida.setColumns(10);
-		textAeropuertoSalida.setBounds(441, 312, 136, 20);
-		getContentPane().add(textAeropuertoSalida);
-		
-		textAeropuertoLlegada = new JTextField();
-		textAeropuertoLlegada.setEnabled(false);
-		textAeropuertoLlegada.setEditable(false);
-		textAeropuertoLlegada.setColumns(10);
-		textAeropuertoLlegada.setBounds(441, 337, 136, 20);
-		getContentPane().add(textAeropuertoLlegada);
-		
-		textFechaSalida = new JTextField();
-		textFechaSalida.setEnabled(false);
-		textFechaSalida.setEditable(false);
-		textFechaSalida.setColumns(10);
-		textFechaSalida.setBounds(441, 362, 136, 20);
-		getContentPane().add(textFechaSalida);
-		
-		textFechaLlegada = new JTextField();
-		textFechaLlegada.setEnabled(false);
-		textFechaLlegada.setEditable(false);
-		textFechaLlegada.setColumns(10);
-		textFechaLlegada.setBounds(441, 386, 136, 20);
-		getContentPane().add(textFechaLlegada);
 
 		botones = new ButtonGroup();
-		rdbtnTarjeta = new JRadioButton("Tarjeta");
-		rdbtnTarjeta.setBounds(163, 488, 61, 23);
-		rdbtnTarjeta.addItemListener(new CapturaItemVenta(this));
-		botones.add(rdbtnTarjeta);
+		getContentPane().setLayout(new BorderLayout(0, 0));
 		
-		textTotalPagar = new JTextField();
-		textTotalPagar.setEnabled(false);
-		textTotalPagar.setEditable(false);
-		textTotalPagar.setBounds(123, 563, 112, 20);
-		getContentPane().add(textTotalPagar);
-		textTotalPagar.setColumns(10);
+		JPanel panel_11 = new JPanel();
+		getContentPane().add(panel_11);
+		panel_11.setLayout(new GridLayout(3, 1, 0, 0));
 		
+		JPanel panel_2 = new JPanel();
+		panel_11.add(panel_2);
+		panel_2.setLayout(new GridLayout(1, 2, 0, 0));
 		
-		rdbtnEfectivo = new JRadioButton("Efectivo");
-		rdbtnEfectivo.setBounds(163, 514, 70, 23);
-		rdbtnEfectivo.addItemListener(new CapturaItemVenta(this));
-		botones.add(rdbtnEfectivo);
+		JPanel panel_3 = new JPanel();
+		panel_2.add(panel_3);
+		panel_3.setLayout(new GridLayout(7, 1, 0, 0));
 		
-		getContentPane().add(rdbtnEfectivo);
-		getContentPane().add(rdbtnTarjeta);
-		
-		comboBox_Cuotas = new JComboBox();
-		comboBox_Cuotas.setEnabled(false);
-		comboBox_Cuotas.setModel(new DefaultComboBoxModel(new String[] {"1", "3", "6", "12", "24"}));
-		comboBox_Cuotas.addItemListener(new CapturaItemVenta(this));
-		comboBox_Cuotas.setBounds(300, 491, 53, 20);
-		getContentPane().add(comboBox_Cuotas);
-			
-		JLabel lblIngreseLosDatos = new JLabel("Ingrese de los datos para una nueva venta");
-		lblIngreseLosDatos.setHorizontalAlignment(SwingConstants.CENTER);
-		lblIngreseLosDatos.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblIngreseLosDatos.setBounds(10, 11, 567, 35);
-		getContentPane().add(lblIngreseLosDatos);
-		
-		JLabel lblIngreseDniDel = new JLabel("DNI del cliente");
-		lblIngreseDniDel.setBounds(31, 97, 86, 14);
-		getContentPane().add(lblIngreseDniDel);
-		
-		JLabel lblClienteSeleccionado = new JLabel("Cliente seleccionado");
-		lblClienteSeleccionado.setFont(new Font("Tahoma", Font.BOLD, 13));
-		lblClienteSeleccionado.setBounds(302, 57, 162, 25);
-		getContentPane().add(lblClienteSeleccionado);
-		
-		JLabel lblNombre = new JLabel("Nombre:");
-		lblNombre.setBounds(309, 97, 46, 14);
-		getContentPane().add(lblNombre);
-		
-		JLabel lblApellido = new JLabel("Apellido:");
-		lblApellido.setBounds(309, 120, 46, 14);
-		getContentPane().add(lblApellido);
-		
-		JLabel lblDni = new JLabel("DNI:");
-		lblDni.setBounds(309, 145, 46, 14);
-		getContentPane().add(lblDni);
-		
-		JLabel lblFechaNacimiento = new JLabel("Fecha nacimiento:");
-		lblFechaNacimiento.setBounds(309, 170, 97, 14);
-		getContentPane().add(lblFechaNacimiento);
-		
-		JLabel lblEmail = new JLabel("E-mail:");
-		lblEmail.setBounds(309, 195, 46, 14);
-		getContentPane().add(lblEmail);
+		JPanel panel_45 = new JPanel();
+		panel_3.add(panel_45);
 		
 		JLabel lblSeleccionarCliente = new JLabel("Seleccionar cliente");
+		lblSeleccionarCliente.setHorizontalAlignment(SwingConstants.CENTER);
+		panel_3.add(lblSeleccionarCliente);
 		lblSeleccionarCliente.setFont(new Font("Tahoma", Font.BOLD, 13));
-		lblSeleccionarCliente.setBounds(31, 57, 162, 25);
-		getContentPane().add(lblSeleccionarCliente);
 		
-		JLabel lblIdDelVuelo = new JLabel("ID del Vuelo");
-		lblIdDelVuelo.setBounds(31, 268, 86, 14);
-		getContentPane().add(lblIdDelVuelo);
+		JPanel panel_28 = new JPanel();
+		panel_3.add(panel_28);
+		panel_28.setLayout(new GridLayout(0, 3, 0, 0));
 		
-		JLabel lblVueloSeleccionado = new JLabel("Vuelo seleccionado");
-		lblVueloSeleccionado.setFont(new Font("Tahoma", Font.BOLD, 13));
-		lblVueloSeleccionado.setBounds(302, 228, 162, 25);
-		getContentPane().add(lblVueloSeleccionado);
+		JPanel panel_29 = new JPanel();
+		panel_28.add(panel_29);
 		
-		JLabel lblIdVuelo = new JLabel("ID Vuelo");
-		lblIdVuelo.setBounds(309, 268, 46, 14);
-		getContentPane().add(lblIdVuelo);
+		JLabel lblIngreseDniDel = new JLabel("DNI del cliente");
+		panel_28.add(lblIngreseDniDel);
+		lblIngreseDniDel.setHorizontalAlignment(SwingConstants.CENTER);
 		
-		JLabel lblAerolinea = new JLabel("Aerolinea");
-		lblAerolinea.setBounds(309, 291, 46, 14);
-		getContentPane().add(lblAerolinea);
+		JPanel panel_5 = new JPanel();
+		panel_3.add(panel_5);
+		panel_5.setLayout(new GridLayout(0, 3, 0, 0));
 		
-		JLabel lblAeropuertoDeSalida = new JLabel("Aeropuerto de salida");
-		lblAeropuertoDeSalida.setBounds(309, 316, 108, 14);
-		getContentPane().add(lblAeropuertoDeSalida);
+		JPanel panel_27 = new JPanel();
+		panel_5.add(panel_27);
 		
-		JLabel lblAeropuertoDeLlegada = new JLabel("Aeropuerto de llegada");
-		lblAeropuertoDeLlegada.setBounds(309, 341, 108, 14);
-		getContentPane().add(lblAeropuertoDeLlegada);
+		textBuscarDNI = new JTextField();
+		panel_5.add(textBuscarDNI);
+		textBuscarDNI.setColumns(10);
 		
-		JLabel lblFechaYHora = new JLabel("Fecha y hora de salida");
-		lblFechaYHora.setBounds(309, 366, 108, 14);
-		getContentPane().add(lblFechaYHora);
+		btnBuscarCliente = new JButton("Buscar");
+		btnBuscarCliente.addActionListener(new CapturaBtnVenta_Datos(this));
+		panel_5.add(btnBuscarCliente);
+		
+		JPanel panel_21 = new JPanel();
+		panel_3.add(panel_21);
+		panel_21.setLayout(new GridLayout(0, 3, 0, 0));
+		
+		JPanel panel_50 = new JPanel();
+		panel_21.add(panel_50);
+		panel_50.setLayout(new GridLayout(1, 0, 0, 0));
+		
+		JButton btnVerClientes = new JButton("Ver Clientes");
+		panel_21.add(btnVerClientes);
+		
+		JPanel panel_4 = new JPanel();
+		panel_2.add(panel_4);
+		panel_4.setLayout(new GridLayout(7, 1, 0, 0));
+		
+		JPanel panel_22 = new JPanel();
+		panel_4.add(panel_22);
+		
+		JPanel panel_46 = new JPanel();
+		panel_4.add(panel_46);
+		panel_46.setLayout(new GridLayout(1, 0, 0, 0));
+		
+		JLabel lblClienteSeleccionado = new JLabel("Cliente seleccionado");
+		panel_46.add(lblClienteSeleccionado);
+		lblClienteSeleccionado.setHorizontalAlignment(SwingConstants.CENTER);
+		lblClienteSeleccionado.setFont(new Font("Tahoma", Font.BOLD, 13));
+		
+		JPanel panel_47 = new JPanel();
+		panel_4.add(panel_47);
+		panel_47.setLayout(new GridLayout(0, 3, 0, 0));
+		
+		JLabel lblNombre = new JLabel("Nombre ");
+		panel_47.add(lblNombre);
+		lblNombre.setHorizontalAlignment(SwingConstants.RIGHT);
+		
+		textNombreVenta = new JTextField();
+		panel_47.add(textNombreVenta);
+		textNombreVenta.setEditable(false);
+		textNombreVenta.setColumns(10);
+		
+		JPanel panel_48 = new JPanel();
+		panel_4.add(panel_48);
+		panel_48.setLayout(new GridLayout(0, 3, 0, 0));
+		
+		JLabel lblApellido = new JLabel("Apellido ");
+		panel_48.add(lblApellido);
+		lblApellido.setHorizontalAlignment(SwingConstants.RIGHT);
+		
+		textApellido = new JTextField();
+		panel_48.add(textApellido);
+		textApellido.setEditable(false);
+		textApellido.setColumns(10);
+		
+		JPanel panel_49 = new JPanel();
+		panel_4.add(panel_49);
+		panel_49.setLayout(new GridLayout(0, 3, 0, 0));
+		
+		JLabel lblDni = new JLabel("DNI ");
+		panel_49.add(lblDni);
+		lblDni.setHorizontalAlignment(SwingConstants.RIGHT);
+		
+		textDNI = new JTextField();
+		panel_49.add(textDNI);
+		textDNI.setEditable(false);
+		textDNI.setColumns(10);
+		
+		JPanel panel_1 = new JPanel();
+		panel_4.add(panel_1);
+		panel_1.setLayout(new GridLayout(0, 3, 0, 0));
+		
+		JLabel lblFechaNacimiento = new JLabel("Fecha nacimiento ");
+		panel_1.add(lblFechaNacimiento);
+		lblFechaNacimiento.setHorizontalAlignment(SwingConstants.RIGHT);
+		
+		textFechaNac = new JTextField();
+		panel_1.add(textFechaNac);
+		textFechaNac.setEditable(false);
+		textFechaNac.setColumns(10);
+		
+		JPanel panel_6 = new JPanel();
+		panel_4.add(panel_6);
+		panel_6.setLayout(new GridLayout(0, 3, 0, 0));
+		
+		JLabel lblEmail = new JLabel("E-mail ");
+		panel_6.add(lblEmail);
+		lblEmail.setHorizontalAlignment(SwingConstants.RIGHT);
+		
+		textEmail = new JTextField();
+		panel_6.add(textEmail);
+		textEmail.setEditable(false);
+		textEmail.setColumns(10);
+		
+		JPanel panel_7 = new JPanel();
+		panel_11.add(panel_7);
+		panel_7.setLayout(new GridLayout(1, 2, 0, 0));
+		
+		JPanel panel_8 = new JPanel();
+		panel_7.add(panel_8);
+		panel_8.setLayout(new GridLayout(0, 1, 0, 0));
+		
+		JPanel panel_34 = new JPanel();
+		panel_8.add(panel_34);
+		panel_34.setLayout(new GridLayout(1, 0, 0, 0));
+		
+		JPanel panel_16 = new JPanel();
+		panel_8.add(panel_16);
+		panel_16.setLayout(new GridLayout(1, 0, 0, 0));
 		
 		JLabel lblSeleccionarVuelo = new JLabel("Seleccionar Vuelo");
+		panel_16.add(lblSeleccionarVuelo);
+		lblSeleccionarVuelo.setHorizontalAlignment(SwingConstants.CENTER);
 		lblSeleccionarVuelo.setFont(new Font("Tahoma", Font.BOLD, 13));
-		lblSeleccionarVuelo.setBounds(31, 228, 162, 25);
-		getContentPane().add(lblSeleccionarVuelo);
 		
-		JLabel lblValorSinRecargo = new JLabel("Valor sin recargo");
-		lblValorSinRecargo.setBounds(31, 470, 86, 14);
-		getContentPane().add(lblValorSinRecargo);
+		JPanel panel_41 = new JPanel();
+		panel_8.add(panel_41);
+		panel_41.setLayout(new GridLayout(0, 3, 0, 0));
 		
-		JLabel lblMetodoDePago = new JLabel("Metodo de pago");
-		lblMetodoDePago.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblMetodoDePago.setBounds(163, 465, 116, 25);
-		getContentPane().add(lblMetodoDePago);
+		JPanel panel_42 = new JPanel();
+		panel_41.add(panel_42);
 		
-		JLabel lblFormaDePago = new JLabel("Cobro del vuelo");
+		JLabel lblIdVuelo = new JLabel("ID Vuelo");
+		lblIdVuelo.setHorizontalAlignment(SwingConstants.CENTER);
+		panel_41.add(lblIdVuelo);
+		
+		JPanel panel_23 = new JPanel();
+		panel_8.add(panel_23);
+		panel_23.setLayout(new GridLayout(0, 3, 0, 0));
+		
+		JPanel panel_39 = new JPanel();
+		panel_23.add(panel_39);
+		
+		textBuscarVuelo = new JTextField();
+		panel_23.add(textBuscarVuelo);
+		textBuscarVuelo.setColumns(10);
+		
+		btnBuscarVuelo = new JButton("Buscar");
+		panel_23.add(btnBuscarVuelo);
+		btnBuscarVuelo.addActionListener(new CapturaBtnVenta_Datos(this));
+		
+		JPanel panel_24 = new JPanel();
+		panel_8.add(panel_24);
+		panel_24.setLayout(new GridLayout(0, 3, 0, 0));
+		
+		JPanel panel_26 = new JPanel();
+		panel_24.add(panel_26);
+		
+		JButton btnVerVuelos = new JButton("Ver Vuelos");
+		panel_24.add(btnVerVuelos);
+		
+		JPanel panel_10 = new JPanel();
+		panel_8.add(panel_10);
+		
+		JPanel panel_33 = new JPanel();
+		panel_8.add(panel_33);
+		panel_33.setLayout(new GridLayout(1, 0, 0, 0));
+		
+		JPanel panel_9 = new JPanel();
+		panel_7.add(panel_9);
+		panel_9.setLayout(new GridLayout(8, 3, 0, 0));
+		
+		JPanel panel_35 = new JPanel();
+		panel_9.add(panel_35);
+		
+		JPanel panel_64 = new JPanel();
+		panel_9.add(panel_64);
+		
+		JPanel panel_65 = new JPanel();
+		panel_9.add(panel_65);
+		
+		JPanel panel_66 = new JPanel();
+		panel_9.add(panel_66);
+		
+		JLabel label = new JLabel("Vuelo seleccionado ");
+		label.setHorizontalAlignment(SwingConstants.CENTER);
+		label.setFont(new Font("Tahoma", Font.BOLD, 13));
+		panel_9.add(label);
+		
+		JPanel panel_36 = new JPanel();
+		panel_9.add(panel_36);
+		
+		JLabel lblIdDelVuelo = new JLabel("ID del Vuelo ");
+		lblIdDelVuelo.setHorizontalAlignment(SwingConstants.RIGHT);
+		panel_9.add(lblIdDelVuelo);
+		
+		textID_Vuelo = new JTextField();
+		panel_9.add(textID_Vuelo);
+		textID_Vuelo.setEditable(false);
+		textID_Vuelo.setColumns(10);
+		
+		JPanel panel_30 = new JPanel();
+		panel_9.add(panel_30);
+		
+		JLabel lblAerolinea = new JLabel("Aerolinea ");
+		lblAerolinea.setHorizontalAlignment(SwingConstants.RIGHT);
+		panel_9.add(lblAerolinea);
+		
+		textAerolinea = new JTextField();
+		panel_9.add(textAerolinea);
+		textAerolinea.setEditable(false);
+		textAerolinea.setColumns(10);
+		
+		JPanel panel_53 = new JPanel();
+		panel_9.add(panel_53);
+		
+		JLabel lblAeropuertoDeSalida = new JLabel("Aeropuerto de salida ");
+		panel_9.add(lblAeropuertoDeSalida);
+		lblAeropuertoDeSalida.setHorizontalAlignment(SwingConstants.RIGHT);
+		
+		textAeropuertoSalida = new JTextField();
+		panel_9.add(textAeropuertoSalida);
+		textAeropuertoSalida.setEditable(false);
+		textAeropuertoSalida.setColumns(10);
+		
+		JPanel panel_52 = new JPanel();
+		panel_9.add(panel_52);
+		
+		JLabel lblAeropuertoDeLlegada = new JLabel("Aeropuerto de llegada ");
+		lblAeropuertoDeLlegada.setHorizontalAlignment(SwingConstants.RIGHT);
+		panel_9.add(lblAeropuertoDeLlegada);
+		
+		textAeropuertoLlegada = new JTextField();
+		panel_9.add(textAeropuertoLlegada);
+		textAeropuertoLlegada.setEditable(false);
+		textAeropuertoLlegada.setColumns(10);
+		
+		JPanel panel_54 = new JPanel();
+		panel_9.add(panel_54);
+		
+		JLabel lblFechaYHora = new JLabel("Fecha y hora de salida ");
+		lblFechaYHora.setHorizontalAlignment(SwingConstants.RIGHT);
+		panel_9.add(lblFechaYHora);
+		
+		textFechaSalida = new JTextField();
+		panel_9.add(textFechaSalida);
+		textFechaSalida.setEditable(false);
+		textFechaSalida.setColumns(10);
+		
+		JPanel panel_55 = new JPanel();
+		panel_9.add(panel_55);
+		
+		JLabel lblFechaYHora_1 = new JLabel("Fecha y hora de llegada ");
+		lblFechaYHora_1.setHorizontalAlignment(SwingConstants.RIGHT);
+		panel_9.add(lblFechaYHora_1);
+		
+		textFechaLlegada = new JTextField();
+		panel_9.add(textFechaLlegada);
+		textFechaLlegada.setEditable(false);
+		textFechaLlegada.setColumns(10);
+		
+		JPanel panel_31 = new JPanel();
+		panel_11.add(panel_31);
+		panel_31.setLayout(new GridLayout(4, 1, 0, 0));
+		
+		JPanel panel_51 = new JPanel();
+		panel_31.add(panel_51);
+		
+		JLabel lblFormaDePago = new JLabel("Cobro del pasaje");
+		panel_31.add(lblFormaDePago);
+		lblFormaDePago.setHorizontalAlignment(SwingConstants.CENTER);
 		lblFormaDePago.setFont(new Font("Tahoma", Font.BOLD, 13));
-		lblFormaDePago.setBounds(31, 429, 162, 25);
-		getContentPane().add(lblFormaDePago);
 		
+		JPanel panel_32 = new JPanel();
+		panel_31.add(panel_32);
+		panel_32.setLayout(new GridLayout(0, 2, 0, 0));
 		
-		JLabel lblCuotas = new JLabel("Cuotas");
-		lblCuotas.setBounds(254, 492, 46, 14);
-		getContentPane().add(lblCuotas);
+		JPanel panel_17 = new JPanel();
+		panel_32.add(panel_17);
+		panel_17.setLayout(new GridLayout(2, 2, 0, 0));
 		
-		JLabel lblNewLabel = new JLabel("3 y 6 cuotas sin interes");
-		lblNewLabel.setBounds(418, 491, 116, 17);
-		getContentPane().add(lblNewLabel);
+		JLabel lblValorSinRecargo_1 = new JLabel("Valor sin recargo  ");
+		lblValorSinRecargo_1.setHorizontalAlignment(SwingConstants.RIGHT);
+		panel_17.add(lblValorSinRecargo_1);
 		
-		JLabel lblO = new JLabel("12 o 24 con 10% de recargo");
-		lblO.setBounds(418, 514, 143, 14);
-		getContentPane().add(lblO);
+		JPanel panel_19 = new JPanel();
+		panel_17.add(panel_19);
+		panel_19.setLayout(new GridLayout(0, 2, 0, 0));
 		
-		JSeparator separator_1 = new JSeparator();
-		separator_1.setBounds(10, 220, 567, 14);
-		getContentPane().add(separator_1);
+		textValor = new JTextField();
+		panel_19.add(textValor);
+		textValor.setColumns(10);
 		
-		JSeparator separator = new JSeparator();
-		separator.setBounds(10, 414, 567, 110);
-		getContentPane().add(separator);
+		JLabel label_2 = new JLabel("Metodo de pago");
+		label_2.setHorizontalAlignment(SwingConstants.RIGHT);
+		label_2.setFont(new Font("Tahoma", Font.BOLD, 11));
+		panel_17.add(label_2);
 		
-		JSeparator separator_2 = new JSeparator();
-		separator_2.setBounds(10, 59, 567, 20);
-		getContentPane().add(separator_2);
+		JPanel panel_18 = new JPanel();
+		panel_17.add(panel_18);
+		panel_18.setLayout(new GridLayout(1, 0, 0, 0));
 		
-		JSeparator separator_3 = new JSeparator();
-		separator_3.setOrientation(SwingConstants.VERTICAL);
-		separator_3.setBounds(274, 57, 12, 335);
-		getContentPane().add(separator_3);
+		rdbtnTarjeta = new JRadioButton("Tarjeta");
+		rdbtnTarjeta.setHorizontalAlignment(SwingConstants.RIGHT);
+		rdbtnTarjeta.addItemListener(new CapturaItemVenta(this));
+		botones.add(rdbtnTarjeta);
+		panel_18.add(rdbtnTarjeta);
 		
-		JLabel lblFechaYHora_1 = new JLabel("Fecha y hora de llegada");
-		lblFechaYHora_1.setBounds(309, 389, 122, 14);
-		getContentPane().add(lblFechaYHora_1);
+		rdbtnEfectivo = new JRadioButton("Efectivo");
+		rdbtnEfectivo.addItemListener(new CapturaItemVenta(this));
+		botones.add(rdbtnEfectivo);
+		panel_18.add(rdbtnEfectivo);
 		
-		JLabel lblTotalAPagar = new JLabel("TOTAL A PAGAR");
-		lblTotalAPagar.setBounds(31, 566, 82, 14);
-		getContentPane().add(lblTotalAPagar);
+		JPanel panel_15 = new JPanel();
+		panel_32.add(panel_15);
+		panel_15.setLayout(new GridLayout(0, 4, 0, 0));
+		
+		JLabel label_3 = new JLabel("3 y 6 cuotas sin interes");
+		label_3.setHorizontalAlignment(SwingConstants.CENTER);
+		panel_15.add(label_3);
+		
+		JLabel label_5 = new JLabel("Cuotas  ");
+		label_5.setHorizontalAlignment(SwingConstants.RIGHT);
+		panel_15.add(label_5);
+		
+		comboBox_Cuotas = new JComboBox<String>();
+		comboBox_Cuotas.setEnabled(false);
+		comboBox_Cuotas.setModel(new DefaultComboBoxModel<String>(new String[] {"1", "3", "6", "12", "24"}));
+		comboBox_Cuotas.addItemListener(new CapturaItemVenta(this));
+		comboBox_Cuotas.setBounds(300, 491, 53, 20);
+		panel_15.add(comboBox_Cuotas);
+		
+		JPanel panel_56 = new JPanel();
+		panel_15.add(panel_56);
+		
+		JPanel panel_20 = new JPanel();
+		panel_15.add(panel_20);
+		panel_20.setLayout(new GridLayout(1, 0, 0, 0));
+		
+		JLabel label_4 = new JLabel("12 o 24 con 10% de recargo");
+		label_4.setHorizontalAlignment(SwingConstants.CENTER);
+		panel_20.add(label_4);
+		
+		JLabel label_6 = new JLabel("TOTAL A PAGAR  ");
+		label_6.setHorizontalAlignment(SwingConstants.RIGHT);
+		panel_15.add(label_6);
+		
+		textTotalPagar = new JTextField();
+		textTotalPagar.setEditable(false);
+		textTotalPagar.setColumns(10);
+		panel_15.add(textTotalPagar);
+		
+		JPanel panel = new JPanel();
+		getContentPane().add(panel, BorderLayout.NORTH);
+		panel.setLayout(new GridLayout(2, 1, 0, 0));
+		
+		JPanel panel_25 = new JPanel();
+		panel.add(panel_25);
+		
+		JLabel lblIngreseLosDatos = new JLabel("Mostrando los datos de la venta para su modificacion");
+		panel.add(lblIngreseLosDatos);
+		lblIngreseLosDatos.setHorizontalAlignment(SwingConstants.CENTER);
+		lblIngreseLosDatos.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		
+		JPanel panel_12 = new JPanel();
+		getContentPane().add(panel_12, BorderLayout.SOUTH);
+		panel_12.setLayout(new GridLayout(2, 7, 0, 0));
+		
+		JPanel panel_40 = new JPanel();
+		panel_12.add(panel_40);
+		
+		btnCancelar = new JButton("Cancelar");
+		panel_12.add(btnCancelar);
+		btnCancelar.addActionListener(new CapturaBtnVenta_Datos(this));
+		btnCancelar.addActionListener(new CapturaBtnVenta_Datos(this));
+		btnCancelar.addActionListener(new CapturaBtnVenta_Datos(this));
+		
+		JPanel panel_13 = new JPanel();
+		panel_12.add(panel_13);
+		
+		JPanel panel_60 = new JPanel();
+		panel_12.add(panel_60);
+		
+		JPanel panel_61 = new JPanel();
+		panel_12.add(panel_61);
+		
+		btnGuardar = new JButton("Guardar");
+		panel_12.add(btnGuardar);
+		btnGuardar.addActionListener(new CapturaBtnVenta_Datos(this));
+		
+		JPanel panel_62 = new JPanel();
+		panel_12.add(panel_62);
+		
+		JPanel panel_63 = new JPanel();
+		panel_12.add(panel_63);
+		
+		JPanel panel_14 = new JPanel();
+		panel_12.add(panel_14);
+		
+		JPanel panel_38 = new JPanel();
+		panel_12.add(panel_38);
+		
+		JPanel panel_37 = new JPanel();
+		panel_12.add(panel_37);
+		
+		JPanel panel_58 = new JPanel();
+		panel_12.add(panel_58);
+		
+		JPanel panel_59 = new JPanel();
+		panel_12.add(panel_59);
+		
+		JPanel panel_57 = new JPanel();
+		panel_12.add(panel_57);
+		
+		JPanel panel_43 = new JPanel();
+		getContentPane().add(panel_43, BorderLayout.WEST);
+		
+		JPanel panel_44 = new JPanel();
+		getContentPane().add(panel_44, BorderLayout.EAST);
+
+		
+//		this.vista = vista;
+//		setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+//		
+//	    addWindowListener(new java.awt.event.WindowAdapter() {
+//	        @Override
+//	        public void windowClosing(java.awt.event.WindowEvent evt) {
+//	            close();
+//	        }
+//	    });
+//		setBounds(5, 53, 603, 673);
+//		setLocationRelativeTo(null);
+//		
+//		
+//		setTitle("Nueva Venta");
+//		getContentPane().setLayout(null);
+//		
+//		btnCancelar = new JButton("Cancelar");
+//		btnCancelar.addActionListener(new CapturaBtnVenta_Datos(this));
+//		btnCancelar.setBounds(481, 598, 97, 25);
+//		getContentPane().add(btnCancelar);
+//		
+//		btnBuscarCliente = new JButton("Buscar");
+//		btnBuscarCliente.setBounds(149, 116, 89, 23);
+//		btnBuscarCliente.addActionListener(new CapturaBtnVenta_Datos(this));
+//		getContentPane().add(btnBuscarCliente);
+//		
+//		btnBuscarVuelo = new JButton("Buscar");
+//		btnBuscarVuelo.setBounds(149, 287, 89, 23);
+//		btnBuscarVuelo.addActionListener(new CapturaBtnVenta_Datos(this));
+//		getContentPane().add(btnBuscarVuelo);
+//		
+//		btnGuardar = new JButton("Guardar");
+//		btnGuardar.setBounds(376, 599, 89, 23);
+//		btnGuardar.addActionListener(new CapturaBtnVenta_Datos(this));
+//		getContentPane().add(btnGuardar);
+//		
+//		textBuscarDNI = new JTextField();
+//		textBuscarDNI.setBounds(31, 117, 86, 20);
+//		getContentPane().add(textBuscarDNI);
+//		textBuscarDNI.setColumns(10);
+//		
+//		textBuscarVuelo = new JTextField();
+//		textBuscarVuelo.setColumns(10);
+//		textBuscarVuelo.setBounds(31, 288, 86, 20);
+//		getContentPane().add(textBuscarVuelo);
+//		
+//		textValor = new JTextField();
+//		textValor.setColumns(10);
+//		textValor.setBounds(31, 491, 109, 20);
+//		getContentPane().add(textValor);
+//		
+//		textNombreVenta = new JTextField();
+//		textNombreVenta.setEditable(false);
+//		textNombreVenta.setBounds(441, 93, 136, 20);
+//		getContentPane().add(textNombreVenta);
+//		textNombreVenta.setColumns(10);
+//		
+//		textApellido = new JTextField();
+//		textApellido.setEditable(false);
+//		textApellido.setColumns(10);
+//		textApellido.setBounds(441, 116, 136, 20);
+//		getContentPane().add(textApellido);
+//		
+//		textDNI = new JTextField();
+//		textDNI.setEditable(false);
+//		textDNI.setColumns(10);
+//		textDNI.setBounds(441, 141, 136, 20);
+//		getContentPane().add(textDNI);
+//		
+//		textFechaNac = new JTextField();
+//		textFechaNac.setEditable(false);
+//		textFechaNac.setColumns(10);
+//		textFechaNac.setBounds(441, 166, 136, 20);
+//		getContentPane().add(textFechaNac);
+//		
+//		textEmail = new JTextField();
+//		textEmail.setEditable(false);
+//		textEmail.setColumns(10);
+//		textEmail.setBounds(441, 191, 136, 20);
+//		getContentPane().add(textEmail);
+//		
+//		textID_Vuelo = new JTextField();
+//		textID_Vuelo.setEditable(false);
+//		textID_Vuelo.setColumns(10);
+//		textID_Vuelo.setBounds(441, 264, 136, 20);
+//		getContentPane().add(textID_Vuelo);
+//		
+//		textAerolinea = new JTextField();
+//		textAerolinea.setEditable(false);
+//		textAerolinea.setColumns(10);
+//		textAerolinea.setBounds(441, 287, 136, 20);
+//		getContentPane().add(textAerolinea);
+//		
+//		textAeropuertoSalida = new JTextField();
+//		textAeropuertoSalida.setEditable(false);
+//		textAeropuertoSalida.setColumns(10);
+//		textAeropuertoSalida.setBounds(441, 312, 136, 20);
+//		getContentPane().add(textAeropuertoSalida);
+//		
+//		textAeropuertoLlegada = new JTextField();
+//		textAeropuertoLlegada.setEditable(false);
+//		textAeropuertoLlegada.setColumns(10);
+//		textAeropuertoLlegada.setBounds(441, 337, 136, 20);
+//		getContentPane().add(textAeropuertoLlegada);
+//		
+//		textFechaSalida = new JTextField();
+//		textFechaSalida.setEditable(false);
+//		textFechaSalida.setColumns(10);
+//		textFechaSalida.setBounds(441, 362, 136, 20);
+//		getContentPane().add(textFechaSalida);
+//		
+//		textFechaLlegada = new JTextField();
+//		textFechaLlegada.setEditable(false);
+//		textFechaLlegada.setColumns(10);
+//		textFechaLlegada.setBounds(441, 386, 136, 20);
+//		getContentPane().add(textFechaLlegada);
+//
+//		botones = new ButtonGroup();
+//		rdbtnTarjeta = new JRadioButton("Tarjeta");
+//		rdbtnTarjeta.setBounds(163, 488, 61, 23);
+//		rdbtnTarjeta.addItemListener(new CapturaItemVenta(this));
+//		botones.add(rdbtnTarjeta);
+//		
+//		textTotalPagar = new JTextField();
+//		textTotalPagar.setEnabled(false);
+//		textTotalPagar.setEditable(false);
+//		textTotalPagar.setBounds(123, 563, 112, 20);
+//		getContentPane().add(textTotalPagar);
+//		textTotalPagar.setColumns(10);
+//		
+//		
+//		rdbtnEfectivo = new JRadioButton("Efectivo");
+//		rdbtnEfectivo.setBounds(163, 514, 70, 23);
+//		rdbtnEfectivo.addItemListener(new CapturaItemVenta(this));
+//		botones.add(rdbtnEfectivo);
+//		
+//		getContentPane().add(rdbtnEfectivo);
+//		getContentPane().add(rdbtnTarjeta);
+//		
+//		comboBox_Cuotas = new JComboBox<String>();
+//		comboBox_Cuotas.setEnabled(false);
+//		comboBox_Cuotas.setModel(new DefaultComboBoxModel<String>(new String[] {"1", "3", "6", "12", "24"}));
+//		comboBox_Cuotas.addItemListener(new CapturaItemVenta(this));
+//		comboBox_Cuotas.setBounds(300, 491, 53, 20);
+//		getContentPane().add(comboBox_Cuotas);
+//			
+//		JLabel lblIngreseLosDatos = new JLabel("Ingrese de los datos para una nueva venta");
+//		lblIngreseLosDatos.setHorizontalAlignment(SwingConstants.CENTER);
+//		lblIngreseLosDatos.setFont(new Font("Tahoma", Font.PLAIN, 20));
+//		lblIngreseLosDatos.setBounds(10, 11, 567, 35);
+//		getContentPane().add(lblIngreseLosDatos);
+//		
+//		JLabel lblIngreseDniDel = new JLabel("DNI del cliente");
+//		lblIngreseDniDel.setBounds(31, 97, 86, 14);
+//		getContentPane().add(lblIngreseDniDel);
+//		
+//		JLabel lblClienteSeleccionado = new JLabel("Cliente seleccionado");
+//		lblClienteSeleccionado.setFont(new Font("Tahoma", Font.BOLD, 13));
+//		lblClienteSeleccionado.setBounds(302, 57, 162, 25);
+//		getContentPane().add(lblClienteSeleccionado);
+//		
+//		JLabel lblNombre = new JLabel("Nombre:");
+//		lblNombre.setBounds(309, 97, 46, 14);
+//		getContentPane().add(lblNombre);
+//		
+//		JLabel lblApellido = new JLabel("Apellido:");
+//		lblApellido.setBounds(309, 120, 46, 14);
+//		getContentPane().add(lblApellido);
+//		
+//		JLabel lblDni = new JLabel("DNI:");
+//		lblDni.setBounds(309, 145, 46, 14);
+//		getContentPane().add(lblDni);
+//		
+//		JLabel lblFechaNacimiento = new JLabel("Fecha nacimiento:");
+//		lblFechaNacimiento.setBounds(309, 170, 97, 14);
+//		getContentPane().add(lblFechaNacimiento);
+//		
+//		JLabel lblEmail = new JLabel("E-mail:");
+//		lblEmail.setBounds(309, 195, 46, 14);
+//		getContentPane().add(lblEmail);
+//		
+//		JLabel lblSeleccionarCliente = new JLabel("Seleccionar cliente");
+//		lblSeleccionarCliente.setFont(new Font("Tahoma", Font.BOLD, 13));
+//		lblSeleccionarCliente.setBounds(31, 57, 162, 25);
+//		getContentPane().add(lblSeleccionarCliente);
+//		
+//		JLabel lblIdDelVuelo = new JLabel("ID del Vuelo");
+//		lblIdDelVuelo.setBounds(31, 268, 86, 14);
+//		getContentPane().add(lblIdDelVuelo);
+//		
+//		JLabel lblVueloSeleccionado = new JLabel("Vuelo seleccionado");
+//		lblVueloSeleccionado.setFont(new Font("Tahoma", Font.BOLD, 13));
+//		lblVueloSeleccionado.setBounds(302, 228, 162, 25);
+//		getContentPane().add(lblVueloSeleccionado);
+//		
+//		JLabel lblIdVuelo = new JLabel("ID Vuelo");
+//		lblIdVuelo.setBounds(309, 268, 46, 14);
+//		getContentPane().add(lblIdVuelo);
+//		
+//		JLabel lblAerolinea = new JLabel("Aerolinea");
+//		lblAerolinea.setBounds(309, 291, 46, 14);
+//		getContentPane().add(lblAerolinea);
+//		
+//		JLabel lblAeropuertoDeSalida = new JLabel("Aeropuerto de salida");
+//		lblAeropuertoDeSalida.setBounds(309, 316, 108, 14);
+//		getContentPane().add(lblAeropuertoDeSalida);
+//		
+//		JLabel lblAeropuertoDeLlegada = new JLabel("Aeropuerto de llegada");
+//		lblAeropuertoDeLlegada.setBounds(309, 341, 108, 14);
+//		getContentPane().add(lblAeropuertoDeLlegada);
+//		
+//		JLabel lblFechaYHora = new JLabel("Fecha y hora de salida");
+//		lblFechaYHora.setBounds(309, 366, 108, 14);
+//		getContentPane().add(lblFechaYHora);
+//		
+//		JLabel lblSeleccionarVuelo = new JLabel("Seleccionar Vuelo");
+//		lblSeleccionarVuelo.setFont(new Font("Tahoma", Font.BOLD, 13));
+//		lblSeleccionarVuelo.setBounds(31, 228, 162, 25);
+//		getContentPane().add(lblSeleccionarVuelo);
+//		
+//		JLabel lblValorSinRecargo = new JLabel("Valor sin recargo");
+//		lblValorSinRecargo.setBounds(31, 470, 86, 14);
+//		getContentPane().add(lblValorSinRecargo);
+//		
+//		JLabel lblMetodoDePago = new JLabel("Metodo de pago");
+//		lblMetodoDePago.setFont(new Font("Tahoma", Font.BOLD, 11));
+//		lblMetodoDePago.setBounds(163, 465, 116, 25);
+//		getContentPane().add(lblMetodoDePago);
+//		
+//		JLabel lblFormaDePago = new JLabel("Cobro del vuelo");
+//		lblFormaDePago.setFont(new Font("Tahoma", Font.BOLD, 13));
+//		lblFormaDePago.setBounds(31, 429, 162, 25);
+//		getContentPane().add(lblFormaDePago);
+//		
+//		
+//		JLabel lblCuotas = new JLabel("Cuotas");
+//		lblCuotas.setBounds(254, 492, 46, 14);
+//		getContentPane().add(lblCuotas);
+//		
+//		JLabel lblNewLabel = new JLabel("3 y 6 cuotas sin interes");
+//		lblNewLabel.setBounds(418, 491, 116, 17);
+//		getContentPane().add(lblNewLabel);
+//		
+//		JLabel lblO = new JLabel("12 o 24 con 10% de recargo");
+//		lblO.setBounds(418, 514, 143, 14);
+//		getContentPane().add(lblO);
+//		
+//		JSeparator separator_1 = new JSeparator();
+//		separator_1.setBounds(10, 220, 567, 14);
+//		getContentPane().add(separator_1);
+//		
+//		JSeparator separator = new JSeparator();
+//		separator.setBounds(10, 414, 567, 110);
+//		getContentPane().add(separator);
+//		
+//		JSeparator separator_2 = new JSeparator();
+//		separator_2.setBounds(10, 59, 567, 20);
+//		getContentPane().add(separator_2);
+//		
+//		JSeparator separator_3 = new JSeparator();
+//		separator_3.setOrientation(SwingConstants.VERTICAL);
+//		separator_3.setBounds(274, 57, 12, 335);
+//		getContentPane().add(separator_3);
+//		
+//		JLabel lblFechaYHora_1 = new JLabel("Fecha y hora de llegada");
+//		lblFechaYHora_1.setBounds(309, 389, 122, 14);
+//		getContentPane().add(lblFechaYHora_1);
+//		
+//		JLabel lblTotalAPagar = new JLabel("TOTAL A PAGAR");
+//		lblTotalAPagar.setBounds(31, 566, 82, 14);
+//		getContentPane().add(lblTotalAPagar);
 		this.setVisible(true);
 		}
 
@@ -367,7 +817,309 @@ public class Venta_Datos_Vista extends JFrame {
 	 * @wbp.parser.constructor
 	 */
 	public Venta_Datos_Vista(Venta_Datos_Controller vista, Venta venta) {
-
+//
+//		this.vista = vista;
+//		setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+//		
+//	    addWindowListener(new java.awt.event.WindowAdapter() {
+//	        @Override
+//	        public void windowClosing(java.awt.event.WindowEvent evt) {
+//	            close();
+//	        }
+//	    });
+//		setBounds(5, 53, 960, 688);
+//		setLocationRelativeTo(null);
+//		
+//		
+//		setTitle("Modificar Venta");
+//		getContentPane().setLayout(new GridLayout(0, 1, 0, 0));
+//
+//		botones = new ButtonGroup();
+//
+//		JPanel panel = new JPanel();
+//		getContentPane().add(panel);
+//		panel.setLayout(new GridLayout(0, 1, 0, 0));
+//		
+//		JLabel lblIngreseLosDatos = new JLabel("Mostrando los datos de la venta para su modificacion");
+//		panel.add(lblIngreseLosDatos);
+//		lblIngreseLosDatos.setHorizontalAlignment(SwingConstants.CENTER);
+//		lblIngreseLosDatos.setFont(new Font("Tahoma", Font.PLAIN, 20));
+//		
+//		JPanel panel_2 = new JPanel();
+//		getContentPane().add(panel_2);
+//		panel_2.setLayout(new GridLayout(1, 2, 0, 0));
+//		
+//		JPanel panel_3 = new JPanel();
+//		panel_2.add(panel_3);
+//		panel_3.setLayout(new GridLayout(3, 1, 0, 0));
+//		
+//		JLabel lblSeleccionarCliente = new JLabel("Seleccionar cliente");
+//		panel_3.add(lblSeleccionarCliente);
+//		lblSeleccionarCliente.setFont(new Font("Tahoma", Font.BOLD, 13));
+//		
+//		JLabel lblIngreseDniDel = new JLabel("DNI del cliente");
+//		panel_3.add(lblIngreseDniDel);
+//		
+//		JPanel panel_5 = new JPanel();
+//		panel_3.add(panel_5);
+//		panel_5.setLayout(new GridLayout(1, 2, 0, 0));
+//		
+//		textBuscarDNI = new JTextField();
+//		panel_5.add(textBuscarDNI);
+//		textBuscarDNI.setColumns(10);
+//		
+//		btnBuscarCliente = new JButton("Buscar");
+//		panel_5.add(btnBuscarCliente);
+//		
+//		JPanel panel_4 = new JPanel();
+//		panel_2.add(panel_4);
+//		panel_4.setLayout(new GridLayout(1, 1, 0, 0));
+//		
+//		JPanel panel_6 = new JPanel();
+//		panel_4.add(panel_6);
+//		panel_6.setLayout(new GridLayout(6, 2, 0, 0));
+//		
+//		JLabel lblClienteSeleccionado = new JLabel("Cliente seleccionado");
+//		panel_6.add(lblClienteSeleccionado);
+//		lblClienteSeleccionado.setFont(new Font("Tahoma", Font.BOLD, 13));
+//		
+//		JPanel panel_1 = new JPanel();
+//		panel_6.add(panel_1);
+//		
+//		JLabel lblNombre = new JLabel("Nombre ");
+//		lblNombre.setHorizontalAlignment(SwingConstants.RIGHT);
+//		panel_6.add(lblNombre);
+//		
+//		textNombreVenta = new JTextField();
+//		panel_6.add(textNombreVenta);
+//		textNombreVenta.setEditable(false);
+//		textNombreVenta.setColumns(10);
+//		
+//		JLabel lblApellido = new JLabel("Apellido ");
+//		lblApellido.setHorizontalAlignment(SwingConstants.RIGHT);
+//		panel_6.add(lblApellido);
+//		
+//		textApellido = new JTextField();
+//		panel_6.add(textApellido);
+//		textApellido.setEditable(false);
+//		textApellido.setColumns(10);
+//		
+//		JLabel lblDni = new JLabel("DNI ");
+//		lblDni.setHorizontalAlignment(SwingConstants.RIGHT);
+//		panel_6.add(lblDni);
+//		
+//		textDNI = new JTextField();
+//		panel_6.add(textDNI);
+//		textDNI.setEditable(false);
+//		textDNI.setColumns(10);
+//		
+//		JLabel lblFechaNacimiento = new JLabel("Fecha nacimiento ");
+//		lblFechaNacimiento.setHorizontalAlignment(SwingConstants.RIGHT);
+//		panel_6.add(lblFechaNacimiento);
+//		
+//		textFechaNac = new JTextField();
+//		panel_6.add(textFechaNac);
+//		textFechaNac.setEditable(false);
+//		textFechaNac.setColumns(10);
+//		
+//		JLabel lblEmail = new JLabel("E-mail ");
+//		lblEmail.setHorizontalAlignment(SwingConstants.RIGHT);
+//		panel_6.add(lblEmail);
+//		
+//		textEmail = new JTextField();
+//		panel_6.add(textEmail);
+//		textEmail.setEditable(false);
+//		textEmail.setColumns(10);
+//		
+//		JPanel panel_7 = new JPanel();
+//		getContentPane().add(panel_7);
+//		panel_7.setLayout(new GridLayout(1, 2, 0, 0));
+//		
+//		JPanel panel_8 = new JPanel();
+//		panel_7.add(panel_8);
+//		panel_8.setLayout(new GridLayout(3, 2, 0, 0));
+//		
+//		JLabel lblSeleccionarVuelo = new JLabel("Vuelo seleccionado ");
+//		panel_8.add(lblSeleccionarVuelo);
+//		lblSeleccionarVuelo.setHorizontalAlignment(SwingConstants.CENTER);
+//		lblSeleccionarVuelo.setFont(new Font("Tahoma", Font.BOLD, 13));
+//		
+//		JPanel panel_16 = new JPanel();
+//		panel_8.add(panel_16);
+//		
+//		JLabel lblIdVuelo = new JLabel("ID Vuelo");
+//		panel_8.add(lblIdVuelo);
+//		
+//		textBuscarVuelo = new JTextField();
+//		panel_8.add(textBuscarVuelo);
+//		textBuscarVuelo.setColumns(10);
+//		
+//		JPanel panel_10 = new JPanel();
+//		panel_8.add(panel_10);
+//		
+//		btnBuscarVuelo = new JButton("Buscar");
+//		panel_8.add(btnBuscarVuelo);
+//		btnBuscarVuelo.setEnabled(false);
+//		
+//		JPanel panel_9 = new JPanel();
+//		panel_7.add(panel_9);
+//		panel_9.setLayout(new GridLayout(6, 2, 0, 0));
+//		
+//		JLabel lblIdDelVuelo = new JLabel("ID del Vuelo ");
+//		lblIdDelVuelo.setHorizontalAlignment(SwingConstants.RIGHT);
+//		panel_9.add(lblIdDelVuelo);
+//		
+//		textID_Vuelo = new JTextField();
+//		panel_9.add(textID_Vuelo);
+//		textID_Vuelo.setEditable(false);
+//		textID_Vuelo.setColumns(10);
+//		
+//		JLabel lblAerolinea = new JLabel("Aerolinea ");
+//		lblAerolinea.setHorizontalAlignment(SwingConstants.RIGHT);
+//		panel_9.add(lblAerolinea);
+//		
+//		textAerolinea = new JTextField();
+//		panel_9.add(textAerolinea);
+//		textAerolinea.setEditable(false);
+//		textAerolinea.setColumns(10);
+//		
+//		JLabel lblAeropuertoDeSalida = new JLabel("Aeropuerto de salida ");
+//		lblAeropuertoDeSalida.setHorizontalAlignment(SwingConstants.RIGHT);
+//		panel_9.add(lblAeropuertoDeSalida);
+//		
+//		textAeropuertoSalida = new JTextField();
+//		panel_9.add(textAeropuertoSalida);
+//		textAeropuertoSalida.setEditable(false);
+//		textAeropuertoSalida.setColumns(10);
+//		
+//		JLabel lblAeropuertoDeLlegada = new JLabel("Aeropuerto de llegada ");
+//		lblAeropuertoDeLlegada.setHorizontalAlignment(SwingConstants.RIGHT);
+//		panel_9.add(lblAeropuertoDeLlegada);
+//		
+//		textAeropuertoLlegada = new JTextField();
+//		panel_9.add(textAeropuertoLlegada);
+//		textAeropuertoLlegada.setEditable(false);
+//		textAeropuertoLlegada.setColumns(10);
+//		
+//		JLabel lblFechaYHora = new JLabel("Fecha y hora de salida ");
+//		lblFechaYHora.setHorizontalAlignment(SwingConstants.RIGHT);
+//		panel_9.add(lblFechaYHora);
+//		
+//		textFechaSalida = new JTextField();
+//		panel_9.add(textFechaSalida);
+//		textFechaSalida.setEditable(false);
+//		textFechaSalida.setColumns(10);
+//		
+//		JLabel lblFechaYHora_1 = new JLabel("Fecha y hora de llegada ");
+//		lblFechaYHora_1.setHorizontalAlignment(SwingConstants.RIGHT);
+//		panel_9.add(lblFechaYHora_1);
+//		
+//		textFechaLlegada = new JTextField();
+//		panel_9.add(textFechaLlegada);
+//		textFechaLlegada.setEditable(false);
+//		textFechaLlegada.setColumns(10);
+//		
+//		JLabel lblFormaDePago = new JLabel("Cobro del pasaje");
+//		lblFormaDePago.setHorizontalAlignment(SwingConstants.CENTER);
+//		lblFormaDePago.setFont(new Font("Tahoma", Font.BOLD, 13));
+//		getContentPane().add(lblFormaDePago);
+//		
+//		JPanel panel_11 = new JPanel();
+//		getContentPane().add(panel_11);
+//		panel_11.setLayout(new GridLayout(1, 2, 0, 0));
+//		
+//		JPanel panel_17 = new JPanel();
+//		panel_11.add(panel_17);
+//		panel_17.setLayout(new GridLayout(2, 2, 0, 0));
+//		
+//		JLabel lblValorSinRecargo = new JLabel("Valor sin recargo");
+//		panel_17.add(lblValorSinRecargo);
+//		lblValorSinRecargo.setHorizontalAlignment(SwingConstants.CENTER);
+//		
+//		textValor = new JTextField();
+//		panel_17.add(textValor);
+//		textValor.setColumns(10);
+//		textValor.addActionListener(new CapturaBtnVenta_Datos(this));
+//		
+//		JLabel lblMetodoDePago = new JLabel("Metodo de pago");
+//		panel_17.add(lblMetodoDePago);
+//		lblMetodoDePago.setHorizontalAlignment(SwingConstants.RIGHT);
+//		lblMetodoDePago.setFont(new Font("Tahoma", Font.BOLD, 11));
+//		
+//		JPanel panel_18 = new JPanel();
+//		panel_17.add(panel_18);
+//		panel_18.setLayout(new GridLayout(1, 0, 0, 0));
+//		
+//		rdbtnTarjeta = new JRadioButton("Tarjeta");
+//		panel_18.add(rdbtnTarjeta);
+//		rdbtnTarjeta.setHorizontalAlignment(SwingConstants.RIGHT);
+//		rdbtnTarjeta.addItemListener(new CapturaItemVenta(this));
+//		botones.add(rdbtnTarjeta);
+//		
+//		
+//		rdbtnEfectivo = new JRadioButton("Efectivo");
+//		panel_18.add(rdbtnEfectivo);
+//		rdbtnEfectivo.addItemListener(new CapturaItemVenta(this));
+//		botones.add(rdbtnEfectivo);
+//		
+//		JPanel panel_15 = new JPanel();
+//		panel_11.add(panel_15);
+//		panel_15.setLayout(new GridLayout(2, 2, 0, 0));
+//		
+//		JPanel panel_19 = new JPanel();
+//		panel_15.add(panel_19);
+//		
+//		JLabel lblNewLabel = new JLabel("3 y 6 cuotas sin interes");
+//		panel_19.add(lblNewLabel);
+//		lblNewLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+//		
+//		JLabel lblO = new JLabel("12 o 24 con 10% de recargo");
+//		panel_19.add(lblO);
+//		
+//		
+//		JLabel lblCuotas = new JLabel("Cuotas  ");
+//		panel_15.add(lblCuotas);
+//		lblCuotas.setHorizontalAlignment(SwingConstants.RIGHT);
+//		
+//		comboBox_Cuotas = new JComboBox<String>();
+//		panel_15.add(comboBox_Cuotas);
+//		comboBox_Cuotas.setEnabled(false);
+//		comboBox_Cuotas.setModel(new DefaultComboBoxModel<String>(new String[] {"1", "3", "6", "12", "24"}));
+//		
+//		JPanel panel_20 = new JPanel();
+//		panel_15.add(panel_20);
+//		
+//		JLabel lblTotalAPagar = new JLabel("TOTAL A PAGAR  ");
+//		panel_15.add(lblTotalAPagar);
+//		lblTotalAPagar.setHorizontalAlignment(SwingConstants.RIGHT);
+//		
+//		textTotalPagar = new JTextField();
+//		panel_15.add(textTotalPagar);
+//		textTotalPagar.setText(String.valueOf(venta.getTotalPagar()));
+//		textTotalPagar.setEditable(false);
+//		textTotalPagar.setColumns(10);
+//		comboBox_Cuotas.addItemListener(new CapturaItemVenta(this));
+//		
+//		JPanel panel_12 = new JPanel();
+//		getContentPane().add(panel_12);
+//		panel_12.setLayout(new GridLayout(1, 0, 0, 0));
+//		
+//		JPanel panel_13 = new JPanel();
+//		panel_12.add(panel_13);
+//		
+//		btnCancelar = new JButton("Cancelar");
+//		panel_12.add(btnCancelar);
+//		btnCancelar.addActionListener(new CapturaBtnVenta_Datos(this));
+//		btnCancelar.addActionListener(new CapturaBtnVenta_Datos(this));
+//		btnCancelar.addActionListener(new CapturaBtnVenta_Datos(this));
+//		
+//		JPanel panel_14 = new JPanel();
+//		panel_12.add(panel_14);
+//		
+//		btnGuardarMod = new JButton("Guardar");
+//		panel_12.add(btnGuardarMod);
+//		btnGuardarMod.addActionListener(new CapturaBtnVenta_Datos(this));
+		
 		this.vista = vista;
 		setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
 		
@@ -377,272 +1129,472 @@ public class Venta_Datos_Vista extends JFrame {
 	            close();
 	        }
 	    });
-		setBounds(5, 53, 603, 673);
+		setBounds(5, 53, 960, 688);
 		setLocationRelativeTo(null);
 		
 		
-		setTitle("Nueva Venta");
-		getContentPane().setLayout(null);
-		
-		btnCancelar = new JButton("Cancelar");
-		btnCancelar.addActionListener(new CapturaBtnVenta_Datos(this));
-		btnCancelar.setBounds(481, 598, 97, 25);
-		getContentPane().add(btnCancelar);
-		
-		btnBuscarCliente = new JButton("Buscar");
-		btnBuscarCliente.setBounds(149, 116, 89, 23);
-		btnCancelar.addActionListener(new CapturaBtnVenta_Datos(this));
-		getContentPane().add(btnBuscarCliente);
-		
-		btnBuscarVuelo = new JButton("Buscar");
-		btnBuscarVuelo.setEnabled(false);
-		btnBuscarVuelo.setBounds(149, 287, 89, 23);
-		btnCancelar.addActionListener(new CapturaBtnVenta_Datos(this));
-		getContentPane().add(btnBuscarVuelo);
-		
-		btnGuardarMod = new JButton("Guardar");
-		btnGuardarMod.setBounds(376, 599, 89, 23);
-		btnGuardarMod.addActionListener(new CapturaBtnVenta_Datos(this));
-		getContentPane().add(btnGuardarMod);
-		
-		textBuscarDNI = new JTextField();
-		textBuscarDNI.setBounds(31, 117, 86, 20);
-		getContentPane().add(textBuscarDNI);
-		textBuscarDNI.setColumns(10);
-		
-		textBuscarVuelo = new JTextField();
-		textBuscarVuelo.setColumns(10);
-		textBuscarVuelo.setBounds(31, 288, 86, 20);
-		getContentPane().add(textBuscarVuelo);
-		
-		textValor = new JTextField();
-		textValor.setColumns(10);
-		textValor.setBounds(31, 491, 109, 20);
-		textValor.addActionListener(new CapturaBtnVenta_Datos(this));
-		getContentPane().add(textValor);
-		
-		textNombreVenta = new JTextField();
-		textNombreVenta.setEditable(false);
-		textNombreVenta.setBounds(441, 93, 136, 20);
-		getContentPane().add(textNombreVenta);
-		textNombreVenta.setColumns(10);
-		
-		textApellido = new JTextField();
-		textApellido.setEditable(false);
-		textApellido.setColumns(10);
-		textApellido.setBounds(441, 116, 136, 20);
-		getContentPane().add(textApellido);
-		
-		textDNI = new JTextField();
-		textDNI.setEditable(false);
-		textDNI.setColumns(10);
-		textDNI.setBounds(441, 141, 136, 20);
-		getContentPane().add(textDNI);
-		
-		textFechaNac = new JTextField();
-		textFechaNac.setEditable(false);
-		textFechaNac.setColumns(10);
-		textFechaNac.setBounds(441, 166, 136, 20);
-		getContentPane().add(textFechaNac);
-		
-		textEmail = new JTextField();
-		textEmail.setEditable(false);
-		textEmail.setColumns(10);
-		textEmail.setBounds(441, 191, 136, 20);
-		getContentPane().add(textEmail);
-		
-		textID_Vuelo = new JTextField();
-		textID_Vuelo.setEditable(false);
-		textID_Vuelo.setColumns(10);
-		textID_Vuelo.setBounds(441, 264, 136, 20);
-		getContentPane().add(textID_Vuelo);
-		
-		textAerolinea = new JTextField();
-		textAerolinea.setEditable(false);
-		textAerolinea.setColumns(10);
-		textAerolinea.setBounds(441, 287, 136, 20);
-		getContentPane().add(textAerolinea);
-		
-		textAeropuertoSalida = new JTextField();
-		textAeropuertoSalida.setEditable(false);
-		textAeropuertoSalida.setColumns(10);
-		textAeropuertoSalida.setBounds(441, 312, 136, 20);
-		getContentPane().add(textAeropuertoSalida);
-		
-		textAeropuertoLlegada = new JTextField();
-		textAeropuertoLlegada.setEditable(false);
-		textAeropuertoLlegada.setColumns(10);
-		textAeropuertoLlegada.setBounds(441, 337, 136, 20);
-		getContentPane().add(textAeropuertoLlegada);
-		
-		textFechaSalida = new JTextField();
-		textFechaSalida.setEditable(false);
-		textFechaSalida.setColumns(10);
-		textFechaSalida.setBounds(441, 362, 136, 20);
-		getContentPane().add(textFechaSalida);
-		
-		textFechaLlegada = new JTextField();
-		textFechaLlegada.setEditable(false);
-		textFechaLlegada.setColumns(10);
-		textFechaLlegada.setBounds(441, 386, 136, 20);
-		getContentPane().add(textFechaLlegada);
+		setTitle("Modificar Venta");
 
 		botones = new ButtonGroup();
-		rdbtnTarjeta = new JRadioButton("Tarjeta");
-		rdbtnTarjeta.setBounds(163, 488, 61, 23);
-		rdbtnTarjeta.addItemListener(new CapturaItemVenta(this));
-		botones.add(rdbtnTarjeta);
+		getContentPane().setLayout(new BorderLayout(0, 0));
 		
-		textTotalPagar = new JTextField();
-		textTotalPagar.setText(String.valueOf(venta.getTotalPagar()));
-		textTotalPagar.setEditable(false);
-		textTotalPagar.setBounds(123, 563, 112, 20);
-		getContentPane().add(textTotalPagar);
-		textTotalPagar.setColumns(10);
+		JPanel panel_11 = new JPanel();
+		getContentPane().add(panel_11);
+		panel_11.setLayout(new GridLayout(3, 1, 0, 0));
 		
+		JPanel panel_2 = new JPanel();
+		panel_11.add(panel_2);
+		panel_2.setLayout(new GridLayout(1, 2, 0, 0));
 		
-		rdbtnEfectivo = new JRadioButton("Efectivo");
-		rdbtnEfectivo.setBounds(163, 514, 70, 23);
-		rdbtnEfectivo.addItemListener(new CapturaItemVenta(this));
-		botones.add(rdbtnEfectivo);
+		JPanel panel_3 = new JPanel();
+		panel_2.add(panel_3);
+		panel_3.setLayout(new GridLayout(7, 1, 0, 0));
 		
-		getContentPane().add(rdbtnEfectivo);
-		getContentPane().add(rdbtnTarjeta);
-		
-		comboBox_Cuotas = new JComboBox();
-		comboBox_Cuotas.setEnabled(false);
-		comboBox_Cuotas.setModel(new DefaultComboBoxModel(new String[] {"1", "3", "6", "12", "24"}));
-		comboBox_Cuotas.addItemListener(new CapturaItemVenta(this));
-		comboBox_Cuotas.setBounds(300, 491, 53, 20);
-		getContentPane().add(comboBox_Cuotas);
-		
-		JLabel lblIngreseLosDatos = new JLabel("Mostrando los datos de la venta para su modificacion");
-		lblIngreseLosDatos.setHorizontalAlignment(SwingConstants.CENTER);
-		lblIngreseLosDatos.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblIngreseLosDatos.setBounds(10, 11, 567, 35);
-		getContentPane().add(lblIngreseLosDatos);
-		
-		JLabel lblIngreseDniDel = new JLabel("DNI del cliente");
-		lblIngreseDniDel.setBounds(31, 97, 86, 14);
-		getContentPane().add(lblIngreseDniDel);
-		
-		JLabel lblClienteSeleccionado = new JLabel("Cliente seleccionado");
-		lblClienteSeleccionado.setFont(new Font("Tahoma", Font.BOLD, 13));
-		lblClienteSeleccionado.setBounds(302, 57, 162, 25);
-		getContentPane().add(lblClienteSeleccionado);
-		
-		JLabel lblNombre = new JLabel("Nombre:");
-		lblNombre.setBounds(309, 97, 46, 14);
-		getContentPane().add(lblNombre);
-		
-		JLabel lblApellido = new JLabel("Apellido:");
-		lblApellido.setBounds(309, 120, 46, 14);
-		getContentPane().add(lblApellido);
-		
-		JLabel lblDni = new JLabel("DNI:");
-		lblDni.setBounds(309, 145, 46, 14);
-		getContentPane().add(lblDni);
-		
-		JLabel lblFechaNacimiento = new JLabel("Fecha nacimiento:");
-		lblFechaNacimiento.setBounds(309, 170, 97, 14);
-		getContentPane().add(lblFechaNacimiento);
-		
-		JLabel lblEmail = new JLabel("E-mail:");
-		lblEmail.setBounds(309, 195, 46, 14);
-		getContentPane().add(lblEmail);
+		JPanel panel_45 = new JPanel();
+		panel_3.add(panel_45);
 		
 		JLabel lblSeleccionarCliente = new JLabel("Seleccionar cliente");
+		lblSeleccionarCliente.setHorizontalAlignment(SwingConstants.CENTER);
+		panel_3.add(lblSeleccionarCliente);
 		lblSeleccionarCliente.setFont(new Font("Tahoma", Font.BOLD, 13));
-		lblSeleccionarCliente.setBounds(31, 57, 162, 25);
-		getContentPane().add(lblSeleccionarCliente);
 		
-		JLabel lblIdDelVuelo = new JLabel("ID del Vuelo");
-		lblIdDelVuelo.setBounds(31, 268, 86, 14);
-		getContentPane().add(lblIdDelVuelo);
+		JPanel panel_28 = new JPanel();
+		panel_3.add(panel_28);
+		panel_28.setLayout(new GridLayout(0, 3, 0, 0));
 		
-		JLabel lblVueloSeleccionado = new JLabel("Vuelo seleccionado");
-		lblVueloSeleccionado.setFont(new Font("Tahoma", Font.BOLD, 13));
-		lblVueloSeleccionado.setBounds(302, 228, 162, 25);
-		getContentPane().add(lblVueloSeleccionado);
+		JPanel panel_29 = new JPanel();
+		panel_28.add(panel_29);
+		
+		JLabel lblIngreseDniDel = new JLabel("DNI del cliente");
+		panel_28.add(lblIngreseDniDel);
+		lblIngreseDniDel.setHorizontalAlignment(SwingConstants.CENTER);
+		
+		JPanel panel_5 = new JPanel();
+		panel_3.add(panel_5);
+		panel_5.setLayout(new GridLayout(0, 3, 0, 0));
+		
+		JPanel panel_27 = new JPanel();
+		panel_5.add(panel_27);
+		
+		textBuscarDNI = new JTextField();
+		panel_5.add(textBuscarDNI);
+		textBuscarDNI.setColumns(10);
+		
+		btnBuscarCliente = new JButton("Buscar");
+		btnBuscarCliente.addActionListener(new CapturaBtnVenta_Datos(this));
+		panel_5.add(btnBuscarCliente);
+		
+		JPanel panel_21 = new JPanel();
+		panel_3.add(panel_21);
+		panel_21.setLayout(new GridLayout(0, 3, 0, 0));
+		
+		JPanel panel_50 = new JPanel();
+		panel_21.add(panel_50);
+		panel_50.setLayout(new GridLayout(1, 0, 0, 0));
+		
+		JButton btnVerClientes = new JButton("Ver Clientes");
+		panel_21.add(btnVerClientes);
+		
+		JPanel panel_4 = new JPanel();
+		panel_2.add(panel_4);
+		panel_4.setLayout(new GridLayout(7, 1, 0, 0));
+		
+		JPanel panel_22 = new JPanel();
+		panel_4.add(panel_22);
+		
+		JPanel panel_46 = new JPanel();
+		panel_4.add(panel_46);
+		panel_46.setLayout(new GridLayout(1, 0, 0, 0));
+		
+		JLabel lblClienteSeleccionado = new JLabel("Cliente seleccionado");
+		panel_46.add(lblClienteSeleccionado);
+		lblClienteSeleccionado.setHorizontalAlignment(SwingConstants.CENTER);
+		lblClienteSeleccionado.setFont(new Font("Tahoma", Font.BOLD, 13));
+		
+		JPanel panel_47 = new JPanel();
+		panel_4.add(panel_47);
+		panel_47.setLayout(new GridLayout(0, 3, 0, 0));
+		
+		JLabel lblNombre = new JLabel("Nombre ");
+		panel_47.add(lblNombre);
+		lblNombre.setHorizontalAlignment(SwingConstants.RIGHT);
+		
+		textNombreVenta = new JTextField();
+		panel_47.add(textNombreVenta);
+		textNombreVenta.setEditable(false);
+		textNombreVenta.setColumns(10);
+		
+		JPanel panel_48 = new JPanel();
+		panel_4.add(panel_48);
+		panel_48.setLayout(new GridLayout(0, 3, 0, 0));
+		
+		JLabel lblApellido = new JLabel("Apellido ");
+		panel_48.add(lblApellido);
+		lblApellido.setHorizontalAlignment(SwingConstants.RIGHT);
+		
+		textApellido = new JTextField();
+		panel_48.add(textApellido);
+		textApellido.setEditable(false);
+		textApellido.setColumns(10);
+		
+		JPanel panel_49 = new JPanel();
+		panel_4.add(panel_49);
+		panel_49.setLayout(new GridLayout(0, 3, 0, 0));
+		
+		JLabel lblDni = new JLabel("DNI ");
+		panel_49.add(lblDni);
+		lblDni.setHorizontalAlignment(SwingConstants.RIGHT);
+		
+		textDNI = new JTextField();
+		panel_49.add(textDNI);
+		textDNI.setEditable(false);
+		textDNI.setColumns(10);
+		
+		JPanel panel_1 = new JPanel();
+		panel_4.add(panel_1);
+		panel_1.setLayout(new GridLayout(0, 3, 0, 0));
+		
+		JLabel lblFechaNacimiento = new JLabel("Fecha nacimiento ");
+		panel_1.add(lblFechaNacimiento);
+		lblFechaNacimiento.setHorizontalAlignment(SwingConstants.RIGHT);
+		
+		textFechaNac = new JTextField();
+		panel_1.add(textFechaNac);
+		textFechaNac.setEditable(false);
+		textFechaNac.setColumns(10);
+		
+		JPanel panel_6 = new JPanel();
+		panel_4.add(panel_6);
+		panel_6.setLayout(new GridLayout(0, 3, 0, 0));
+		
+		JLabel lblEmail = new JLabel("E-mail ");
+		panel_6.add(lblEmail);
+		lblEmail.setHorizontalAlignment(SwingConstants.RIGHT);
+		
+		textEmail = new JTextField();
+		panel_6.add(textEmail);
+		textEmail.setEditable(false);
+		textEmail.setColumns(10);
+		
+		JPanel panel_7 = new JPanel();
+		panel_11.add(panel_7);
+		panel_7.setLayout(new GridLayout(1, 2, 0, 0));
+		
+		JPanel panel_8 = new JPanel();
+		panel_7.add(panel_8);
+		panel_8.setLayout(new GridLayout(0, 1, 0, 0));
+		
+		JPanel panel_34 = new JPanel();
+		panel_8.add(panel_34);
+		panel_34.setLayout(new GridLayout(1, 0, 0, 0));
+		
+		JPanel panel_16 = new JPanel();
+		panel_8.add(panel_16);
+		panel_16.setLayout(new GridLayout(1, 0, 0, 0));
+		
+		JLabel lblSeleccionarVuelo = new JLabel("Seleccionar Vuelo");
+		panel_16.add(lblSeleccionarVuelo);
+		lblSeleccionarVuelo.setHorizontalAlignment(SwingConstants.CENTER);
+		lblSeleccionarVuelo.setFont(new Font("Tahoma", Font.BOLD, 13));
+		
+		JPanel panel_41 = new JPanel();
+		panel_8.add(panel_41);
+		panel_41.setLayout(new GridLayout(0, 3, 0, 0));
+		
+		JPanel panel_42 = new JPanel();
+		panel_41.add(panel_42);
 		
 		JLabel lblIdVuelo = new JLabel("ID Vuelo");
-		lblIdVuelo.setBounds(309, 268, 46, 14);
-		getContentPane().add(lblIdVuelo);
+		lblIdVuelo.setHorizontalAlignment(SwingConstants.CENTER);
+		panel_41.add(lblIdVuelo);
 		
-		JLabel lblAerolinea = new JLabel("Aerolinea");
-		lblAerolinea.setBounds(309, 291, 46, 14);
-		getContentPane().add(lblAerolinea);
+		JPanel panel_23 = new JPanel();
+		panel_8.add(panel_23);
+		panel_23.setLayout(new GridLayout(0, 3, 0, 0));
 		
-		JLabel lblAeropuertoDeSalida = new JLabel("Aeropuerto de salida");
-		lblAeropuertoDeSalida.setBounds(309, 316, 108, 14);
-		getContentPane().add(lblAeropuertoDeSalida);
+		JPanel panel_39 = new JPanel();
+		panel_23.add(panel_39);
 		
-		JLabel lblAeropuertoDeLlegada = new JLabel("Aeropuerto de llegada");
-		lblAeropuertoDeLlegada.setBounds(309, 341, 108, 14);
-		getContentPane().add(lblAeropuertoDeLlegada);
+		textBuscarVuelo = new JTextField();
+		panel_23.add(textBuscarVuelo);
+		textBuscarVuelo.setColumns(10);
 		
-		JLabel lblFechaYHora = new JLabel("Fecha y hora de salida");
-		lblFechaYHora.setBounds(309, 366, 108, 14);
-		getContentPane().add(lblFechaYHora);
+		btnBuscarVuelo = new JButton("Buscar");
+		panel_23.add(btnBuscarVuelo);
+		btnBuscarVuelo.addActionListener(new CapturaBtnVenta_Datos(this));
 		
-		JLabel lblSeleccionarVuelo = new JLabel("Vuelo (no se puede modificar) ");
-		lblSeleccionarVuelo.setFont(new Font("Tahoma", Font.BOLD, 13));
-		lblSeleccionarVuelo.setBounds(31, 228, 233, 25);
-		getContentPane().add(lblSeleccionarVuelo);
+		JPanel panel_24 = new JPanel();
+		panel_8.add(panel_24);
+		panel_24.setLayout(new GridLayout(0, 3, 0, 0));
 		
-		JLabel lblValorSinRecargo = new JLabel("Valor sin recargo");
-		lblValorSinRecargo.setBounds(31, 470, 86, 14);
-		getContentPane().add(lblValorSinRecargo);
+		JPanel panel_26 = new JPanel();
+		panel_24.add(panel_26);
 		
-		JLabel lblMetodoDePago = new JLabel("Metodo de pago");
-		lblMetodoDePago.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblMetodoDePago.setBounds(163, 465, 116, 25);
-		getContentPane().add(lblMetodoDePago);
+		JButton btnVerVuelos = new JButton("Ver Vuelos");
+		panel_24.add(btnVerVuelos);
 		
-		JLabel lblFormaDePago = new JLabel("Cobro del vuelo");
+		JPanel panel_10 = new JPanel();
+		panel_8.add(panel_10);
+		
+		JPanel panel_33 = new JPanel();
+		panel_8.add(panel_33);
+		panel_33.setLayout(new GridLayout(1, 0, 0, 0));
+		
+		JPanel panel_9 = new JPanel();
+		panel_7.add(panel_9);
+		panel_9.setLayout(new GridLayout(8, 3, 0, 0));
+		
+		JPanel panel_35 = new JPanel();
+		panel_9.add(panel_35);
+		
+		JPanel panel_64 = new JPanel();
+		panel_9.add(panel_64);
+		
+		JPanel panel_65 = new JPanel();
+		panel_9.add(panel_65);
+		
+		JPanel panel_66 = new JPanel();
+		panel_9.add(panel_66);
+		
+		JLabel label = new JLabel("Vuelo seleccionado ");
+		label.setHorizontalAlignment(SwingConstants.CENTER);
+		label.setFont(new Font("Tahoma", Font.BOLD, 13));
+		panel_9.add(label);
+		
+		JPanel panel_36 = new JPanel();
+		panel_9.add(panel_36);
+		
+		JLabel lblIdDelVuelo = new JLabel("ID del Vuelo ");
+		lblIdDelVuelo.setHorizontalAlignment(SwingConstants.RIGHT);
+		panel_9.add(lblIdDelVuelo);
+		
+		textID_Vuelo = new JTextField();
+		panel_9.add(textID_Vuelo);
+		textID_Vuelo.setEditable(false);
+		textID_Vuelo.setColumns(10);
+		
+		JPanel panel_30 = new JPanel();
+		panel_9.add(panel_30);
+		
+		JLabel lblAerolinea = new JLabel("Aerolinea ");
+		lblAerolinea.setHorizontalAlignment(SwingConstants.RIGHT);
+		panel_9.add(lblAerolinea);
+		
+		textAerolinea = new JTextField();
+		panel_9.add(textAerolinea);
+		textAerolinea.setEditable(false);
+		textAerolinea.setColumns(10);
+		
+		JPanel panel_53 = new JPanel();
+		panel_9.add(panel_53);
+		
+		JLabel lblAeropuertoDeSalida = new JLabel("Aeropuerto de salida ");
+		panel_9.add(lblAeropuertoDeSalida);
+		lblAeropuertoDeSalida.setHorizontalAlignment(SwingConstants.RIGHT);
+		
+		textAeropuertoSalida = new JTextField();
+		panel_9.add(textAeropuertoSalida);
+		textAeropuertoSalida.setEditable(false);
+		textAeropuertoSalida.setColumns(10);
+		
+		JPanel panel_52 = new JPanel();
+		panel_9.add(panel_52);
+		
+		JLabel lblAeropuertoDeLlegada = new JLabel("Aeropuerto de llegada ");
+		lblAeropuertoDeLlegada.setHorizontalAlignment(SwingConstants.RIGHT);
+		panel_9.add(lblAeropuertoDeLlegada);
+		
+		textAeropuertoLlegada = new JTextField();
+		panel_9.add(textAeropuertoLlegada);
+		textAeropuertoLlegada.setEditable(false);
+		textAeropuertoLlegada.setColumns(10);
+		
+		JPanel panel_54 = new JPanel();
+		panel_9.add(panel_54);
+		
+		JLabel lblFechaYHora = new JLabel("Fecha y hora de salida ");
+		lblFechaYHora.setHorizontalAlignment(SwingConstants.RIGHT);
+		panel_9.add(lblFechaYHora);
+		
+		textFechaSalida = new JTextField();
+		panel_9.add(textFechaSalida);
+		textFechaSalida.setEditable(false);
+		textFechaSalida.setColumns(10);
+		
+		JPanel panel_55 = new JPanel();
+		panel_9.add(panel_55);
+		
+		JLabel lblFechaYHora_1 = new JLabel("Fecha y hora de llegada ");
+		lblFechaYHora_1.setHorizontalAlignment(SwingConstants.RIGHT);
+		panel_9.add(lblFechaYHora_1);
+		
+		textFechaLlegada = new JTextField();
+		panel_9.add(textFechaLlegada);
+		textFechaLlegada.setEditable(false);
+		textFechaLlegada.setColumns(10);
+		
+		JPanel panel_31 = new JPanel();
+		panel_11.add(panel_31);
+		panel_31.setLayout(new GridLayout(4, 1, 0, 0));
+		
+		JPanel panel_51 = new JPanel();
+		panel_31.add(panel_51);
+		
+		JLabel lblFormaDePago = new JLabel("Cobro del pasaje");
+		panel_31.add(lblFormaDePago);
+		lblFormaDePago.setHorizontalAlignment(SwingConstants.CENTER);
 		lblFormaDePago.setFont(new Font("Tahoma", Font.BOLD, 13));
-		lblFormaDePago.setBounds(31, 429, 162, 25);
-		getContentPane().add(lblFormaDePago);
 		
+		JPanel panel_32 = new JPanel();
+		panel_31.add(panel_32);
+		panel_32.setLayout(new GridLayout(0, 2, 0, 0));
 		
-		JLabel lblCuotas = new JLabel("Cuotas");
-		lblCuotas.setBounds(254, 492, 46, 14);
-		getContentPane().add(lblCuotas);
+		JPanel panel_17 = new JPanel();
+		panel_32.add(panel_17);
+		panel_17.setLayout(new GridLayout(2, 2, 0, 0));
 		
-		JLabel lblNewLabel = new JLabel("3 y 6 cuotas sin interes");
-		lblNewLabel.setBounds(418, 491, 116, 17);
-		getContentPane().add(lblNewLabel);
+		JLabel lblValorSinRecargo_1 = new JLabel("Valor sin recargo  ");
+		lblValorSinRecargo_1.setHorizontalAlignment(SwingConstants.RIGHT);
+		panel_17.add(lblValorSinRecargo_1);
 		
-		JLabel lblO = new JLabel("12 o 24 con 10% de recargo");
-		lblO.setBounds(418, 514, 143, 14);
-		getContentPane().add(lblO);
+		JPanel panel_19 = new JPanel();
+		panel_17.add(panel_19);
+		panel_19.setLayout(new GridLayout(0, 2, 0, 0));
 		
-		JSeparator separator_1 = new JSeparator();
-		separator_1.setBounds(10, 220, 567, 14);
-		getContentPane().add(separator_1);
+		textValor = new JTextField();
+		panel_19.add(textValor);
+		textValor.setColumns(10);
 		
-		JSeparator separator = new JSeparator();
-		separator.setBounds(10, 414, 567, 110);
-		getContentPane().add(separator);
+		JLabel label_2 = new JLabel("Metodo de pago");
+		label_2.setHorizontalAlignment(SwingConstants.RIGHT);
+		label_2.setFont(new Font("Tahoma", Font.BOLD, 11));
+		panel_17.add(label_2);
 		
-		JSeparator separator_2 = new JSeparator();
-		separator_2.setBounds(10, 59, 567, 20);
-		getContentPane().add(separator_2);
+		JPanel panel_18 = new JPanel();
+		panel_17.add(panel_18);
+		panel_18.setLayout(new GridLayout(1, 0, 0, 0));
 		
-		JSeparator separator_3 = new JSeparator();
-		separator_3.setOrientation(SwingConstants.VERTICAL);
-		separator_3.setBounds(274, 57, 12, 335);
-		getContentPane().add(separator_3);
+		rdbtnTarjeta = new JRadioButton("Tarjeta");
+		rdbtnTarjeta.setHorizontalAlignment(SwingConstants.RIGHT);
+		rdbtnTarjeta.addItemListener(new CapturaItemVenta(this));
+		botones.add(rdbtnTarjeta);
+		panel_18.add(rdbtnTarjeta);
 		
-		JLabel lblFechaYHora_1 = new JLabel("Fecha y hora de llegada");
-		lblFechaYHora_1.setBounds(309, 389, 122, 14);
-		getContentPane().add(lblFechaYHora_1);
+		rdbtnEfectivo = new JRadioButton("Efectivo");
+		rdbtnEfectivo.addItemListener(new CapturaItemVenta(this));
+		botones.add(rdbtnEfectivo);
+		panel_18.add(rdbtnEfectivo);
 		
-		JLabel lblTotalAPagar = new JLabel("TOTAL A PAGAR");
-		lblTotalAPagar.setBounds(31, 566, 82, 14);
-		getContentPane().add(lblTotalAPagar);
+		JPanel panel_15 = new JPanel();
+		panel_32.add(panel_15);
+		panel_15.setLayout(new GridLayout(0, 4, 0, 0));
+		
+		JLabel label_3 = new JLabel("3 y 6 cuotas sin interes");
+		label_3.setHorizontalAlignment(SwingConstants.CENTER);
+		panel_15.add(label_3);
+		
+		JLabel label_5 = new JLabel("Cuotas  ");
+		label_5.setHorizontalAlignment(SwingConstants.RIGHT);
+		panel_15.add(label_5);
+		
+		comboBox_Cuotas = new JComboBox<String>();
+		comboBox_Cuotas.setEnabled(false);
+		comboBox_Cuotas.setModel(new DefaultComboBoxModel<String>(new String[] {"1", "3", "6", "12", "24"}));
+		comboBox_Cuotas.addItemListener(new CapturaItemVenta(this));
+		comboBox_Cuotas.setBounds(300, 491, 53, 20);
+		panel_15.add(comboBox_Cuotas);
+		
+		JPanel panel_56 = new JPanel();
+		panel_15.add(panel_56);
+		
+		JPanel panel_20 = new JPanel();
+		panel_15.add(panel_20);
+		panel_20.setLayout(new GridLayout(1, 0, 0, 0));
+		
+		JLabel label_4 = new JLabel("12 o 24 con 10% de recargo");
+		label_4.setHorizontalAlignment(SwingConstants.CENTER);
+		panel_20.add(label_4);
+		
+		JLabel label_6 = new JLabel("TOTAL A PAGAR  ");
+		label_6.setHorizontalAlignment(SwingConstants.RIGHT);
+		panel_15.add(label_6);
+		
+		textTotalPagar = new JTextField();
+		textTotalPagar.setEditable(false);
+		textTotalPagar.setColumns(10);
+		textTotalPagar.setText(String.valueOf(venta.getTotalPagar()));
+		panel_15.add(textTotalPagar);
+		
+		JPanel panel = new JPanel();
+		getContentPane().add(panel, BorderLayout.NORTH);
+		panel.setLayout(new GridLayout(2, 1, 0, 0));
+		
+		JPanel panel_25 = new JPanel();
+		panel.add(panel_25);
+		
+		JLabel lblIngreseLosDatos = new JLabel("Mostrando los datos de la venta para su modificacion");
+		panel.add(lblIngreseLosDatos);
+		lblIngreseLosDatos.setHorizontalAlignment(SwingConstants.CENTER);
+		lblIngreseLosDatos.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		
+		JPanel panel_12 = new JPanel();
+		getContentPane().add(panel_12, BorderLayout.SOUTH);
+		panel_12.setLayout(new GridLayout(2, 7, 0, 0));
+		
+		JPanel panel_40 = new JPanel();
+		panel_12.add(panel_40);
+		
+		btnCancelar = new JButton("Cancelar");
+		panel_12.add(btnCancelar);
+		btnCancelar.addActionListener(new CapturaBtnVenta_Datos(this));
+		btnCancelar.addActionListener(new CapturaBtnVenta_Datos(this));
+		btnCancelar.addActionListener(new CapturaBtnVenta_Datos(this));
+		
+		JPanel panel_13 = new JPanel();
+		panel_12.add(panel_13);
+		
+		JPanel panel_60 = new JPanel();
+		panel_12.add(panel_60);
+		
+		JPanel panel_61 = new JPanel();
+		panel_12.add(panel_61);
+		
+		btnGuardar = new JButton("Guardar");
+		panel_12.add(btnGuardar);
+		btnGuardar.addActionListener(new CapturaBtnVenta_Datos(this));
+		
+		JPanel panel_62 = new JPanel();
+		panel_12.add(panel_62);
+		
+		JPanel panel_63 = new JPanel();
+		panel_12.add(panel_63);
+		
+		JPanel panel_14 = new JPanel();
+		panel_12.add(panel_14);
+		
+		JPanel panel_38 = new JPanel();
+		panel_12.add(panel_38);
+		
+		JPanel panel_37 = new JPanel();
+		panel_12.add(panel_37);
+		
+		JPanel panel_58 = new JPanel();
+		panel_12.add(panel_58);
+		
+		JPanel panel_59 = new JPanel();
+		panel_12.add(panel_59);
+		
+		JPanel panel_57 = new JPanel();
+		panel_12.add(panel_57);
+		
+		JPanel panel_43 = new JPanel();
+		getContentPane().add(panel_43, BorderLayout.WEST);
+		
+		JPanel panel_44 = new JPanel();
+		getContentPane().add(panel_44, BorderLayout.EAST);
+		
 
-		
+		this.setVisible(true);
 		}
 
 	
@@ -961,6 +1913,7 @@ public class Venta_Datos_Vista extends JFrame {
 	}
 
 
+	@SuppressWarnings("deprecation")
 	public boolean seleccionarVuelo(Vuelo buscar) {
 		if(JOptionPane.showConfirmDialog(null, ("Desea seleccionar al siguiente vuelo?\n ID del Vuelo: "+buscar.getId_vuelo()+
 				"\nAerolinea: "+buscar.getAerolinea().getNombre()+"\nAeropuerto de salida: ["+buscar.getAeroSalida().getCiudad()+"]"

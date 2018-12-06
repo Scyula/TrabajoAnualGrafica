@@ -6,16 +6,13 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import edu.usal.negocio.dominio.Cliente;
 import edu.usal.negocio.dominio.Vuelo;
 import edu.usal.pantalla.controller.Vuelo_Cliente_Controller;
 import edu.usal.pantalla.vista.eventos.CapturaBtnVuelo_Cliente;
 
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
-import javax.swing.JList;
 import javax.swing.JOptionPane;
-import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import java.awt.GridLayout;
 import javax.swing.JScrollPane;

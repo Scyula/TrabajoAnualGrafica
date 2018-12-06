@@ -3,7 +3,6 @@ package edu.usal.pantalla.vista.eventos;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import edu.usal.pantalla.controller.OperacionesController;
 import edu.usal.pantalla.vista.MenuPrincipalVista__Tabla;
 
 public class CapturaBtnMP_Tabla implements ActionListener {

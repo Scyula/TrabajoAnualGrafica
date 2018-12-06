@@ -9,21 +9,14 @@ import java.util.List;
 import javax.swing.ComboBoxModel;
 
 import edu.usal.negocio.dao.factory.AeropuertoFactory;
-import edu.usal.negocio.dao.factory.ClienteFactory;
 import edu.usal.negocio.dao.factory.VueloFactory;
 import edu.usal.negocio.dao.interfaces.AeropuertoDAO;
-import edu.usal.negocio.dao.interfaces.ClienteDAO;
 import edu.usal.negocio.dao.interfaces.VueloDAO;
 import edu.usal.negocio.dominio.Aeropuerto;
 import edu.usal.negocio.dominio.Vuelo;
-import edu.usal.negocio.dominio.Direccion;
 import edu.usal.negocio.dominio.LineaAerea;
 import edu.usal.negocio.dominio.Pais;
-import edu.usal.negocio.dominio.PasajeroFrecuente;
-import edu.usal.negocio.dominio.Pasaporte;
 import edu.usal.negocio.dominio.Provincia;
-import edu.usal.negocio.dominio.Telefono;
-import edu.usal.pantalla.vista.Cliente_Datos_Vista;
 import edu.usal.pantalla.vista.Vuelo_Datos_Vista;
 import edu.usal.util.DatosEstaticos;
 import edu.usal.util.IOGeneral;
@@ -53,6 +46,7 @@ public class Vuelo_Datos_Controller {
 		try {
 			if(vuelodao.updateVuelo(vuelo)) {
 				menu.exitoOperacion();
+				mPController.seleccionVuelos();
 			}else {
 				menu.fracasoOperacion();
 			}
@@ -74,6 +68,7 @@ public class Vuelo_Datos_Controller {
 		try {
 			if(vuelodao.addVuelo(vuelo)) {
 				menu.exitoOperacion();
+				mPController.seleccionVuelos();
 			}else {
 				menu.fracasoOperacion();
 			}

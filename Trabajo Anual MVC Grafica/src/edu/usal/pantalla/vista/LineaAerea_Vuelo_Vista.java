@@ -10,14 +10,10 @@ import javax.swing.table.DefaultTableModel;
 import edu.usal.negocio.dominio.Cliente;
 import edu.usal.negocio.dominio.LineaAerea;
 import edu.usal.pantalla.controller.LineaAerea_Vuelo_Controller;
-import edu.usal.pantalla.controller.Vuelo_Cliente_Controller;
-import edu.usal.pantalla.vista.eventos.CapturaBtnVuelo_Cliente;
 
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
-import javax.swing.JList;
 import javax.swing.JOptionPane;
-import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import java.awt.GridLayout;
 import javax.swing.JScrollPane;

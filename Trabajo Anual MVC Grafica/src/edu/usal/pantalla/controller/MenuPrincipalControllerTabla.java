@@ -2,7 +2,6 @@ package edu.usal.pantalla.controller;
 
 import java.awt.Component;
 import java.sql.SQLException;
-import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.table.TableCellRenderer;
@@ -27,18 +26,15 @@ import edu.usal.util.IOGeneral;
 
 public class MenuPrincipalControllerTabla{
 		private MenuPrincipalVista__Tabla menuPrincipal;
-		private Cliente_Datos_Controller menuDatosCliente;
-		private LineaAerea_Datos_Controller menuDatosLineaAerea;
-		private Venta_Datos_Controller menuDatosVenta;
-		private Vuelo_Datos_Controller menuDatosVuelo;	
 		private ActualizarDatos datos;
 		private OperacionesController oper;
 		
 		public MenuPrincipalControllerTabla() {
 			this.menuPrincipal = new MenuPrincipalVista__Tabla(this);
 			this.oper = new OperacionesController();
+			this.datos = new ActualizarDatos();
 		}
-		
+
 		public void hacerVisibleMP() {
 			this.menuPrincipal.setVisible(true);
 		}
@@ -48,7 +44,7 @@ public class MenuPrincipalControllerTabla{
 				System.exit(0);
 			}
 		}
-		
+
 		private void actualizar() {
 			this.menuPrincipal.revalidate();
 			this.menuPrincipal.repaint();
@@ -60,13 +56,13 @@ public class MenuPrincipalControllerTabla{
 
 		public void seleccionClientes() {
 			try {
-				datos = new ActualizarDatos();
 				this.menuPrincipal.getTable().setModel(datos.clientes());
 				this.calcularEspacio();
 
 				this.menuPrincipal.getPanel_Agregar().removeAll();
 				this.menuPrincipal.getPanel_Eliminar().removeAll();
 				this.menuPrincipal.getPanel_Modificar().removeAll();
+				this.menuPrincipal.getPanel_Buscar().removeAll();
 				if(this.menuPrincipal.getPanel_Ver().getComponentCount()==1) {
 					this.menuPrincipal.getPanel_Ver().remove(0);
 				}
@@ -74,7 +70,9 @@ public class MenuPrincipalControllerTabla{
 				this.menuPrincipal.getPanel_Agregar().add(this.menuPrincipal.getBtnAddCliente());
 				this.menuPrincipal.getPanel_Modificar().add(this.menuPrincipal.getBtnModCliente());
 				this.menuPrincipal.getPanel_Eliminar().add(this.menuPrincipal.getBtnDelCliente());
+				this.menuPrincipal.getPanel_Buscar().add(this.menuPrincipal.getBtnBuscarCliente());
 				
+				this.menuPrincipal.getBtnBuscarCliente().setVisible(true);
 				this.menuPrincipal.getBtnAddCliente().setVisible(true);
 				this.menuPrincipal.getBtnDelCliente().setVisible(true);
 				this.menuPrincipal.getBtnModCliente().setVisible(true);
@@ -87,19 +85,17 @@ public class MenuPrincipalControllerTabla{
 
 		public void nuevoCliente() {
 			this.menuPrincipal.setVisible(false);
-			menuDatosCliente = new Cliente_Datos_Controller(this);	
-			seleccionClientes();
+			new Cliente_Datos_Controller(this);	
 		}
 		
 		public void modCliente() {
 				Cliente select = buscarCliente();
 				if(select==null) {
-					this.menuPrincipal.fracasoOperacion("La seleccion del cliente");
+					this.menuPrincipal.fracasoOperacion("Debe seleccionar un cliente");
 				}else {
 					if(this.menuPrincipal.confirmarSeleccion(select, "(MODIFICACION)")){
 						this.menuPrincipal.setVisible(false);
-						menuDatosCliente = new Cliente_Datos_Controller(this, select);
-						seleccionClientes();
+						new Cliente_Datos_Controller(this, select);
 					}else{
 						this.menuPrincipal.cancelaOperacion();
 					}
@@ -110,11 +106,10 @@ public class MenuPrincipalControllerTabla{
 		public void delCliente() {
 			Cliente select = buscarCliente();
 			if(select==null) {
-				this.menuPrincipal.fracasoOperacion("La seleccion del cliente");
+				this.menuPrincipal.fracasoOperacion("Debe seleccionar un cliente");
 			}else {
 				if(this.menuPrincipal.confirmarSeleccion(select, "(ELIMINACION)")){
 					oper.eliminar(this, select);
-					seleccionClientes();
 				}else{
 					this.menuPrincipal.cancelaOperacion();
 				}
@@ -130,8 +125,6 @@ public class MenuPrincipalControllerTabla{
 				IOGeneral.pritln(">>>>>Error con la base de datos<<<<<");
 				IOGeneral.pritln(e.getMessage());
 			}	catch(ArrayIndexOutOfBoundsException e) {
-				IOGeneral.pritln(">>>>>Error debe seleccionar un elemento<<<<<");
-				IOGeneral.pritln(e.getMessage());
 			}
 			return null;
 		}
@@ -139,13 +132,13 @@ public class MenuPrincipalControllerTabla{
 		
 		public void seleccionAerolinea() {
 			try {
-				datos = new ActualizarDatos();
 				this.menuPrincipal.getTable().setModel(datos.aerolineas());
 				this.calcularEspacio();
 				
 				this.menuPrincipal.getPanel_Agregar().removeAll();
 				this.menuPrincipal.getPanel_Eliminar().removeAll();
 				this.menuPrincipal.getPanel_Modificar().removeAll();
+				this.menuPrincipal.getPanel_Buscar().removeAll();
 				if(this.menuPrincipal.getPanel_Ver().getComponentCount()==1) {
 					this.menuPrincipal.getPanel_Ver().remove(0);
 				}
@@ -154,7 +147,9 @@ public class MenuPrincipalControllerTabla{
 				this.menuPrincipal.getPanel_Modificar().add(this.menuPrincipal.getBtnModAerolinea());
 				this.menuPrincipal.getPanel_Eliminar().add(this.menuPrincipal.getBtnDelAerolinea());
 				this.menuPrincipal.getPanel_Ver().add(this.menuPrincipal.getBtnVerVuelos());
+				this.menuPrincipal.getPanel_Buscar().add(this.menuPrincipal.getBtnBuscarAerolinea());
 				
+				this.menuPrincipal.getBtnBuscarAerolinea().setVisible(true);
 				this.menuPrincipal.getBtnAddAerolinea().setVisible(true);
 				this.menuPrincipal.getBtnDelAerolinea().setVisible(true);
 				this.menuPrincipal.getBtnModAerolinea().setVisible(true);
@@ -179,8 +174,6 @@ public class MenuPrincipalControllerTabla{
 			        int width = c.getPreferredSize().width + this.menuPrincipal.getTable().getIntercellSpacing().width;
 			        preferredWidth = Math.max(preferredWidth, width);
 
-			        //  We've exceeded the maximum width, no need to check other rows
-
 			        if (preferredWidth >= maxWidth)
 			        {
 			            preferredWidth = maxWidth;
@@ -194,19 +187,17 @@ public class MenuPrincipalControllerTabla{
 
 		public void nuevoAerolinea() {
 			this.menuPrincipal.setVisible(false);
-			menuDatosLineaAerea = new LineaAerea_Datos_Controller(this);
-			seleccionAerolinea();	
+			new LineaAerea_Datos_Controller(this);
 		}
 
 		public void modAerolinea() {
 			LineaAerea select = buscarAerolinea();
 			if(select==null) {
-				this.menuPrincipal.fracasoOperacion("La seleccion de la aerolinea");
+				this.menuPrincipal.fracasoOperacion("Debe seleccionar una aerolinea");
 			}else {
 				if(this.menuPrincipal.confirmarSeleccion(select, "(MODIFICACION)")){
 					this.menuPrincipal.setVisible(false);
-					menuDatosLineaAerea = new LineaAerea_Datos_Controller(this, select);
-					seleccionAerolinea();
+					new LineaAerea_Datos_Controller(this, select);
 				}else{
 					this.menuPrincipal.cancelaOperacion();
 				}
@@ -217,11 +208,10 @@ public class MenuPrincipalControllerTabla{
 		public void delAerolinea() {
 			LineaAerea select = buscarAerolinea();
 			if(select==null) {
-				this.menuPrincipal.fracasoOperacion("La seleccion de la aerolinea");
+				this.menuPrincipal.fracasoOperacion("Debe seleccionar una aerolinea");
 			}else {
 				if(this.menuPrincipal.confirmarSeleccion(select, "(ELIMINACION)")){
 					oper.eliminar(this, select);
-					seleccionAerolinea();
 				}else{
 					this.menuPrincipal.cancelaOperacion();
 				}
@@ -236,8 +226,6 @@ public class MenuPrincipalControllerTabla{
 					IOGeneral.pritln(">>>>>Error con la base de datos<<<<<");
 					IOGeneral.pritln(e.getMessage());
 				} catch(ArrayIndexOutOfBoundsException e) {
-					IOGeneral.pritln(">>>>>Error debe seleccionar un elemento<<<<<");
-					IOGeneral.pritln(e.getMessage());
 				}
 				return null;
 		}
@@ -246,12 +234,12 @@ public class MenuPrincipalControllerTabla{
 		
 		public void seleccionVuelos() {
 			try {
-				datos = new ActualizarDatos();
 				this.menuPrincipal.getTable().setModel(datos.vuelos());
 				
 				this.menuPrincipal.getPanel_Agregar().removeAll();
 				this.menuPrincipal.getPanel_Eliminar().removeAll();
 				this.menuPrincipal.getPanel_Modificar().removeAll();
+				this.menuPrincipal.getPanel_Buscar().removeAll();
 				if(this.menuPrincipal.getPanel_Ver().getComponentCount()==1) {
 					this.menuPrincipal.getPanel_Ver().remove(0);
 				}
@@ -260,7 +248,9 @@ public class MenuPrincipalControllerTabla{
 				this.menuPrincipal.getPanel_Eliminar().add(this.menuPrincipal.getBtnDelVuelo());
 				this.menuPrincipal.getPanel_Modificar().add(this.menuPrincipal.getBtnModVuelo());
 				this.menuPrincipal.getPanel_Ver().add(this.menuPrincipal.getBtnVerClientes());
+				this.menuPrincipal.getPanel_Buscar().add(this.menuPrincipal.getBtnBuscarVuelo());
 				
+				this.menuPrincipal.getBtnBuscarVuelo().setVisible(true);
 				this.menuPrincipal.getBtnAddVuelo().setVisible(true);
 				this.menuPrincipal.getBtnDelVuelo().setVisible(true);
 				this.menuPrincipal.getBtnModVuelo().setVisible(true);
@@ -274,19 +264,17 @@ public class MenuPrincipalControllerTabla{
 		
 		public void nuevoVuelo() {
 			this.menuPrincipal.setVisible(false);
-			menuDatosVuelo = new Vuelo_Datos_Controller(this);	
-			seleccionVuelos();
+			new Vuelo_Datos_Controller(this);	
 		}
 
 		public void modVuelo() {
 			Vuelo select = buscarVuelo();
 			if(select==null) {
-				this.menuPrincipal.fracasoOperacion("La seleccion de la aerolinea");
+				this.menuPrincipal.fracasoOperacion("Debe seleccionar una aerolinea");
 			}else {
 				if(this.menuPrincipal.confirmarSeleccion(select, "(MODIFICACION)")){
 					this.menuPrincipal.setVisible(false);
-					menuDatosVuelo = new Vuelo_Datos_Controller(this, select);
-					seleccionVuelos();
+					new Vuelo_Datos_Controller(this, select);
 				}else{
 					this.menuPrincipal.cancelaOperacion();
 				}
@@ -297,11 +285,10 @@ public class MenuPrincipalControllerTabla{
 		public void delVuelo() {
 			Vuelo select = buscarVuelo();
 			if(select==null) {
-				this.menuPrincipal.fracasoOperacion("La seleccion de la aerolinea");
+				this.menuPrincipal.fracasoOperacion("Debe seleccionar una aerolinea");
 			}else {
 				if(this.menuPrincipal.confirmarSeleccion(select, "(ELIMINACION)")){
 					oper.eliminar(this, select);
-					seleccionVuelos();
 				}else{
 					this.menuPrincipal.cancelaOperacion();
 				}
@@ -315,23 +302,22 @@ public class MenuPrincipalControllerTabla{
 				} catch (SQLException e) {
 					IOGeneral.pritln(">>>>>Error con la base de datos<<<<<");
 					IOGeneral.pritln(e.getMessage());
+					return null;
 				} catch(ArrayIndexOutOfBoundsException e) {
-					IOGeneral.pritln(">>>>>Error debe seleccionar un elemento<<<<<");
-					IOGeneral.pritln(e.getMessage());
+					return null;
 				}
-				return null;
 		}
 		
 		
 
 		public void seleccionVenta() {
 			try {
-				datos = new ActualizarDatos();
 				this.menuPrincipal.getTable().setModel(datos.ventas());
 				
 				this.menuPrincipal.getPanel_Agregar().removeAll();
 				this.menuPrincipal.getPanel_Eliminar().removeAll();
 				this.menuPrincipal.getPanel_Modificar().removeAll();
+				this.menuPrincipal.getPanel_Buscar().removeAll();
 				if(this.menuPrincipal.getPanel_Ver().getComponentCount()==1) {
 					this.menuPrincipal.getPanel_Ver().remove(0);
 				}
@@ -339,7 +325,9 @@ public class MenuPrincipalControllerTabla{
 				this.menuPrincipal.getPanel_Agregar().add(this.menuPrincipal.getBtnAddVenta());
 				this.menuPrincipal.getPanel_Eliminar().add(this.menuPrincipal.getBtnDelVenta());
 				this.menuPrincipal.getPanel_Modificar().add(this.menuPrincipal.getBtnModVenta());
+				this.menuPrincipal.getPanel_Buscar().add(this.menuPrincipal.getBtnBuscarVenta());
 				
+				this.menuPrincipal.getBtnBuscarVenta().setVisible(true);
 				this.menuPrincipal.getBtnAddVenta().setVisible(true);
 				this.menuPrincipal.getBtnDelVenta().setVisible(true);
 				this.menuPrincipal.getBtnModVenta().setVisible(true);
@@ -352,19 +340,17 @@ public class MenuPrincipalControllerTabla{
 
 		public void nuevoVenta() {
 			this.menuPrincipal.setVisible(false);
-			menuDatosVenta = new Venta_Datos_Controller(this);
-			seleccionVenta();	
+			new Venta_Datos_Controller(this);
 		}
 
 		public void modVenta() {
 			Venta select = buscarVenta();
 			if(select==null) {
-				this.menuPrincipal.fracasoOperacion("La seleccion de la venta");
+				this.menuPrincipal.fracasoOperacion("Debe seleccionar una venta");
 			}else {
 				if(this.menuPrincipal.confirmarSeleccion(select, "(MODIFICACION)")){
 					this.menuPrincipal.setVisible(false);
-					menuDatosVenta = new Venta_Datos_Controller(this, select);
-					seleccionVenta();
+					new Venta_Datos_Controller(this, select);
 				}else{
 					this.menuPrincipal.cancelaOperacion();
 				}
@@ -375,11 +361,10 @@ public class MenuPrincipalControllerTabla{
 		public void delVenta() {
 			Venta select = buscarVenta();
 			if(select==null) {
-				this.menuPrincipal.fracasoOperacion("La seleccion de la venta");
+				this.menuPrincipal.fracasoOperacion("Debe seleccionar una venta");
 			}else {
 				if(this.menuPrincipal.confirmarSeleccion(select, "(ELIMINACION)")){
 					oper.eliminar(this, select);
-					seleccionVenta();
 				}else{
 					this.menuPrincipal.cancelaOperacion();
 				}
@@ -394,21 +379,23 @@ public class MenuPrincipalControllerTabla{
 					IOGeneral.pritln(">>>>>Error con la base de datos<<<<<");
 					IOGeneral.pritln(e.getMessage());
 				} catch(ArrayIndexOutOfBoundsException e) {
-					IOGeneral.pritln(">>>>>Error debe seleccionar un elemento<<<<<");
-					IOGeneral.pritln(e.getMessage());
 				}
 				return null;
 		}
 
 		public void verVuelosAerolinea() {
 			LineaAerea linea = buscarAerolinea();
-			menuPrincipal.setVisible(false);
-			LineaAerea_Vuelo_Controller aeroVuelos = new LineaAerea_Vuelo_Controller(this,linea);
+			if(linea!=null) {
+				menuPrincipal.setVisible(false);
+				new LineaAerea_Vuelo_Controller(this,linea);
+			}
 		}
 
 		public void verClientesVuelo() {
-			Vuelo vuelo = buscarVuelo();
-			menuPrincipal.setVisible(false);
-			Vuelo_Cliente_Controller vueloCliente = new Vuelo_Cliente_Controller(this, vuelo);
+					Vuelo vuelo = buscarVuelo();
+					if(vuelo!=null) {
+						menuPrincipal.setVisible(false);
+						new Vuelo_Cliente_Controller(this, vuelo);
+					}			
 		}
 }

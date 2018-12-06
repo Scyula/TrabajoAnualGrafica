@@ -3,9 +3,6 @@ package edu.usal.pantalla.vista.eventos;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
-import edu.usal.negocio.dominio.LineaAerea;
-import edu.usal.negocio.dominio.Pais;
-import edu.usal.pantalla.vista.Cliente_Datos_Vista;
 import edu.usal.pantalla.vista.Venta_Datos_Vista;
 
 public class CapturaItemVenta implements ItemListener {

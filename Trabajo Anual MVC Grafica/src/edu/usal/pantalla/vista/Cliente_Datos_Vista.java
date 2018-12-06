@@ -7,7 +7,6 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
 
@@ -19,8 +18,6 @@ import edu.usal.pantalla.controller.Cliente_Datos_Controller;
 import edu.usal.pantalla.vista.eventos.CapturaBtnCliente_Datos;
 import edu.usal.pantalla.vista.eventos.CapturaItemCliente;
 
-import java.awt.event.ItemListener;
-import java.awt.event.ItemEvent;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 import com.toedter.calendar.JDateChooser;
@@ -35,8 +32,6 @@ public class Cliente_Datos_Vista extends JFrame {
 	
 	Cliente_Datos_Controller vista;
 	
-	private JPanel contentPane;
-
 	private JLabel lblNombre;
 	private JLabel lblApellido;
 	private JLabel lblDni;

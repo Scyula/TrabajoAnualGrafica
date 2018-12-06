@@ -1,7 +1,6 @@
 package edu.usal.pantalla.vista;
 
 import java.awt.BorderLayout;
-import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -21,6 +20,10 @@ import javax.swing.DefaultComboBoxModel;
 
 public class LineaAerea_Datos_Vista extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 124513L;
 	private LineaAerea_Datos_Controller control;
 	private JPanel contentPane;
 	private JTextField textNombre;

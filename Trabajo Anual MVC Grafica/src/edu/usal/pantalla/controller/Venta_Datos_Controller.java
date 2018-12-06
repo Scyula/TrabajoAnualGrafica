@@ -44,6 +44,7 @@ public class Venta_Datos_Controller {
 				ventadao = VentaFactory.getVentaDAO(DatosEstaticos.getSource());
 				if(ventadao.updateVenta(venta)) {
 					menu.exitoOperacion();
+					mPController.seleccionVenta();
 				}else {
 					menu.errorOperacion("No se pudo guardar la venta");
 				}
@@ -68,6 +69,7 @@ public class Venta_Datos_Controller {
 				
 				if(ventadao.addVenta(venta)&&vuelodao.updateVuelo(this.venta.getVuelo())) {
 					menu.exitoOperacion();
+					mPController.seleccionVenta();
 				}else {
 					menu.errorOperacion("No se pudo guardar la venta");
 				}

@@ -8,7 +8,3 @@ public class Principal {
             	MenuPrincipalControllerTabla menu = new MenuPrincipalControllerTabla();	
 	}
 }
-
-
-
-

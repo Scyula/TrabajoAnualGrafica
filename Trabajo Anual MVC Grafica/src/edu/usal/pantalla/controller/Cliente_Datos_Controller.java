@@ -44,6 +44,7 @@ public class Cliente_Datos_Controller {
 		try {
 			if(clientedao.updateCliente(cliente)) {
 				menu.exitoOperacion();
+				mPController.seleccionClientes();
 			}else {
 				menu.fracasoOperacion();
 			}
@@ -64,6 +65,7 @@ public class Cliente_Datos_Controller {
 		try {
 			if(clientedao.addCliente(cliente)) {
 				menu.exitoOperacion();
+				mPController.seleccionClientes();
 			}else {
 				menu.fracasoOperacion();
 			}

@@ -1,6 +1,5 @@
 package edu.usal.pantalla.controller;
 
-import edu.usal.negocio.dominio.Cliente;
 import edu.usal.negocio.dominio.Vuelo;
 import edu.usal.pantalla.vista.Vuelo_Cliente_Vista;
 import edu.usal.util.ActualizarDatos;

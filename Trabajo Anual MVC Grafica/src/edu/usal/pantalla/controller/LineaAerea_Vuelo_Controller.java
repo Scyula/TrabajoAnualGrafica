@@ -47,7 +47,7 @@ public class LineaAerea_Vuelo_Controller {
 	public void VerClientes() {
 		Vuelo vuelo = buscarVuelo();
 		vista.setVisible(false);
-		Vuelo_Cliente_Controller vueloCliente = new Vuelo_Cliente_Controller(this, vuelo);
+		new Vuelo_Cliente_Controller(this, vuelo);
 	}
 	
 	private Vuelo buscarVuelo() {

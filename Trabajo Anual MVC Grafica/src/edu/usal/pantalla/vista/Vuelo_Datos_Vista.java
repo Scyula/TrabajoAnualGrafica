@@ -33,7 +33,6 @@ public class Vuelo_Datos_Vista extends JFrame {
 	
 	Vuelo_Datos_Controller vista;
 	
-	private JPanel contentPane;
 
 	private JTextField textTiempoVuelo;
 	
