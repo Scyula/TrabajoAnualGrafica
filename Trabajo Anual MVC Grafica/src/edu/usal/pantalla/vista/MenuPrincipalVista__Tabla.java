@@ -26,6 +26,12 @@ import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 import java.awt.FlowLayout;
+import javax.swing.SwingConstants;
+import javax.swing.BoxLayout;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JTextField;
+import javax.swing.DefaultComboBoxModel;
 
 public class MenuPrincipalVista__Tabla extends JFrame {
 
@@ -44,7 +50,6 @@ public class MenuPrincipalVista__Tabla extends JFrame {
 	private JPanel panel_Agregar;
 	private JPanel panel_Eliminar;
 	private JPanel panel_Ver;
-	private JPanel panel_Buscar;
 	
 	private JButton btnClientes;
 	private JButton btnAerolineas;
@@ -54,27 +59,23 @@ public class MenuPrincipalVista__Tabla extends JFrame {
 	private JButton btnModCliente = new JButton("Modificar");
 	private JButton btnAddCliente = new JButton("Nuevo");
 	private JButton btnDelCliente = new JButton("Eliminar");
-	private JButton btnBuscarCliente = new JButton("Buscar");
 	
 	
 	private JButton btnModAerolinea= new JButton("Modificar");
 	private JButton btnAddAerolinea = new JButton("Nuevo");
 	private JButton btnDelAerolinea = new JButton("Eliminar");
 	private JButton btnVerVuelos = new JButton("Ver Vuelos");
-	private JButton btnBuscarAerolinea = new JButton("Buscar");
 	
 
 	private JButton btnModVuelo = new JButton("Modificar");
 	private JButton btnAddVuelo = new JButton("Nuevo");
 	private JButton btnDelVuelo = new JButton("Eliminar");
 	private JButton btnVerClientes = new JButton("Ver Clientes");
-	private JButton btnBuscarVuelo = new JButton("Buscar");
 	
 
 	private JButton btnModVenta = new JButton("Modificar");
 	private JButton btnAddVenta = new JButton("Nuevo");
 	private JButton btnDelVenta = new JButton("Eliminar");
-	private JButton btnBuscarVenta = new JButton("Buscar");
 	
 	private JPanel panel_2;
 	private JPanel panel_3;
@@ -86,7 +87,6 @@ public class MenuPrincipalVista__Tabla extends JFrame {
 	private JPanel panel_12;
 	private JPanel panel_13;
 	private JPanel panel_14;
-	private JPanel panel_15;
 	private JPanel panel_16;
 	private JPanel panel_17;
 	private JPanel panel_18;
@@ -107,13 +107,34 @@ public class MenuPrincipalVista__Tabla extends JFrame {
 	private JPanel panel_33;
 	private JPanel panel_34;
 	private JPanel panel_35;
-	private JPanel panel_36;
-	private JPanel panel_37;
-	private JPanel panel_38;
-	private JPanel panel_39;
 	private JPanel panel_40;
 	private JPanel panel_41;
 	private JPanel panel_42;
+	private JPanel panel_43;
+	private JPanel panel_44;
+	private JPanel panel_45;
+	private JPanel panel_46;
+	private JPanel panel_47;
+	private JPanel panel_48;
+	private JPanel panel_49;
+	private JPanel panel_50;
+	private JPanel panel_51;
+	private JPanel panel_52;
+	private JPanel panel_53;
+	private JPanel panel_54;
+	private JButton btnBuscar;
+	private JPanel panel_55;
+	private JPanel panel_56;
+	private JPanel panel_57;
+	private JPanel panel_58;
+	private JPanel panel_59;
+	private JPanel panel_60;
+	private JPanel panel_61;
+	private JPanel panel_62;
+	private JLabel lblSeleccioneCampo;
+	private JLabel lblBusqueda;
+	private JComboBox<String> comboBox_Busqueda;
+	private JTextField textBuscar;
 	
 
 	public MenuPrincipalControllerTabla getMpController() {
@@ -155,7 +176,7 @@ public class MenuPrincipalVista__Tabla extends JFrame {
 		btnModVenta.addActionListener(new CapturaBtnMP_Tabla(this));
 		btnAddVenta.addActionListener(new CapturaBtnMP_Tabla(this));
 		btnDelVenta.addActionListener(new CapturaBtnMP_Tabla(this));
-				
+								
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(51, 153, 255));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -173,6 +194,9 @@ public class MenuPrincipalVista__Tabla extends JFrame {
 		JPanel panel = new JPanel();
 		scrollPane.setRowHeaderView(panel);
 		panel.setLayout(new GridLayout(13, 1, 0, 0));
+		
+		panel_9 = new JPanel();
+		panel.add(panel_9);
 		
 		panel_2 = new JPanel();
 		panel.add(panel_2);
@@ -254,9 +278,6 @@ public class MenuPrincipalVista__Tabla extends JFrame {
 		panel_7.add(panel_27, BorderLayout.EAST);
 		btnVenta.addActionListener(new CapturaBtnMP_Tabla(this));
 		
-		panel_9 = new JPanel();
-		panel.add(panel_9);
-		
 		panel_40 = new JPanel();
 		panel.add(panel_40);
 		
@@ -279,49 +300,119 @@ public class MenuPrincipalVista__Tabla extends JFrame {
 		panel.add(panel_12);
 		panel_12.setLayout(new BorderLayout(0, 0));
 		
-		panel_32 = new JPanel();
-		panel_12.add(panel_32, BorderLayout.NORTH);
-		
-		panel_33 = new JPanel();
-		panel_12.add(panel_33, BorderLayout.SOUTH);
-		
-		panel_34 = new JPanel();
-		panel_12.add(panel_34, BorderLayout.WEST);
-		
-		panel_35 = new JPanel();
-		panel_12.add(panel_35, BorderLayout.EAST);
-		
-		panel_Ver = new JPanel();
-		panel_12.add(panel_Ver, BorderLayout.CENTER);
-		panel_Ver.setLayout(new GridLayout(1, 0, 0, 0));
-		panel_Ver.setVisible(true);
-		
-		panel_15 = new JPanel();
-		panel.add(panel_15);
-		panel_15.setLayout(new BorderLayout(0, 0));
-		
-		panel_36 = new JPanel();
-		panel_15.add(panel_36, BorderLayout.NORTH);
-		
-		panel_37 = new JPanel();
-		panel_15.add(panel_37, BorderLayout.SOUTH);
-		
-		panel_38 = new JPanel();
-		panel_15.add(panel_38, BorderLayout.WEST);
-		
-		panel_39 = new JPanel();
-		panel_15.add(panel_39, BorderLayout.EAST);
-		
-		panel_Buscar = new JPanel();
-		panel_15.add(panel_Buscar, BorderLayout.CENTER);
-		panel_Buscar.setLayout(new GridLayout(1, 0, 0, 0));
-		
 		JPanel panel_1 = new JPanel();
 		contentPane.add(panel_1, BorderLayout.NORTH);
+		panel_1.setLayout(new GridLayout(0, 1, 0, 0));
 		
 		JLabel lblAeropuerto = new JLabel("Aeropuerto");
+		lblAeropuerto.setHorizontalAlignment(SwingConstants.CENTER);
 		lblAeropuerto.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		panel_1.add(lblAeropuerto);
+		
+		panel_43 = new JPanel();
+		panel_1.add(panel_43);
+		panel_43.setLayout(new GridLayout(0, 7, 0, 0));
+		
+		panel_45 = new JPanel();
+		panel_43.add(panel_45);
+		panel_45.setLayout(new BorderLayout(0, 0));
+		
+		lblBusqueda = new JLabel("Busqueda");
+		lblBusqueda.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblBusqueda.setHorizontalAlignment(SwingConstants.RIGHT);
+		panel_45.add(lblBusqueda, BorderLayout.CENTER);
+		
+		panel_46 = new JPanel();
+		panel_43.add(panel_46);
+		panel_46.setLayout(new BorderLayout(0, 0));
+		
+		lblSeleccioneCampo = new JLabel("Seleccione campo");
+		lblSeleccioneCampo.setHorizontalAlignment(SwingConstants.RIGHT);
+		panel_46.add(lblSeleccioneCampo, BorderLayout.CENTER);
+		
+		panel_47 = new JPanel();
+		panel_43.add(panel_47);
+		panel_47.setLayout(new BorderLayout(0, 0));
+		
+		panel_59 = new JPanel();
+		panel_47.add(panel_59, BorderLayout.NORTH);
+		
+		panel_60 = new JPanel();
+		panel_47.add(panel_60, BorderLayout.SOUTH);
+		
+		panel_61 = new JPanel();
+		panel_47.add(panel_61, BorderLayout.WEST);
+		
+		panel_62 = new JPanel();
+		panel_47.add(panel_62, BorderLayout.EAST);
+		
+		comboBox_Busqueda = new JComboBox<String>();
+		panel_47.add(comboBox_Busqueda, BorderLayout.CENTER);
+		
+		panel_48 = new JPanel();
+		panel_43.add(panel_48);
+		panel_48.setLayout(new BorderLayout(0, 0));
+		
+		panel_55 = new JPanel();
+		panel_48.add(panel_55, BorderLayout.NORTH);
+		
+		panel_56 = new JPanel();
+		panel_48.add(panel_56, BorderLayout.SOUTH);
+		
+		panel_57 = new JPanel();
+		panel_48.add(panel_57, BorderLayout.WEST);
+		
+		panel_58 = new JPanel();
+		panel_48.add(panel_58, BorderLayout.EAST);
+		
+		textBuscar = new JTextField();
+		panel_48.add(textBuscar, BorderLayout.CENTER);
+		textBuscar.setColumns(10);
+		
+		panel_49 = new JPanel();
+		panel_43.add(panel_49);
+		panel_49.setLayout(new BorderLayout(0, 0));
+		
+		panel_51 = new JPanel();
+		panel_49.add(panel_51, BorderLayout.NORTH);
+		
+		panel_52 = new JPanel();
+		panel_49.add(panel_52, BorderLayout.SOUTH);
+		
+		panel_53 = new JPanel();
+		panel_49.add(panel_53, BorderLayout.WEST);
+		
+		panel_54 = new JPanel();
+		panel_49.add(panel_54, BorderLayout.EAST);
+		
+		btnBuscar = new JButton("Buscar");
+		btnBuscar.addActionListener(new CapturaBtnMP_Tabla(this));
+		panel_49.add(btnBuscar, BorderLayout.CENTER);
+		
+		panel_50 = new JPanel();
+		panel_43.add(panel_50);
+		panel_50.setLayout(new BorderLayout(0, 0));
+		
+		panel_32 = new JPanel();
+		panel_50.add(panel_32, BorderLayout.NORTH);
+		
+		panel_33 = new JPanel();
+		panel_50.add(panel_33, BorderLayout.EAST);
+		
+		panel_34 = new JPanel();
+		panel_50.add(panel_34, BorderLayout.WEST);
+		
+		panel_35 = new JPanel();
+		panel_50.add(panel_35, BorderLayout.SOUTH);
+		
+		panel_Ver = new JPanel();
+		panel_50.add(panel_Ver, BorderLayout.CENTER);
+		panel_Ver.setLayout(new GridLayout(1, 0, 0, 0));
+		
+		panel_44 = new JPanel();
+		panel_43.add(panel_44);
+		panel_44.setLayout(new BorderLayout(0, 0));
+		panel_Ver.setVisible(true);
 		
 		panel_Botones = new JPanel();
 		contentPane.add(panel_Botones, BorderLayout.SOUTH);
@@ -555,46 +646,29 @@ public class MenuPrincipalVista__Tabla extends JFrame {
 		this.btnDelVenta = btnDelVenta;
 	}
 	
-	
 
-	public JPanel getPanel_Buscar() {
-		return panel_Buscar;
+	public JButton getBtnBuscar() {
+		return btnBuscar;
 	}
 
-	public void setPanel_Buscar(JPanel panel_Buscar) {
-		this.panel_Buscar = panel_Buscar;
+	public void setBtnBuscar(JButton btnBuscar) {
+		this.btnBuscar = btnBuscar;
 	}
 
-	public JButton getBtnBuscarCliente() {
-		return btnBuscarCliente;
+	public JComboBox<String> getComboBox_Busqueda() {
+		return comboBox_Busqueda;
 	}
 
-	public void setBtnBuscarCliente(JButton btnBuscarCliente) {
-		this.btnBuscarCliente = btnBuscarCliente;
+	public void setComboBox_Busqueda(JComboBox<String> comboBox_Busqueda) {
+		this.comboBox_Busqueda = comboBox_Busqueda;
 	}
 
-	public JButton getBtnBuscarAerolinea() {
-		return btnBuscarAerolinea;
+	public JTextField getTextBuscar() {
+		return textBuscar;
 	}
 
-	public void setBtnBuscarAerolinea(JButton btnBuscarAerolinea) {
-		this.btnBuscarAerolinea = btnBuscarAerolinea;
-	}
-
-	public JButton getBtnBuscarVuelo() {
-		return btnBuscarVuelo;
-	}
-
-	public void setBtnBuscarVuelo(JButton btnBuscarVuelo) {
-		this.btnBuscarVuelo = btnBuscarVuelo;
-	}
-
-	public JButton getBtnBuscarVenta() {
-		return btnBuscarVenta;
-	}
-
-	public void setBtnBuscarVenta(JButton btnBuscarVenta) {
-		this.btnBuscarVenta = btnBuscarVenta;
+	public void setTextBuscar(JTextField textBuscar) {
+		this.textBuscar = textBuscar;
 	}
 
 	public int confirmarSalida() {

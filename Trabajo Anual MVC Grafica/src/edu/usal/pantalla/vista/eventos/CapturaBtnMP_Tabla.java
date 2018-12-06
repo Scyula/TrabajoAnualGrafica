@@ -83,6 +83,14 @@ public class CapturaBtnMP_Tabla implements ActionListener {
 				vista.getMpController().delVenta();
 			}
 			
+			
+			
+			
+			if(e.getSource().equals(vista.getBtnBuscar())) {
+				vista.getMpController().buscarEnTabla();
+			}
+
+			
 	}
 
 }

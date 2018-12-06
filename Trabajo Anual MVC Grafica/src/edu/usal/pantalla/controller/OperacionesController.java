@@ -14,6 +14,7 @@ import edu.usal.negocio.dominio.Cliente;
 import edu.usal.negocio.dominio.LineaAerea;
 import edu.usal.negocio.dominio.Venta;
 import edu.usal.negocio.dominio.Vuelo;
+import edu.usal.pantalla.controller.mostrar.Cliente_Mostrar_Controller;
 import edu.usal.util.DatosEstaticos;
 
 public class OperacionesController {
@@ -81,6 +82,12 @@ public class OperacionesController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	
+	public void ordenar(Cliente_Mostrar_Controller cliente_Buscar_Controller) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	

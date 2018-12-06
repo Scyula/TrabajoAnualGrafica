@@ -3,7 +3,7 @@ package edu.usal.pantalla.vista.eventos;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
-import edu.usal.pantalla.vista.Venta_Datos_Vista;
+import edu.usal.pantalla.vista.datos.Venta_Datos_Vista;
 
 public class CapturaItemVenta implements ItemListener {
 	Venta_Datos_Vista vista;

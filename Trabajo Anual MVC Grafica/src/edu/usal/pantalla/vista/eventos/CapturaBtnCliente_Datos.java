@@ -3,7 +3,7 @@ package edu.usal.pantalla.vista.eventos;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import edu.usal.pantalla.vista.Cliente_Datos_Vista;
+import edu.usal.pantalla.vista.datos.Cliente_Datos_Vista;
 
 public class CapturaBtnCliente_Datos implements ActionListener {
 

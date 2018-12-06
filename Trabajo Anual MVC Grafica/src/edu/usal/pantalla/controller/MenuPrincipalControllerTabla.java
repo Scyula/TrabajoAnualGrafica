@@ -19,85 +19,90 @@ import edu.usal.negocio.dominio.Cliente;
 import edu.usal.negocio.dominio.LineaAerea;
 import edu.usal.negocio.dominio.Venta;
 import edu.usal.negocio.dominio.Vuelo;
+import edu.usal.pantalla.controller.datos.Cliente_Datos_Controller;
+import edu.usal.pantalla.controller.datos.LineaAerea_Datos_Controller;
+import edu.usal.pantalla.controller.datos.Venta_Datos_Controller;
+import edu.usal.pantalla.controller.datos.Vuelo_Datos_Controller;
+import edu.usal.pantalla.controller.mostrar.Cliente_Mostrar_Controller;
+import edu.usal.pantalla.controller.mostrar.LineaAerea_Vuelo_Controller;
+import edu.usal.pantalla.controller.mostrar.Vuelo_Cliente_Controller;
 import edu.usal.pantalla.vista.MenuPrincipalVista__Tabla;
 import edu.usal.util.ActualizarDatos;
 import edu.usal.util.DatosEstaticos;
-import edu.usal.util.IOGeneral;
+import edu.usal.util.IOGeneralDAO;
 
 public class MenuPrincipalControllerTabla{
-		private MenuPrincipalVista__Tabla menuPrincipal;
+		private MenuPrincipalVista__Tabla vista;
 		private ActualizarDatos datos;
 		private OperacionesController oper;
 		
 		public MenuPrincipalControllerTabla() {
-			this.menuPrincipal = new MenuPrincipalVista__Tabla(this);
+			this.vista = new MenuPrincipalVista__Tabla(this);
 			this.oper = new OperacionesController();
 			this.datos = new ActualizarDatos();
 		}
 
 		public void hacerVisibleMP() {
-			this.menuPrincipal.setVisible(true);
+			this.vista.setVisible(true);
 		}
 
 		public void Salir() {
-			if(menuPrincipal.confirmarSalida()==JFrame.EXIT_ON_CLOSE) {
+			if(vista.confirmarSalida()==JFrame.EXIT_ON_CLOSE) {
 				System.exit(0);
 			}
 		}
 
 		private void actualizar() {
-			this.menuPrincipal.revalidate();
-			this.menuPrincipal.repaint();
+			this.vista.revalidate();
+			this.vista.repaint();
 		}
 
 		public MenuPrincipalVista__Tabla getMenuPrincipal() {
-			return menuPrincipal;
+			return vista;
 		}
 
 		public void seleccionClientes() {
 			try {
-				this.menuPrincipal.getTable().setModel(datos.clientes());
+				this.vista.getTable().setModel(datos.clientes());
 				this.calcularEspacio();
 
-				this.menuPrincipal.getPanel_Agregar().removeAll();
-				this.menuPrincipal.getPanel_Eliminar().removeAll();
-				this.menuPrincipal.getPanel_Modificar().removeAll();
-				this.menuPrincipal.getPanel_Buscar().removeAll();
-				if(this.menuPrincipal.getPanel_Ver().getComponentCount()==1) {
-					this.menuPrincipal.getPanel_Ver().remove(0);
+				this.vista.getPanel_Agregar().removeAll();
+				this.vista.getPanel_Eliminar().removeAll();
+				this.vista.getPanel_Modificar().removeAll();
+				if(this.vista.getPanel_Ver().getComponentCount()==1) {
+					this.vista.getPanel_Ver().remove(0);
 				}
+				this.vista.getComboBox_Busqueda().setModel(this.datos.cargarCombo("Cliente"));
 				
-				this.menuPrincipal.getPanel_Agregar().add(this.menuPrincipal.getBtnAddCliente());
-				this.menuPrincipal.getPanel_Modificar().add(this.menuPrincipal.getBtnModCliente());
-				this.menuPrincipal.getPanel_Eliminar().add(this.menuPrincipal.getBtnDelCliente());
-				this.menuPrincipal.getPanel_Buscar().add(this.menuPrincipal.getBtnBuscarCliente());
+				this.vista.getPanel_Agregar().add(this.vista.getBtnAddCliente());
+				this.vista.getPanel_Modificar().add(this.vista.getBtnModCliente());
+				this.vista.getPanel_Eliminar().add(this.vista.getBtnDelCliente());
 				
-				this.menuPrincipal.getBtnBuscarCliente().setVisible(true);
-				this.menuPrincipal.getBtnAddCliente().setVisible(true);
-				this.menuPrincipal.getBtnDelCliente().setVisible(true);
-				this.menuPrincipal.getBtnModCliente().setVisible(true);
+				this.vista.getBtnAddCliente().setVisible(true);
+				this.vista.getBtnDelCliente().setVisible(true);
+				this.vista.getBtnModCliente().setVisible(true);
 				
 				this.actualizar();
 			} catch (SQLException e) {
-				menuPrincipal.fracasoOperacion("No se pudieron cargar los clientes\n"+e.getMessage());
+				vista.fracasoOperacion("No se pudieron cargar los clientes\n"+e.getMessage());
 			}
 		}
 
 		public void nuevoCliente() {
-			this.menuPrincipal.setVisible(false);
+			this.vista.setVisible(false);
 			new Cliente_Datos_Controller(this);	
 		}
 		
 		public void modCliente() {
 				Cliente select = buscarCliente();
 				if(select==null) {
-					this.menuPrincipal.fracasoOperacion("Debe seleccionar un cliente");
+					this.vista.fracasoOperacion("Debe seleccionar un cliente");
 				}else {
-					if(this.menuPrincipal.confirmarSeleccion(select, "(MODIFICACION)")){
-						this.menuPrincipal.setVisible(false);
+					if(this.vista.confirmarSeleccion(select, "(MODIFICACION)")){
+						this.vista.setVisible(false);
 						new Cliente_Datos_Controller(this, select);
 					}else{
-						this.menuPrincipal.cancelaOperacion();
+						this.vista.cancelaOperacion();
 					}
 					
 				}
@@ -106,12 +111,12 @@ public class MenuPrincipalControllerTabla{
 		public void delCliente() {
 			Cliente select = buscarCliente();
 			if(select==null) {
-				this.menuPrincipal.fracasoOperacion("Debe seleccionar un cliente");
+				this.vista.fracasoOperacion("Debe seleccionar un cliente");
 			}else {
-				if(this.menuPrincipal.confirmarSeleccion(select, "(ELIMINACION)")){
+				if(this.vista.confirmarSeleccion(select, "(ELIMINACION)")){
 					oper.eliminar(this, select);
 				}else{
-					this.menuPrincipal.cancelaOperacion();
+					this.vista.cancelaOperacion();
 				}
 				
 			}
@@ -120,10 +125,10 @@ public class MenuPrincipalControllerTabla{
 		private Cliente buscarCliente() {
 			try {
 			ClienteDAO clientedao = ClienteFactory.getClienteDAO(DatosEstaticos.getSource());
-			return clientedao.readCliente(Integer.valueOf((String) this.menuPrincipal.getTable().getModel().getValueAt(this.menuPrincipal.getTable().getSelectedRow(), 2)));	
+			return clientedao.readCliente(Integer.valueOf((String) this.vista.getTable().getModel().getValueAt(this.vista.getTable().getSelectedRow(), 2)));	
 			} catch (SQLException e) {
-				IOGeneral.pritln(">>>>>Error con la base de datos<<<<<");
-				IOGeneral.pritln(e.getMessage());
+				IOGeneralDAO.pritln(">>>>>Error con la base de datos<<<<<");
+				IOGeneralDAO.pritln(e.getMessage());
 			}	catch(ArrayIndexOutOfBoundsException e) {
 			}
 			return null;
@@ -132,46 +137,44 @@ public class MenuPrincipalControllerTabla{
 		
 		public void seleccionAerolinea() {
 			try {
-				this.menuPrincipal.getTable().setModel(datos.aerolineas());
+				this.vista.getTable().setModel(datos.aerolineas());
 				this.calcularEspacio();
 				
-				this.menuPrincipal.getPanel_Agregar().removeAll();
-				this.menuPrincipal.getPanel_Eliminar().removeAll();
-				this.menuPrincipal.getPanel_Modificar().removeAll();
-				this.menuPrincipal.getPanel_Buscar().removeAll();
-				if(this.menuPrincipal.getPanel_Ver().getComponentCount()==1) {
-					this.menuPrincipal.getPanel_Ver().remove(0);
+				this.vista.getPanel_Agregar().removeAll();
+				this.vista.getPanel_Eliminar().removeAll();
+				this.vista.getPanel_Modificar().removeAll();
+				if(this.vista.getPanel_Ver().getComponentCount()==1) {
+					this.vista.getPanel_Ver().remove(0);
 				}
+				this.vista.getComboBox_Busqueda().setModel(this.datos.cargarCombo("Aerolinea"));
 				
-				this.menuPrincipal.getPanel_Agregar().add(this.menuPrincipal.getBtnAddAerolinea());
-				this.menuPrincipal.getPanel_Modificar().add(this.menuPrincipal.getBtnModAerolinea());
-				this.menuPrincipal.getPanel_Eliminar().add(this.menuPrincipal.getBtnDelAerolinea());
-				this.menuPrincipal.getPanel_Ver().add(this.menuPrincipal.getBtnVerVuelos());
-				this.menuPrincipal.getPanel_Buscar().add(this.menuPrincipal.getBtnBuscarAerolinea());
+				this.vista.getPanel_Agregar().add(this.vista.getBtnAddAerolinea());
+				this.vista.getPanel_Modificar().add(this.vista.getBtnModAerolinea());
+				this.vista.getPanel_Eliminar().add(this.vista.getBtnDelAerolinea());
+				this.vista.getPanel_Ver().add(this.vista.getBtnVerVuelos());
 				
-				this.menuPrincipal.getBtnBuscarAerolinea().setVisible(true);
-				this.menuPrincipal.getBtnAddAerolinea().setVisible(true);
-				this.menuPrincipal.getBtnDelAerolinea().setVisible(true);
-				this.menuPrincipal.getBtnModAerolinea().setVisible(true);
+				this.vista.getBtnAddAerolinea().setVisible(true);
+				this.vista.getBtnDelAerolinea().setVisible(true);
+				this.vista.getBtnModAerolinea().setVisible(true);
 								
 				this.actualizar();
 			} catch (SQLException e) {
-				menuPrincipal.fracasoOperacion("No se pudieron cargar las aerolineas\n"+e.getMessage());
+				vista.fracasoOperacion("No se pudieron cargar las aerolineas\n"+e.getMessage());
 			}
 		}
 		
 		private void calcularEspacio() {
-			for (int column = 0; column < this.menuPrincipal.getTable().getColumnCount(); column++)
+			for (int column = 0; column < this.vista.getTable().getColumnCount(); column++)
 			{
-			    TableColumn tableColumn = this.menuPrincipal.getTable().getColumnModel().getColumn(column);
+			    TableColumn tableColumn = this.vista.getTable().getColumnModel().getColumn(column);
 			    int preferredWidth = tableColumn.getMinWidth();
 			    int maxWidth = tableColumn.getMaxWidth();
 
-			    for (int row = 0; row < this.menuPrincipal.getTable().getRowCount(); row++)
+			    for (int row = 0; row < this.vista.getTable().getRowCount(); row++)
 			    {
-			        TableCellRenderer cellRenderer = this.menuPrincipal.getTable().getCellRenderer(row, column);
-			        Component c = this.menuPrincipal.getTable().prepareRenderer(cellRenderer, row, column);
-			        int width = c.getPreferredSize().width + this.menuPrincipal.getTable().getIntercellSpacing().width;
+			        TableCellRenderer cellRenderer = this.vista.getTable().getCellRenderer(row, column);
+			        Component c = this.vista.getTable().prepareRenderer(cellRenderer, row, column);
+			        int width = c.getPreferredSize().width + this.vista.getTable().getIntercellSpacing().width;
 			        preferredWidth = Math.max(preferredWidth, width);
 
 			        if (preferredWidth >= maxWidth)
@@ -186,20 +189,20 @@ public class MenuPrincipalControllerTabla{
 		}
 
 		public void nuevoAerolinea() {
-			this.menuPrincipal.setVisible(false);
+			this.vista.setVisible(false);
 			new LineaAerea_Datos_Controller(this);
 		}
 
 		public void modAerolinea() {
 			LineaAerea select = buscarAerolinea();
 			if(select==null) {
-				this.menuPrincipal.fracasoOperacion("Debe seleccionar una aerolinea");
+				this.vista.fracasoOperacion("Debe seleccionar una aerolinea");
 			}else {
-				if(this.menuPrincipal.confirmarSeleccion(select, "(MODIFICACION)")){
-					this.menuPrincipal.setVisible(false);
+				if(this.vista.confirmarSeleccion(select, "(MODIFICACION)")){
+					this.vista.setVisible(false);
 					new LineaAerea_Datos_Controller(this, select);
 				}else{
-					this.menuPrincipal.cancelaOperacion();
+					this.vista.cancelaOperacion();
 				}
 				
 			}
@@ -208,12 +211,12 @@ public class MenuPrincipalControllerTabla{
 		public void delAerolinea() {
 			LineaAerea select = buscarAerolinea();
 			if(select==null) {
-				this.menuPrincipal.fracasoOperacion("Debe seleccionar una aerolinea");
+				this.vista.fracasoOperacion("Debe seleccionar una aerolinea");
 			}else {
-				if(this.menuPrincipal.confirmarSeleccion(select, "(ELIMINACION)")){
+				if(this.vista.confirmarSeleccion(select, "(ELIMINACION)")){
 					oper.eliminar(this, select);
 				}else{
-					this.menuPrincipal.cancelaOperacion();
+					this.vista.cancelaOperacion();
 				}
 			}
 		}
@@ -221,10 +224,10 @@ public class MenuPrincipalControllerTabla{
 		private LineaAerea buscarAerolinea() {
 			try {
 				LineaAereaDAO linea = LineaAereaFactory.getLineaAereaDAO(DatosEstaticos.getSource());
-				return linea.readLineaAerea(Integer.valueOf((String) this.menuPrincipal.getTable().getModel().getValueAt(this.menuPrincipal.getTable().getSelectedRow(), 0)));	
+				return linea.readLineaAerea(Integer.valueOf((String) this.vista.getTable().getModel().getValueAt(this.vista.getTable().getSelectedRow(), 0)));	
 				} catch (SQLException e) {
-					IOGeneral.pritln(">>>>>Error con la base de datos<<<<<");
-					IOGeneral.pritln(e.getMessage());
+					IOGeneralDAO.pritln(">>>>>Error con la base de datos<<<<<");
+					IOGeneralDAO.pritln(e.getMessage());
 				} catch(ArrayIndexOutOfBoundsException e) {
 				}
 				return null;
@@ -234,49 +237,49 @@ public class MenuPrincipalControllerTabla{
 		
 		public void seleccionVuelos() {
 			try {
-				this.menuPrincipal.getTable().setModel(datos.vuelos());
+				this.vista.getTable().setModel(datos.vuelos());
+				this.vista.getComboBox_Busqueda().setModel(this.datos.cargarCombo("Vuelo"));
 				
-				this.menuPrincipal.getPanel_Agregar().removeAll();
-				this.menuPrincipal.getPanel_Eliminar().removeAll();
-				this.menuPrincipal.getPanel_Modificar().removeAll();
-				this.menuPrincipal.getPanel_Buscar().removeAll();
-				if(this.menuPrincipal.getPanel_Ver().getComponentCount()==1) {
-					this.menuPrincipal.getPanel_Ver().remove(0);
+				this.vista.getPanel_Agregar().removeAll();
+				this.vista.getPanel_Eliminar().removeAll();
+				this.vista.getPanel_Modificar().removeAll();
+				if(this.vista.getPanel_Ver().getComponentCount()==1) {
+					this.vista.getPanel_Ver().remove(0);
 				}
 				
-				this.menuPrincipal.getPanel_Agregar().add(this.menuPrincipal.getBtnAddVuelo());
-				this.menuPrincipal.getPanel_Eliminar().add(this.menuPrincipal.getBtnDelVuelo());
-				this.menuPrincipal.getPanel_Modificar().add(this.menuPrincipal.getBtnModVuelo());
-				this.menuPrincipal.getPanel_Ver().add(this.menuPrincipal.getBtnVerClientes());
-				this.menuPrincipal.getPanel_Buscar().add(this.menuPrincipal.getBtnBuscarVuelo());
+				this.vista.getPanel_Agregar().add(this.vista.getBtnAddVuelo());
+				this.vista.getPanel_Eliminar().add(this.vista.getBtnDelVuelo());
+				this.vista.getPanel_Modificar().add(this.vista.getBtnModVuelo());
+				this.vista.getPanel_Ver().add(this.vista.getBtnVerClientes());
 				
-				this.menuPrincipal.getBtnBuscarVuelo().setVisible(true);
-				this.menuPrincipal.getBtnAddVuelo().setVisible(true);
-				this.menuPrincipal.getBtnDelVuelo().setVisible(true);
-				this.menuPrincipal.getBtnModVuelo().setVisible(true);
-				this.menuPrincipal.getBtnVerClientes().setVisible(true);
+				this.vista.getBtnAddVuelo().setVisible(true);
+				this.vista.getBtnDelVuelo().setVisible(true);
+				this.vista.getBtnModVuelo().setVisible(true);
+				this.vista.getBtnVerClientes().setVisible(true);
 				
 				this.actualizar();
 			} catch (SQLException e) {
-				menuPrincipal.fracasoOperacion("No se pudieron cargar los vuelos\n"+e.getMessage());
+				vista.fracasoOperacion("No se pudieron cargar los vuelos\n"+e.getMessage());
 			}
 		}
 		
+		
+
 		public void nuevoVuelo() {
-			this.menuPrincipal.setVisible(false);
+			this.vista.setVisible(false);
 			new Vuelo_Datos_Controller(this);	
 		}
 
 		public void modVuelo() {
 			Vuelo select = buscarVuelo();
 			if(select==null) {
-				this.menuPrincipal.fracasoOperacion("Debe seleccionar una aerolinea");
+				this.vista.fracasoOperacion("Debe seleccionar una aerolinea");
 			}else {
-				if(this.menuPrincipal.confirmarSeleccion(select, "(MODIFICACION)")){
-					this.menuPrincipal.setVisible(false);
+				if(this.vista.confirmarSeleccion(select, "(MODIFICACION)")){
+					this.vista.setVisible(false);
 					new Vuelo_Datos_Controller(this, select);
 				}else{
-					this.menuPrincipal.cancelaOperacion();
+					this.vista.cancelaOperacion();
 				}
 				
 			}
@@ -285,12 +288,12 @@ public class MenuPrincipalControllerTabla{
 		public void delVuelo() {
 			Vuelo select = buscarVuelo();
 			if(select==null) {
-				this.menuPrincipal.fracasoOperacion("Debe seleccionar una aerolinea");
+				this.vista.fracasoOperacion("Debe seleccionar una aerolinea");
 			}else {
-				if(this.menuPrincipal.confirmarSeleccion(select, "(ELIMINACION)")){
+				if(this.vista.confirmarSeleccion(select, "(ELIMINACION)")){
 					oper.eliminar(this, select);
 				}else{
-					this.menuPrincipal.cancelaOperacion();
+					this.vista.cancelaOperacion();
 				}
 			}
 		}
@@ -298,10 +301,10 @@ public class MenuPrincipalControllerTabla{
 		private Vuelo buscarVuelo() {
 			try {
 				VueloDAO linea = VueloFactory.getVueloDAO(DatosEstaticos.getSource());
-				return linea.readVuelo((String) this.menuPrincipal.getTable().getModel().getValueAt(this.menuPrincipal.getTable().getSelectedRow(), 0));	
+				return linea.readVuelo((String) this.vista.getTable().getModel().getValueAt(this.vista.getTable().getSelectedRow(), 0));	
 				} catch (SQLException e) {
-					IOGeneral.pritln(">>>>>Error con la base de datos<<<<<");
-					IOGeneral.pritln(e.getMessage());
+					IOGeneralDAO.pritln(">>>>>Error con la base de datos<<<<<");
+					IOGeneralDAO.pritln(e.getMessage());
 					return null;
 				} catch(ArrayIndexOutOfBoundsException e) {
 					return null;
@@ -312,47 +315,46 @@ public class MenuPrincipalControllerTabla{
 
 		public void seleccionVenta() {
 			try {
-				this.menuPrincipal.getTable().setModel(datos.ventas());
+				this.vista.getTable().setModel(datos.ventas());
 				
-				this.menuPrincipal.getPanel_Agregar().removeAll();
-				this.menuPrincipal.getPanel_Eliminar().removeAll();
-				this.menuPrincipal.getPanel_Modificar().removeAll();
-				this.menuPrincipal.getPanel_Buscar().removeAll();
-				if(this.menuPrincipal.getPanel_Ver().getComponentCount()==1) {
-					this.menuPrincipal.getPanel_Ver().remove(0);
+				this.vista.getPanel_Agregar().removeAll();
+				this.vista.getPanel_Eliminar().removeAll();
+				this.vista.getPanel_Modificar().removeAll();
+				if(this.vista.getPanel_Ver().getComponentCount()==1) {
+					this.vista.getPanel_Ver().remove(0);
 				}
+				this.vista.getComboBox_Busqueda().setModel(this.datos.cargarCombo("Venta"));
 				
-				this.menuPrincipal.getPanel_Agregar().add(this.menuPrincipal.getBtnAddVenta());
-				this.menuPrincipal.getPanel_Eliminar().add(this.menuPrincipal.getBtnDelVenta());
-				this.menuPrincipal.getPanel_Modificar().add(this.menuPrincipal.getBtnModVenta());
-				this.menuPrincipal.getPanel_Buscar().add(this.menuPrincipal.getBtnBuscarVenta());
 				
-				this.menuPrincipal.getBtnBuscarVenta().setVisible(true);
-				this.menuPrincipal.getBtnAddVenta().setVisible(true);
-				this.menuPrincipal.getBtnDelVenta().setVisible(true);
-				this.menuPrincipal.getBtnModVenta().setVisible(true);
+				this.vista.getPanel_Agregar().add(this.vista.getBtnAddVenta());
+				this.vista.getPanel_Eliminar().add(this.vista.getBtnDelVenta());
+				this.vista.getPanel_Modificar().add(this.vista.getBtnModVenta());
+				
+				this.vista.getBtnAddVenta().setVisible(true);
+				this.vista.getBtnDelVenta().setVisible(true);
+				this.vista.getBtnModVenta().setVisible(true);
 				
 				this.actualizar();
 			} catch (SQLException e) {
-				menuPrincipal.fracasoOperacion("No se pudieron cargar los vuelos\n"+e.getMessage());
+				vista.fracasoOperacion("No se pudieron cargar los vuelos\n"+e.getMessage());
 			}
 		}
 
 		public void nuevoVenta() {
-			this.menuPrincipal.setVisible(false);
+			this.vista.setVisible(false);
 			new Venta_Datos_Controller(this);
 		}
 
 		public void modVenta() {
 			Venta select = buscarVenta();
 			if(select==null) {
-				this.menuPrincipal.fracasoOperacion("Debe seleccionar una venta");
+				this.vista.fracasoOperacion("Debe seleccionar una venta");
 			}else {
-				if(this.menuPrincipal.confirmarSeleccion(select, "(MODIFICACION)")){
-					this.menuPrincipal.setVisible(false);
+				if(this.vista.confirmarSeleccion(select, "(MODIFICACION)")){
+					this.vista.setVisible(false);
 					new Venta_Datos_Controller(this, select);
 				}else{
-					this.menuPrincipal.cancelaOperacion();
+					this.vista.cancelaOperacion();
 				}
 				
 			}
@@ -361,12 +363,12 @@ public class MenuPrincipalControllerTabla{
 		public void delVenta() {
 			Venta select = buscarVenta();
 			if(select==null) {
-				this.menuPrincipal.fracasoOperacion("Debe seleccionar una venta");
+				this.vista.fracasoOperacion("Debe seleccionar una venta");
 			}else {
-				if(this.menuPrincipal.confirmarSeleccion(select, "(ELIMINACION)")){
+				if(this.vista.confirmarSeleccion(select, "(ELIMINACION)")){
 					oper.eliminar(this, select);
 				}else{
-					this.menuPrincipal.cancelaOperacion();
+					this.vista.cancelaOperacion();
 				}
 			}
 		}
@@ -374,10 +376,10 @@ public class MenuPrincipalControllerTabla{
 		private Venta buscarVenta() {
 			try {
 				VentaDAO linea = VentaFactory.getVentaDAO(DatosEstaticos.getSource());
-				return linea.readVenta(Integer.valueOf((String)this.menuPrincipal.getTable().getModel().getValueAt(this.menuPrincipal.getTable().getSelectedRow(), 0)));	
+				return linea.readVenta(Integer.valueOf((String)this.vista.getTable().getModel().getValueAt(this.vista.getTable().getSelectedRow(), 0)));	
 				} catch (SQLException e) {
-					IOGeneral.pritln(">>>>>Error con la base de datos<<<<<");
-					IOGeneral.pritln(e.getMessage());
+					IOGeneralDAO.pritln(">>>>>Error con la base de datos<<<<<");
+					IOGeneralDAO.pritln(e.getMessage());
 				} catch(ArrayIndexOutOfBoundsException e) {
 				}
 				return null;
@@ -386,16 +388,23 @@ public class MenuPrincipalControllerTabla{
 		public void verVuelosAerolinea() {
 			LineaAerea linea = buscarAerolinea();
 			if(linea!=null) {
-				menuPrincipal.setVisible(false);
+				vista.setVisible(false);
 				new LineaAerea_Vuelo_Controller(this,linea);
 			}
 		}
 
 		public void verClientesVuelo() {
-					Vuelo vuelo = buscarVuelo();
-					if(vuelo!=null) {
-						menuPrincipal.setVisible(false);
-						new Vuelo_Cliente_Controller(this, vuelo);
-					}			
+			Vuelo vuelo = buscarVuelo();
+			if(vuelo!=null) {
+				vista.setVisible(false);
+				new Vuelo_Cliente_Controller(this, vuelo);
+			}			
 		}
+
+		public void buscarEnTabla() {
+			
+			
+		}
+		
+		
 }

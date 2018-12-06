@@ -14,7 +14,7 @@ import edu.usal.negocio.dominio.Pais;
 import edu.usal.negocio.dominio.Provincia;
 import edu.usal.negocio.dominio.Vuelo;
 import edu.usal.util.Coneccion;
-import edu.usal.util.IOGeneral;
+import edu.usal.util.IOGeneralDAO;
 import edu.usal.util.PropertiesUtil;
 
 public class AgregarAeropuertosSQL {
@@ -32,7 +32,7 @@ public class AgregarAeropuertosSQL {
 				prep.setString(2, linea.getCiudad());
 				prep.setInt(3, linea.getPais().getId());
 				prep.setInt(4, linea.getProvincia().getId());
-				IOGeneral.pritln(String.valueOf(prep.executeUpdate())+linea.getCiudad());
+				IOGeneralDAO.pritln(String.valueOf(prep.executeUpdate())+linea.getCiudad());
 				prep.close();				
 			}
 			con.cerrarConeccion();

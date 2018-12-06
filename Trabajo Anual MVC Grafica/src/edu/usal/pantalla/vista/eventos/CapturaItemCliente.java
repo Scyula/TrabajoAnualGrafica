@@ -5,7 +5,7 @@ import java.awt.event.ItemListener;
 
 import edu.usal.negocio.dominio.LineaAerea;
 import edu.usal.negocio.dominio.Pais;
-import edu.usal.pantalla.vista.Cliente_Datos_Vista;
+import edu.usal.pantalla.vista.datos.Cliente_Datos_Vista;
 
 public class CapturaItemCliente implements ItemListener {
 	Cliente_Datos_Vista vista;

@@ -5,6 +5,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Vector;
 
+import javax.swing.ComboBoxModel;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.event.ListDataListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
@@ -28,7 +31,7 @@ public class ActualizarDatos {
 	    columnNames.addElement("Nombre");
 	    columnNames.addElement("Apellido");
 	    columnNames.addElement("DNI");
-	    columnNames.addElement("Fecha");
+	    columnNames.addElement("Fecha de Nacimiento");
 	    columnNames.addElement("E-mail");
 	    
 		ClienteDAO clientes = ClienteFactory.getClienteDAO("SQL");
@@ -220,6 +223,24 @@ public class ActualizarDatos {
 		}
 		TableModel tabla1 = new DefaultTableModel(rowData,columnNames);
 		return tabla1;
+	}
+
+	public ComboBoxModel<String> cargarCombo(String string) {
+		ComboBoxModel<String> model = new DefaultComboBoxModel<String>(new String[] {"Error"});
+		switch (string) {
+		case "Vuelo": model = new DefaultComboBoxModel<String>(new String[] {"Seleccione un Item","ID de Vuelo","Despues de (Fecha)","Aeropuerto Salida","Aeropuerto Llegada","Aerolinea","Disponibilidad"});
+		break;
+		case "Venta": model = new DefaultComboBoxModel<String>(new String[] {"Seleccione un Item","ID de Venta","Vuelo por ID","por Aerolinea","DNI Cliente","Valor mayor que","Valor menor que","Forma de pago","Cantidad cuotas"});
+		break;
+		case "Cliente": model = new DefaultComboBoxModel<String>(new String[] {"Seleccione un Item","DNI","Nombre","Apellido","Pais","E-mail"});
+		break;
+		case "Aerolinea": model = new DefaultComboBoxModel<String>(new String[] {"Seleccione un Item","ID","Nombre Aerolinea","Alianza"});
+		break;
+		default:
+			break;
+		}
+		return model;
+		
 	}
 	
 }
