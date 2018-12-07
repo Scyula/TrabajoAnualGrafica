@@ -2,10 +2,16 @@ package edu.usal.pantalla.controller;
 
 import java.awt.Component;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellRenderer;
-import javax.swing.table.TableColumn;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 import edu.usal.negocio.dao.factory.ClienteFactory;
 import edu.usal.negocio.dao.factory.LineaAereaFactory;
@@ -23,7 +29,6 @@ import edu.usal.pantalla.controller.datos.Cliente_Datos_Controller;
 import edu.usal.pantalla.controller.datos.LineaAerea_Datos_Controller;
 import edu.usal.pantalla.controller.datos.Venta_Datos_Controller;
 import edu.usal.pantalla.controller.datos.Vuelo_Datos_Controller;
-import edu.usal.pantalla.controller.mostrar.Cliente_Mostrar_Controller;
 import edu.usal.pantalla.controller.mostrar.LineaAerea_Vuelo_Controller;
 import edu.usal.pantalla.controller.mostrar.Vuelo_Cliente_Controller;
 import edu.usal.pantalla.vista.MenuPrincipalVista__Tabla;
@@ -35,6 +40,7 @@ public class MenuPrincipalControllerTabla{
 		private MenuPrincipalVista__Tabla vista;
 		private ActualizarDatos datos;
 		private OperacionesController oper;
+		private TableRowSorter<TableModel> modeloOrdenado;
 		
 		public MenuPrincipalControllerTabla() {
 			this.vista = new MenuPrincipalVista__Tabla(this);
@@ -64,7 +70,8 @@ public class MenuPrincipalControllerTabla{
 		public void seleccionClientes() {
 			try {
 				this.vista.getTable().setModel(datos.clientes());
-				this.calcularEspacio();
+				this.centrarStrings();
+				this.permitirOrdenar("Cliente");
 
 				this.vista.getPanel_Agregar().removeAll();
 				this.vista.getPanel_Eliminar().removeAll();
@@ -82,10 +89,49 @@ public class MenuPrincipalControllerTabla{
 				this.vista.getBtnDelCliente().setVisible(true);
 				this.vista.getBtnModCliente().setVisible(true);
 				
+				this.formatoTextoFecha(3);
 				this.actualizar();
 			} catch (SQLException e) {
 				vista.fracasoOperacion("No se pudieron cargar los clientes\n"+e.getMessage());
 			}
+		}
+
+		private void formatoTextoFecha(int i) {
+			DefaultTableCellRenderer tableCellRenderer = new DefaultTableCellRenderer() {
+
+			    SimpleDateFormat f = new SimpleDateFormat("MM - dd - yyyy");
+
+			    public Component getTableCellRendererComponent(JTable table,
+			            Object value, boolean isSelected, boolean hasFocus,
+			            int row, int column) {
+			        if( value instanceof Date) {
+			            value = f.format(value);
+			        }
+			        return super.getTableCellRendererComponent(table, value, isSelected,
+			                hasFocus, row, column);
+			    }
+			};
+			tableCellRenderer.setHorizontalAlignment( JLabel.CENTER );
+			this.getMenuPrincipal().getTable().getColumnModel().getColumn(i).setCellRenderer(tableCellRenderer);
+		}
+		
+		private void formatoTextoFechaHora(int i) {
+			DefaultTableCellRenderer tableCellRenderer = new DefaultTableCellRenderer() {
+
+			    SimpleDateFormat f = new SimpleDateFormat("MM - dd - yyyy HH:MM");
+
+			    public Component getTableCellRendererComponent(JTable table,
+			            Object value, boolean isSelected, boolean hasFocus,
+			            int row, int column) {
+			        if( value instanceof Date) {
+			            value = f.format(value);
+			        }
+			        return super.getTableCellRendererComponent(table, value, isSelected,
+			                hasFocus, row, column);
+			    }
+			};
+			tableCellRenderer.setHorizontalAlignment( JLabel.CENTER );
+			this.getMenuPrincipal().getTable().getColumnModel().getColumn(i).setCellRenderer(tableCellRenderer);
 		}
 
 		public void nuevoCliente() {
@@ -138,7 +184,8 @@ public class MenuPrincipalControllerTabla{
 		public void seleccionAerolinea() {
 			try {
 				this.vista.getTable().setModel(datos.aerolineas());
-				this.calcularEspacio();
+				this.centrarStrings();
+				this.permitirOrdenar("Aerolinea");
 				
 				this.vista.getPanel_Agregar().removeAll();
 				this.vista.getPanel_Eliminar().removeAll();
@@ -163,29 +210,41 @@ public class MenuPrincipalControllerTabla{
 			}
 		}
 		
-		private void calcularEspacio() {
-			for (int column = 0; column < this.vista.getTable().getColumnCount(); column++)
-			{
-			    TableColumn tableColumn = this.vista.getTable().getColumnModel().getColumn(column);
-			    int preferredWidth = tableColumn.getMinWidth();
-			    int maxWidth = tableColumn.getMaxWidth();
+		private void permitirOrdenar(String tipo) {
+			modeloOrdenado = new TableRowSorter<TableModel>(this.vista.getTable().getModel());
+			this.vista.getTable().setRowSorter(modeloOrdenado);
+		}
 
-			    for (int row = 0; row < this.vista.getTable().getRowCount(); row++)
-			    {
-			        TableCellRenderer cellRenderer = this.vista.getTable().getCellRenderer(row, column);
-			        Component c = this.vista.getTable().prepareRenderer(cellRenderer, row, column);
-			        int width = c.getPreferredSize().width + this.vista.getTable().getIntercellSpacing().width;
-			        preferredWidth = Math.max(preferredWidth, width);
-
-			        if (preferredWidth >= maxWidth)
-			        {
-			            preferredWidth = maxWidth;
-			            break;
-			        }
-			    }
-
-			    tableColumn.setPreferredWidth( preferredWidth );
-			}
+		private void centrarStrings() {
+//			for (int column = 0; column < this.vista.getTable().getColumnCount(); column++)
+//			{
+//			    TableColumn tableColumn = this.vista.getTable().getColumnModel().getColumn(column);
+//			    int preferredWidth = tableColumn.getMinWidth();
+//			    int maxWidth = tableColumn.getMaxWidth();
+//
+//			    for (int row = 0; row < this.vista.getTable().getRowCount(); row++)
+//			    {
+//			        TableCellRenderer cellRenderer = this.vista.getTable().getCellRenderer(row, column);
+//			        Component c = this.vista.getTable().prepareRenderer(cellRenderer, row, column);
+//			        int width = c.getPreferredSize().width + this.vista.getTable().getIntercellSpacing().width;
+//			        preferredWidth = Math.max(preferredWidth, width);
+//
+//			        if (preferredWidth >= maxWidth)
+//			        {
+//			            preferredWidth = maxWidth;
+//			            break;
+//			        }
+//			    }
+//
+//			    tableColumn.setPreferredWidth( preferredWidth );
+//			}
+			
+			DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+			centerRenderer.setHorizontalAlignment( JLabel.CENTER );
+			this.getMenuPrincipal().getTable().setDefaultRenderer(String.class, centerRenderer);
+			this.getMenuPrincipal().getTable().setDefaultRenderer(Date.class, centerRenderer);
+			this.getMenuPrincipal().getTable().setDefaultRenderer(Integer.class, centerRenderer);
+			this.getMenuPrincipal().getTable().setDefaultRenderer(Double.class, centerRenderer);
 		}
 
 		public void nuevoAerolinea() {
@@ -239,6 +298,7 @@ public class MenuPrincipalControllerTabla{
 			try {
 				this.vista.getTable().setModel(datos.vuelos());
 				this.vista.getComboBox_Busqueda().setModel(this.datos.cargarCombo("Vuelo"));
+				this.permitirOrdenar("Vuelo");
 				
 				this.vista.getPanel_Agregar().removeAll();
 				this.vista.getPanel_Eliminar().removeAll();
@@ -256,7 +316,10 @@ public class MenuPrincipalControllerTabla{
 				this.vista.getBtnDelVuelo().setVisible(true);
 				this.vista.getBtnModVuelo().setVisible(true);
 				this.vista.getBtnVerClientes().setVisible(true);
-				
+
+				this.formatoTextoFechaHora(3);
+				this.formatoTextoFechaHora(5);
+				this.centrarStrings();
 				this.actualizar();
 			} catch (SQLException e) {
 				vista.fracasoOperacion("No se pudieron cargar los vuelos\n"+e.getMessage());
@@ -316,6 +379,7 @@ public class MenuPrincipalControllerTabla{
 		public void seleccionVenta() {
 			try {
 				this.vista.getTable().setModel(datos.ventas());
+				this.permitirOrdenar("");
 				
 				this.vista.getPanel_Agregar().removeAll();
 				this.vista.getPanel_Eliminar().removeAll();
@@ -333,7 +397,9 @@ public class MenuPrincipalControllerTabla{
 				this.vista.getBtnAddVenta().setVisible(true);
 				this.vista.getBtnDelVenta().setVisible(true);
 				this.vista.getBtnModVenta().setVisible(true);
-				
+
+				this.formatoTextoFechaHora(5);
+				this.centrarStrings();
 				this.actualizar();
 			} catch (SQLException e) {
 				vista.fracasoOperacion("No se pudieron cargar los vuelos\n"+e.getMessage());
@@ -402,8 +468,16 @@ public class MenuPrincipalControllerTabla{
 		}
 
 		public void buscarEnTabla() {
+			oper.ordenar(this);
 			
-			
+		}
+
+		public TableRowSorter<TableModel> getModeloOrdenado() {
+			return modeloOrdenado;
+		}
+
+		public void setModeloOrdenado(TableRowSorter<TableModel> modeloOrdenado) {
+			this.modeloOrdenado = modeloOrdenado;
 		}
 		
 		

@@ -40,16 +40,27 @@ public class ActualizarDatos {
 		Vector<Vector> rowData = new Vector<Vector>();
 		if(!lista.isEmpty()) {	
 			for (Cliente cliente : lista) {
-				Vector<String> aux = new Vector<String>();
+				Vector<Object> aux = new Vector<Object>();
 			    aux.addElement(cliente.getNombre());
 			    aux.addElement(cliente.getApellido());
-			    aux.addElement(String.valueOf(cliente.getDNI()));
-			    aux.addElement(obtenerFecha(cliente.getFechaNac()));
+			    aux.addElement((cliente.getDNI()));
+			    aux.addElement((cliente.getFechaNac()));
 			    aux.addElement(cliente.getEmail());
 			    rowData.add(aux);
 			}
 		}
-		TableModel tabla1 = new DefaultTableModel(rowData,columnNames);
+		TableModel tabla1 = new DefaultTableModel(rowData,columnNames){
+			@Override
+			public Class getColumnClass(int column)
+			{
+			    if (column == 2)
+			        {	return Integer.class;}
+			    else if( column == 3)
+			    	{	return Date.class;}
+			    else 
+			    	{	return String.class;}
+			}
+		};
 		return tabla1;
 	}
 
@@ -70,14 +81,24 @@ public class ActualizarDatos {
 	    Vector<Vector> rowData = new Vector<Vector>();
 		if(!lista.isEmpty()) {	
 			for (LineaAerea linea : lista) {
-				Vector<String> aux = new Vector<String>();
-			    aux.addElement(String.valueOf(linea.getId()));
+				Vector<Object> aux = new Vector<Object>();
+			    aux.addElement(linea.getId());
 			    aux.addElement(linea.getNombre());
 			    aux.addElement(obtenerAlianza(linea.getAlianza()));
 			    rowData.add(aux);
 			}
 		}
-		TableModel tabla1 = new DefaultTableModel(rowData,columnNames);
+		TableModel tabla1 = new DefaultTableModel(rowData,columnNames) {
+			@Override
+			public Class getColumnClass(int column)
+			{
+			    if (column == 0)
+			        return Integer.class;
+			    else
+			        return String.class;
+			}
+		};
+		
 		return tabla1;
 	}
 
@@ -110,20 +131,31 @@ public class ActualizarDatos {
 	    Vector<Vector> rowData = new Vector<Vector>();
 		if(!lista.isEmpty()) {	
 			for (Vuelo vue : lista) {
-				Vector<String> aux = new Vector<String>();
+				Vector<Object> aux = new Vector<Object>();
 			    aux.addElement(vue.getId_vuelo());
 			    aux.addElement(vue.getAerolinea().getNombre());
 			    aux.addElement(vue.getAeroSalida().getCiudad());
-			    aux.addElement(obtenerFechaHora(vue.getFechaHoraSalida()));
+			    aux.addElement((vue.getFechaHoraSalida()));
 			    aux.addElement(vue.getAeroLlegada().getCiudad());
-			    aux.addElement(obtenerFechaHora(vue.getFechaHoraLlegada()));
-			    aux.addElement(String.valueOf(vue.getCantAsientos()));
-			    aux.addElement(String.valueOf(vue.getCantAsientos()));
+			    aux.addElement((vue.getFechaHoraLlegada()));
+			    aux.addElement((vue.getCantAsientos()));
+			    aux.addElement((vue.getCantAsientos()));
 			    aux.addElement(vue.getTiempoVuelo());
 			    rowData.add(aux);
 			}
 		}
-		TableModel tabla1 = new DefaultTableModel(rowData,columnNames);
+		TableModel tabla1 = new DefaultTableModel(rowData,columnNames){
+			@Override
+			public Class getColumnClass(int column)
+			{
+			    if (column == 6 || column == 7)
+			        {	return Integer.class;}
+			    else if( column == 3 || column == 5)
+			    	{	return Date.class;}
+			    else
+			    	{	return String.class;}
+			}
+		};
 		return tabla1;
 	}
 
@@ -149,19 +181,32 @@ public class ActualizarDatos {
 	    Vector<Vector> rowData = new Vector<Vector>();
 		if(!lista.isEmpty()) {	
 			for (Venta vent : lista) {
-				Vector<String> aux = new Vector<String>();
-			    aux.addElement(String.valueOf(vent.getId_venta()));
+				Vector<Object> aux = new Vector<Object>();
+			    aux.addElement((vent.getId_venta()));
 			    aux.addElement(vent.getVuelo().getId_vuelo());
 			    aux.addElement(vent.getLineaAerea().getNombre());
-			    aux.addElement(String.valueOf(vent.getCliente().getDNI()));
-			    aux.addElement(String.valueOf(vent.getTotalPagar()));
-			    aux.addElement(obtenerFechaHora(vent.getFechaHoraVenta()));
-			    aux.addElement(String.valueOf(vent.getFormaPago()));
-			    aux.addElement(String.valueOf(vent.getCuotas()));
+			    aux.addElement((vent.getCliente().getDNI()));
+			    aux.addElement((vent.getTotalPagar()));
+			    aux.addElement((vent.getFechaHoraVenta()));
+			    aux.addElement((vent.getFormaPago()));
+			    aux.addElement((vent.getCuotas()));
 			    rowData.add(aux);
 			}
 		}
-		TableModel tabla1 = new DefaultTableModel(rowData,columnNames);
+		TableModel tabla1 = new DefaultTableModel(rowData,columnNames){
+			@Override
+			public Class getColumnClass(int column)
+			{
+			    if (column == 3 || column == 7 || column == 0)
+			        {	return Integer.class;}
+			    else if( column == 5)
+			    	{	return Date.class;}
+			    else if(column == 4)
+			    	{ return Double.class;}
+			    else
+			    	{	return String.class;}
+			}
+		};
 		return tabla1;
 	}
 	
@@ -182,20 +227,31 @@ public class ActualizarDatos {
 	    Vector<Vector> rowData = new Vector<Vector>();
 		if(!lista.isEmpty()) {	
 			for (Vuelo vue : lista) {
-				Vector<String> aux = new Vector<String>();
+				Vector<Object> aux = new Vector<Object>();
 			    aux.addElement(vue.getId_vuelo());
 			    aux.addElement(vue.getAerolinea().getNombre());
 			    aux.addElement(vue.getAeroSalida().getCiudad());
-			    aux.addElement(obtenerFechaHora(vue.getFechaHoraSalida()));
+			    aux.addElement((vue.getFechaHoraSalida()));
 			    aux.addElement(vue.getAeroLlegada().getCiudad());
-			    aux.addElement(obtenerFechaHora(vue.getFechaHoraLlegada()));
-			    aux.addElement(String.valueOf(vue.getCantAsientos()));
-			    aux.addElement(String.valueOf(vue.getCantAsientos()));
+			    aux.addElement((vue.getFechaHoraLlegada()));
+			    aux.addElement((vue.getCantAsientos()));
+			    aux.addElement((vue.getCantAsientos()));
 			    aux.addElement(vue.getTiempoVuelo());
 			    rowData.add(aux);
 			}
 		}
-		TableModel tabla1 = new DefaultTableModel(rowData,columnNames);
+		TableModel tabla1 = new DefaultTableModel(rowData,columnNames){
+			@Override
+			public Class getColumnClass(int column)
+			{
+			    if (column == 6 || column == 7)
+			        {	return Integer.class;}
+			    else if( column == 3 || column == 5)
+			    	{	return Date.class;}
+			    else
+			    	{	return String.class;}
+			}
+		};
 		return tabla1;
 	}
 	
@@ -221,7 +277,18 @@ public class ActualizarDatos {
 			    rowData.add(aux);
 			}
 		}
-		TableModel tabla1 = new DefaultTableModel(rowData,columnNames);
+		TableModel tabla1 = new DefaultTableModel(rowData,columnNames){
+			@Override
+			public Class getColumnClass(int column)
+			{
+			    if (column == 2)
+			        {	return Integer.class;}
+			    else if( column == 3)
+			    	{	return Date.class;}
+			    else 
+			    	{	return String.class;}
+			}
+		};
 		return tabla1;
 	}
 

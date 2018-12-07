@@ -2,6 +2,10 @@ package edu.usal.pantalla.controller;
 
 import java.sql.SQLException;
 
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.RowFilter;
+import javax.swing.table.TableModel;
+
 import edu.usal.negocio.dao.factory.ClienteFactory;
 import edu.usal.negocio.dao.factory.LineaAereaFactory;
 import edu.usal.negocio.dao.factory.VentaFactory;
@@ -85,8 +89,44 @@ public class OperacionesController {
 	}
 
 	
-	public void ordenar(Cliente_Mostrar_Controller cliente_Buscar_Controller) {
-		// TODO Auto-generated method stub
+	public void ordenar(MenuPrincipalControllerTabla controller) {
+		
+		
+		
+		switch((String)controller.getMenuPrincipal().getComboBox_Busqueda().getSelectedItem()) {
+			//Vuelo
+		case "ID de Vuelo": controller.getModeloOrdenado().setRowFilter(RowFilter.regexFilter(controller.getMenuPrincipal().getTextBuscar().getText(), 0));
+		break;
+		case "Despues de (Fecha)":
+		case "Aeropuerto Salida":
+		case "Aeropuerto Llegada":
+		case "Aerolinea":
+		case "Disponibilidad":
+			break;
+			//Venta
+		case "ID de Venta":
+		case "Vuelo por ID":
+		case "por Aerolinea":
+		case "DNI Cliente":
+		case "Valor mayor que":
+		case "Valor menor que":
+		case "Forma de pago":
+		case "Cantidad cuotas":
+			break;
+			//Cliente
+		case"DNI":
+		case "Nombre":
+		case "Apellido":
+		case "Pais":
+		case "E-mail":
+			break;
+			//Aerolinea
+		case "ID":
+		case "Nombre Aerolinea":
+		case "Alianza":
+			break;
+			default:
+		}
 		
 	}
 	
