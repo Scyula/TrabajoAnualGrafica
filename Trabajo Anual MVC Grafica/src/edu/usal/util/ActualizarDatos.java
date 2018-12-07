@@ -31,6 +31,7 @@ public class ActualizarDatos {
 	    columnNames.addElement("Nombre");
 	    columnNames.addElement("Apellido");
 	    columnNames.addElement("DNI");
+	    columnNames.addElement("Pais");
 	    columnNames.addElement("Fecha de Nacimiento");
 	    columnNames.addElement("E-mail");
 	    
@@ -44,6 +45,7 @@ public class ActualizarDatos {
 			    aux.addElement(cliente.getNombre());
 			    aux.addElement(cliente.getApellido());
 			    aux.addElement((cliente.getDNI()));
+			    aux.addElement(cliente.getDireccion().getPais().getNombre());
 			    aux.addElement((cliente.getFechaNac()));
 			    aux.addElement(cliente.getEmail());
 			    rowData.add(aux);
@@ -139,7 +141,7 @@ public class ActualizarDatos {
 			    aux.addElement(vue.getAeroLlegada().getCiudad());
 			    aux.addElement((vue.getFechaHoraLlegada()));
 			    aux.addElement((vue.getCantAsientos()));
-			    aux.addElement((vue.getCantAsientos()));
+			    aux.addElement((vue.getAsientosDisponibles()));
 			    aux.addElement(vue.getTiempoVuelo());
 			    rowData.add(aux);
 			}
@@ -235,7 +237,7 @@ public class ActualizarDatos {
 			    aux.addElement(vue.getAeroLlegada().getCiudad());
 			    aux.addElement((vue.getFechaHoraLlegada()));
 			    aux.addElement((vue.getCantAsientos()));
-			    aux.addElement((vue.getCantAsientos()));
+			    aux.addElement((vue.getAsientosDisponibles()));
 			    aux.addElement(vue.getTiempoVuelo());
 			    rowData.add(aux);
 			}
@@ -260,6 +262,7 @@ public class ActualizarDatos {
 	    columnNames.addElement("Nombre");
 	    columnNames.addElement("Apellido");
 	    columnNames.addElement("DNI");
+	    columnNames.addElement("Pais");
 	    columnNames.addElement("Fecha");
 	    columnNames.addElement("E-mail");
 	    
@@ -268,11 +271,12 @@ public class ActualizarDatos {
 		Vector<Vector> rowData = new Vector<Vector>();
 		if(!lista.isEmpty()) {	
 			for (Cliente cliente : lista) {
-				Vector<String> aux = new Vector<String>();
+				Vector<Object> aux = new Vector<Object>();
 			    aux.addElement(cliente.getNombre());
 			    aux.addElement(cliente.getApellido());
-			    aux.addElement(String.valueOf(cliente.getDNI()));
-			    aux.addElement(obtenerFecha(cliente.getFechaNac()));
+			    aux.addElement((cliente.getDNI()));
+			    aux.addElement(cliente.getDireccion().getPais().getNombre());
+			    aux.addElement((cliente.getFechaNac()));
 			    aux.addElement(cliente.getEmail());
 			    rowData.add(aux);
 			}
@@ -297,7 +301,8 @@ public class ActualizarDatos {
 		switch (string) {
 		case "Vuelo": model = new DefaultComboBoxModel<String>(new String[] {"Seleccione un Item","ID de Vuelo","Despues de (Fecha)","Aeropuerto Salida","Aeropuerto Llegada","Aerolinea","Disponibilidad"});
 		break;
-		case "Venta": model = new DefaultComboBoxModel<String>(new String[] {"Seleccione un Item","ID de Venta","Vuelo por ID","por Aerolinea","DNI Cliente","Valor mayor que","Valor menor que","Forma de pago","Cantidad cuotas"});
+		case "Venta": model = new DefaultComboBoxModel<String>(new String[] {"Seleccione un Item","ID de Venta","Vuelo por ID","por Aerolinea","DNI Cliente"
+				,"Valor mayor que","Valor menor que","Forma de pago","Cantidad cuotas"});
 		break;
 		case "Cliente": model = new DefaultComboBoxModel<String>(new String[] {"Seleccione un Item","DNI","Nombre","Apellido","Pais","E-mail"});
 		break;

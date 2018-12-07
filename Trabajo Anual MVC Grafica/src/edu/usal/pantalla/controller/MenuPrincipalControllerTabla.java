@@ -9,7 +9,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
@@ -89,7 +88,7 @@ public class MenuPrincipalControllerTabla{
 				this.vista.getBtnDelCliente().setVisible(true);
 				this.vista.getBtnModCliente().setVisible(true);
 				
-				this.formatoTextoFecha(3);
+				this.formatoTextoFecha(4);
 				this.actualizar();
 			} catch (SQLException e) {
 				vista.fracasoOperacion("No se pudieron cargar los clientes\n"+e.getMessage());
@@ -99,7 +98,7 @@ public class MenuPrincipalControllerTabla{
 		private void formatoTextoFecha(int i) {
 			DefaultTableCellRenderer tableCellRenderer = new DefaultTableCellRenderer() {
 
-			    SimpleDateFormat f = new SimpleDateFormat("MM - dd - yyyy");
+			    SimpleDateFormat f = new SimpleDateFormat("dd - MM - yyyy");
 
 			    public Component getTableCellRendererComponent(JTable table,
 			            Object value, boolean isSelected, boolean hasFocus,
@@ -118,7 +117,7 @@ public class MenuPrincipalControllerTabla{
 		private void formatoTextoFechaHora(int i) {
 			DefaultTableCellRenderer tableCellRenderer = new DefaultTableCellRenderer() {
 
-			    SimpleDateFormat f = new SimpleDateFormat("MM - dd - yyyy HH:MM");
+			    SimpleDateFormat f = new SimpleDateFormat("dd - MM - yyyy HH:mm");
 
 			    public Component getTableCellRendererComponent(JTable table,
 			            Object value, boolean isSelected, boolean hasFocus,
@@ -478,6 +477,19 @@ public class MenuPrincipalControllerTabla{
 
 		public void setModeloOrdenado(TableRowSorter<TableModel> modeloOrdenado) {
 			this.modeloOrdenado = modeloOrdenado;
+		}
+
+		public void campoBusqueda() {
+			String seleccion=((String)(vista.getComboBox_Busqueda().getSelectedItem()));
+			vista.getPanel_Buscar().removeAll();
+			if(seleccion.equals("Despues de (Fecha)")) {
+							vista.getPanel_Buscar().add(vista.getFecha());
+							vista.getFecha().setVisible(true);
+			}else {
+				vista.getPanel_Buscar().add(vista.getTextBuscar());
+				vista.getTextBuscar().setVisible(true);
+			}
+			this.actualizar();
 		}
 		
 		

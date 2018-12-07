@@ -12,6 +12,7 @@ import edu.usal.negocio.dominio.Venta;
 import edu.usal.negocio.dominio.Vuelo;
 import edu.usal.pantalla.controller.MenuPrincipalControllerTabla;
 import edu.usal.pantalla.vista.eventos.CapturaBtnMP_Tabla;
+import edu.usal.pantalla.vista.eventos.CapturaListaBuscador;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -25,13 +26,12 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
-import java.awt.FlowLayout;
+
+import com.toedter.calendar.JDateChooser;
+
 import javax.swing.SwingConstants;
-import javax.swing.BoxLayout;
-import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
-import javax.swing.DefaultComboBoxModel;
 
 public class MenuPrincipalVista__Tabla extends JFrame {
 
@@ -135,6 +135,9 @@ public class MenuPrincipalVista__Tabla extends JFrame {
 	private JLabel lblBusqueda;
 	private JComboBox<String> comboBox_Busqueda;
 	private JTextField textBuscar;
+	private JPanel panel_Buscar;
+	
+	private JDateChooser fecha = new JDateChooser();
 	
 
 	public MenuPrincipalControllerTabla getMpController() {
@@ -176,6 +179,7 @@ public class MenuPrincipalVista__Tabla extends JFrame {
 		btnModVenta.addActionListener(new CapturaBtnMP_Tabla(this));
 		btnAddVenta.addActionListener(new CapturaBtnMP_Tabla(this));
 		btnDelVenta.addActionListener(new CapturaBtnMP_Tabla(this));
+		
 								
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(51, 153, 255));
@@ -347,6 +351,7 @@ public class MenuPrincipalVista__Tabla extends JFrame {
 		panel_47.add(panel_62, BorderLayout.EAST);
 		
 		comboBox_Busqueda = new JComboBox<String>();
+		comboBox_Busqueda.addItemListener(new CapturaListaBuscador(this));
 		panel_47.add(comboBox_Busqueda, BorderLayout.CENTER);
 		
 		panel_48 = new JPanel();
@@ -365,8 +370,12 @@ public class MenuPrincipalVista__Tabla extends JFrame {
 		panel_58 = new JPanel();
 		panel_48.add(panel_58, BorderLayout.EAST);
 		
+		panel_Buscar = new JPanel();
+		panel_48.add(panel_Buscar, BorderLayout.CENTER);
+		panel_Buscar.setLayout(new GridLayout(0, 1, 0, 0));
+		
 		textBuscar = new JTextField();
-		panel_48.add(textBuscar, BorderLayout.CENTER);
+		panel_Buscar.add(textBuscar);
 		textBuscar.setColumns(10);
 		
 		panel_49 = new JPanel();
@@ -669,6 +678,25 @@ public class MenuPrincipalVista__Tabla extends JFrame {
 
 	public void setTextBuscar(JTextField textBuscar) {
 		this.textBuscar = textBuscar;
+	}
+	
+
+	public JDateChooser getFecha() {
+		return fecha;
+	}
+
+	
+	
+	public JPanel getPanel_Buscar() {
+		return panel_Buscar;
+	}
+
+	public void setPanel_Buscar(JPanel panel_Buscar) {
+		this.panel_Buscar = panel_Buscar;
+	}
+
+	public void setFecha(JDateChooser fecha) {
+		this.fecha = fecha;
 	}
 
 	public int confirmarSalida() {
