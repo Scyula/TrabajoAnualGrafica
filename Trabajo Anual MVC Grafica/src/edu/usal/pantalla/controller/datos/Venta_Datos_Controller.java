@@ -182,7 +182,7 @@ public class Venta_Datos_Controller {
 		return Math.round(numero * Math.pow(10, 3)) / Math.pow(10, 3);
 		}
 
-	public void buscarCliente() {
+	public boolean buscarCliente() {
 		ClienteDAO clientedao = ClienteFactory.getClienteDAO("SQL");
 		try {
 			Cliente buscar = clientedao.readCliente(Integer.parseInt(vista.getTextBuscarDNI().getText()));
@@ -191,6 +191,7 @@ public class Venta_Datos_Controller {
 					ingresarDatosCliente(buscar);
 					this.venta.setCliente(buscar);
 					vista.exitoOperacion();
+					return true;
 				}else {
 					vista.cancelaOperacion();
 				}
@@ -202,6 +203,8 @@ public class Venta_Datos_Controller {
 		} catch (SQLException e) {
 			vista.errorBaseDatos(e.getMessage());
 		}
+
+		return false;
 	}
 	
 	public void ingresarDatosCliente(Cliente buscar){
@@ -226,7 +229,7 @@ public class Venta_Datos_Controller {
 		return "No tiene";
 	}
 
-	public void buscarVuelo() {
+	public boolean buscarVuelo() {
 		VueloDAO vuelodao = VueloFactory.getVueloDAO("SQL");
 		try {
 			Vuelo buscar = vuelodao.readVuelo(vista.getTextBuscarVuelo().getText());
@@ -234,14 +237,17 @@ public class Venta_Datos_Controller {
 				if(vista.seleccionarVuelo(buscar)) {
 					ingresarDatosVuelo(buscar);
 					vista.exitoOperacion();
+					return true;
 				}else {
 					vista.cancelaOperacion();
+					return false;
 				}
 			}
 		} catch (SQLException e) {
 			vista.errorBaseDatos(e.getMessage());
 		}
-		
+
+		return false;
 	}
 	public void ingresarDatosVuelo(Vuelo buscar) {
 		vista.getTextID_Vuelo().setText(buscar.getId_vuelo());

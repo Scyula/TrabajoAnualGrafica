@@ -214,30 +214,7 @@ public class MenuPrincipalControllerTabla{
 			this.vista.getTable().setRowSorter(modeloOrdenado);
 		}
 
-		private void centrarStrings() {
-//			for (int column = 0; column < this.vista.getTable().getColumnCount(); column++)
-//			{
-//			    TableColumn tableColumn = this.vista.getTable().getColumnModel().getColumn(column);
-//			    int preferredWidth = tableColumn.getMinWidth();
-//			    int maxWidth = tableColumn.getMaxWidth();
-//
-//			    for (int row = 0; row < this.vista.getTable().getRowCount(); row++)
-//			    {
-//			        TableCellRenderer cellRenderer = this.vista.getTable().getCellRenderer(row, column);
-//			        Component c = this.vista.getTable().prepareRenderer(cellRenderer, row, column);
-//			        int width = c.getPreferredSize().width + this.vista.getTable().getIntercellSpacing().width;
-//			        preferredWidth = Math.max(preferredWidth, width);
-//
-//			        if (preferredWidth >= maxWidth)
-//			        {
-//			            preferredWidth = maxWidth;
-//			            break;
-//			        }
-//			    }
-//
-//			    tableColumn.setPreferredWidth( preferredWidth );
-//			}
-			
+		private void centrarStrings() {			
 			DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
 			centerRenderer.setHorizontalAlignment( JLabel.CENTER );
 			this.getMenuPrincipal().getTable().setDefaultRenderer(String.class, centerRenderer);
@@ -282,7 +259,8 @@ public class MenuPrincipalControllerTabla{
 		private LineaAerea buscarAerolinea() {
 			try {
 				LineaAereaDAO linea = LineaAereaFactory.getLineaAereaDAO(DatosEstaticos.getSource());
-				return linea.readLineaAerea(Integer.valueOf((String) this.vista.getTable().getModel().getValueAt(this.vista.getTable().getSelectedRow(), 0)));	
+				int valor = (Integer)this.vista.getTable().getModel().getValueAt(this.vista.getTable().getSelectedRow(), 0);
+				return linea.readLineaAerea(valor);	
 				} catch (SQLException e) {
 					IOGeneralDAO.pritln(">>>>>Error con la base de datos<<<<<");
 					IOGeneralDAO.pritln(e.getMessage());

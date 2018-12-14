@@ -287,7 +287,7 @@ public class ActualizarDatos {
 			{
 			    if (column == 2)
 			        {	return Integer.class;}
-			    else if( column == 3)
+			    else if( column == 4)
 			    	{	return Date.class;}
 			    else 
 			    	{	return String.class;}

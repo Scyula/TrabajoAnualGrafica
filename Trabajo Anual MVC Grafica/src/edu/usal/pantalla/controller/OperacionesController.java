@@ -158,7 +158,7 @@ public class OperacionesController {
 		break;
 		case "Pais":controller.getModeloOrdenado().setRowFilter(RowFilter.regexFilter("(?i)" + controller.getMenuPrincipal().getTextBuscar().getText(), 3));
 		break;
-		case "E-mail":controller.getModeloOrdenado().setRowFilter(RowFilter.regexFilter("(?i)" + controller.getMenuPrincipal().getTextBuscar().getText(), 4));
+		case "E-mail":controller.getModeloOrdenado().setRowFilter(RowFilter.regexFilter("(?i)" + controller.getMenuPrincipal().getTextBuscar().getText(), 5));
 		break;
 
 			//Aerolinea
