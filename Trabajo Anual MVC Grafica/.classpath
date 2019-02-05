@@ -2,11 +2,13 @@
 <classpath>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="lib" path="miglayout15-swing.jar" sourcepath="miglayout-src.zip"/>
-	<classpathentry kind="lib" path="jgoodies-common-1.8.0.jar" sourcepath="jgoodies-common-1.8.0-sources.jar"/>
-	<classpathentry kind="lib" path="jgoodies-forms-1.8.0.jar" sourcepath="jgoodies-forms-1.8.0-sources.jar"/>
-	<classpathentry kind="lib" path="jcalendar-1.444444.jar" sourcepath="C:/Users/agust/.m2/repository/com/toedter/jcalendar/1.4/jcalendar-1.4-sources.jar"/>
-	<classpathentry kind="lib" path="C:/sqljdbc4-2.0.jar"/>
 	<classpathentry kind="lib" path="C:/Users/agust/Documents/1-.JAR_FIles/DAO.jar"/>
+	<classpathentry kind="lib" path="recursos/jcalendar-1.444444.jar"/>
+	<classpathentry kind="lib" path="recursos/jgoodies-common-1.8.0-sources.jar"/>
+	<classpathentry kind="lib" path="recursos/jgoodies-common-1.8.0.jar"/>
+	<classpathentry kind="lib" path="recursos/jgoodies-forms-1.8.0-sources.jar"/>
+	<classpathentry kind="lib" path="recursos/jgoodies-forms-1.8.0.jar"/>
+	<classpathentry kind="lib" path="recursos/miglayout15-swing.jar"/>
+	<classpathentry kind="lib" path="recursos/sqljdbc4-2.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
