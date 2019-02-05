@@ -1017,5 +1017,9 @@ public Cliente_Datos_Vista(Cliente_Datos_Controller vista, Cliente c) {
         if (JOptionPane.showConfirmDialog(null, "¿Desea realmente salir del sistema?",
                 "Salir del sistema", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
             System.exit(0);
-    } 
+    }
+
+	public void errorCarga() {
+		JOptionPane.showMessageDialog(null, "Error en la carga de datos, verifique los archivos de la carpeta \"recursos/txt\"", "", JOptionPane.WARNING_MESSAGE);
+	} 
 }

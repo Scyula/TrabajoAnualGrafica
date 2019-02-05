@@ -1,0 +1,195 @@
+0-Otro
+1-Afganistan
+2-Albania
+3-Alemania
+4-Andorra
+5-Angola
+6-Antigua y Barbuda
+7-Arabia Saudita
+8-Argelia
+9-Argentina
+10-Armenia
+11-Australia
+12-Austria
+13-Azerbaiyan
+14-Bahamas
+15-Bangladesh
+16-Barbados
+17-Barein
+18-Belgica
+19-Belice
+20-Beiín
+21-Bielorrusia
+22-Birmania
+23-Bolivia
+24-Bosnia
+25-Botsuana
+26-Brasil
+27-Brunei
+28-Bulgaria
+29-Burkina Faso
+30-Burundi
+31-Butan
+32-Cabo Verde
+33-Camboya
+34-Camerún
+35-Canada
+36-Catar
+37-Chad
+38-Chile
+39-China
+40-Chipre
+41-Ciudad del Vaticano
+42-Colombia
+43-Comoras
+44-Corea del Norte
+45-Corea del Sur
+46-Costa de Marfil
+47-Costa Rica
+48-Croacia
+49-Cuba
+50-Dinamarca
+51-Dominica
+52-Ecuador
+53-Egipto
+54-El Salvador
+55-Emiratos Arabes Unidos
+56-Eritrea
+57-Eslovaquia
+58-Eslovenia
+59-España
+60-Estados Unidos
+61-Estonia
+62-Etiopia
+63-Filipinas
+64-Finlandia
+65-Fiyi
+66-Francia
+67-Gabon
+68-Gambia
+69-Georgia
+70-Ghana
+71-Granada
+72-Grecia
+73-Guatemala
+74-Guyana
+75-Guinea
+76-Guinea ecuatorial
+77-Guinea Bisau
+78-Haiti
+79-Honduras
+80-Hungria
+81-India
+82-Indonesia
+83-Irak
+84-Iran
+85-Irlanda
+86-Islandia
+87-Islas Marshall
+88-Islas Salomon
+89-Israel
+90-Italia
+91-Jamaica
+92-Japon
+93-Jordania
+94-Kazajistan
+95-Kenia
+96-Kirguistan
+97-Kiribati
+98-Kuwait
+99-Laos
+100-Lesoto
+101-Letonia
+102-Libano
+103-Liberia
+104-Libia
+105-Liechtenstein
+106-Lituania
+107-Luxemburgo
+108-Madagascar
+109-Malasia
+110-Malaui
+111-Maldivas
+112-Mali
+113-Malta
+114-Marruecos
+115-Mauricio
+116-Mauritania
+117-Mexico
+118-Micronesia
+119-Moldavia
+120-Monaco
+121-Mongolia
+122-Montenegro
+123-Mozambique
+124-Namibia
+125-Nauru
+126-Nepal
+127-Nicaragua
+128-Niger
+129-Nigeria
+130-Noruega
+131-Nueva Zelanda
+132-Oman
+133-Paises Bajos
+134-Pakistan
+135-Palaos
+136-Panama
+137-Papua Nueva Guinea
+138-Paraguay
+139-Peru
+140-Polonia
+141-Portugal
+142-Reino Unido
+143-Republica Centroafricana
+144-Republica Checa
+145-Republica de Macedonia
+146-Republica del Congo
+147-Republica Democrática del Congo
+148-Republica Dominicana
+149-Republica Sudafricana
+150-Ruanda
+151-Rumania
+152-Rusia
+153-Samoa
+154-San Cristobal y Nieves
+155-San Marino
+156-San Vicente y las Granadinas
+157-Santa Lucía
+158-Santo Tome y Príncipe
+159-Senegal
+160-Serbia
+161-Seychelles
+162-Sierra Leona
+163-Singapur
+164-Siria
+165-Somalia
+166-Sri Lanka
+167-Suazilandia
+168-Sudan
+169-Sudan del Sur
+170-Suecia
+171-Suiza
+172-Surinam
+173-Tailandia
+174-Tanzania
+175-Tayikistan
+176-Timor Oriental
+177-Togo
+178-Tonga
+179-Trinidad y Tobago
+180-Tunez
+181-Turkmenistan
+182-Turquia
+183-Tuvalu
+184-Ucrania
+185-Uganda
+186-Uruguay
+187-Uzbekistan
+188-Vanuatu
+189-Venezuela
+190-Vietnam
+191-Yemen
+192-Yibuti
+193-Zambia
+194-Zimbabue

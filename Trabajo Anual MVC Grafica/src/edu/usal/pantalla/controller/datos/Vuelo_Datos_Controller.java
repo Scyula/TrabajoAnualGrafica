@@ -27,6 +27,7 @@ public class Vuelo_Datos_Controller {
 	Vuelo_Datos_Vista menu;
 	MenuPrincipalControllerTabla mPController;
 	private VueloDAO vuelodao;
+	private boolean cargaCorrecta = true;
 	
 	public Vuelo_Datos_Controller(MenuPrincipalControllerTabla menuPrincipalController) {
 		this.mPController= menuPrincipalController;
@@ -123,6 +124,9 @@ private Date obtenerFechaSalida(Vuelo_Datos_Vista datos) {
 	
 	public Pais[] obtenerListaPaises() {	
 		Hashtable<Integer, String> lista= DatosEstaticos.getPaises();
+		if(lista.isEmpty()) {
+			this.cargaCorrecta=false;
+		}
 		Pais[] modelo = new Pais[(lista.size()+1)];
 		modelo[0]= new Pais(-1,"Seleccione un pais");
 		for (int i=1; i<lista.size();i++) {
@@ -134,6 +138,9 @@ private Date obtenerFechaSalida(Vuelo_Datos_Vista datos) {
 
 	public Provincia[] obtenerListaProvincias() {
 		Hashtable<Integer, String> lista= DatosEstaticos.getProvincias();
+		if(lista.isEmpty()) {
+			this.cargaCorrecta=false;
+		}
 		Provincia[] modelo = new Provincia[(lista.size()+1)];
 		modelo[0]= new Provincia(-1,"Seleccione una provincia");
 		for (int i=1; i<lista.size();i++) {
@@ -160,7 +167,9 @@ private Date obtenerFechaSalida(Vuelo_Datos_Vista datos) {
 		for (i=1;i<lista.size();i++) {
 			modelo[i]=lista.get(i-1);
 		}
+		if(lista.size()>0) {
 		modelo[i]=lista.get(i-1);
+		}
 		return modelo;
 	}
 	
@@ -171,8 +180,10 @@ private Date obtenerFechaSalida(Vuelo_Datos_Vista datos) {
 	public Aeropuerto[] obtenerListaAeropuerto() {
 		try {
 		AeropuertoDAO aerodao = AeropuertoFactory.getAeropuertoDAO(DatosEstaticos.getSource());
-		List<Aeropuerto> lista;
-			lista = aerodao.getAllAeropuerto();
+		List<Aeropuerto> lista = aerodao.getAllAeropuerto();
+		if(lista.isEmpty()) {
+			this.cargaCorrecta=false;
+		}
 		Aeropuerto[] modelo = new Aeropuerto[(lista.size()+1)];
 		int i=0;
 		modelo[i]= new Aeropuerto();
@@ -180,7 +191,9 @@ private Date obtenerFechaSalida(Vuelo_Datos_Vista datos) {
 		for (i=1;i<lista.size();i++) {
 			modelo[i]=lista.get(i-1);
 		}
-		modelo[i]=lista.get(i-1);
+		if(lista.size()>0) {
+			modelo[i]=lista.get(i-1);
+		}
 		return modelo;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -210,6 +223,14 @@ private Date obtenerFechaSalida(Vuelo_Datos_Vista datos) {
 		return -1;
 	}
 
+	public void corroboraCarga() {
+		if(this.cargaCorrecta == false) {
+			this.menu.dispose();
+			this.menu.errorCarga();
+			this.mPController.hacerVisibleMP();
+		}
+		
+	}
 	
 	
 }

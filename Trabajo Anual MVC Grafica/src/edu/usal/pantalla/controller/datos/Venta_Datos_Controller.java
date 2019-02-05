@@ -25,7 +25,7 @@ public class Venta_Datos_Controller {
 	Venta_Datos_Vista vista;
 	MenuPrincipalControllerTabla controllerMP;
 	private VentaDAO ventadao;
-	private Venta venta; 
+	private Venta venta;
 	
 	public Venta_Datos_Controller(MenuPrincipalControllerTabla menuPrincipalController) {
 		this.venta = new Venta();

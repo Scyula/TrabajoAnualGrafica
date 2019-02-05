@@ -26,10 +26,12 @@ public class Cliente_Datos_Controller {
 	Cliente_Datos_Vista menu;
 	MenuPrincipalControllerTabla mPController;
 	private ClienteDAO clientedao;
+	private boolean cargaCorrecta = true;
 	
 	public Cliente_Datos_Controller(MenuPrincipalControllerTabla menuPrincipalControllerTabla) {
 		this.mPController= menuPrincipalControllerTabla;
 		menu = new Cliente_Datos_Vista(this);
+		this.corroboraCarga();
 	}
 	
 	public Cliente_Datos_Controller(MenuPrincipalControllerTabla menuPrincipalController, Cliente cliente) {
@@ -138,6 +140,9 @@ public class Cliente_Datos_Controller {
 	
 	public Pais[] obtenerListaPaises() {	
 		Hashtable<Integer, String> lista= DatosEstaticos.getPaises();
+		if(lista.isEmpty()) {
+			this.cargaCorrecta=false;
+		}
 		Pais[] modelo = new Pais[(lista.size()+1)];
 		modelo[0]= new Pais(-1,"Seleccione un pais");
 		for (int i=1; i<lista.size();i++) {
@@ -149,6 +154,9 @@ public class Cliente_Datos_Controller {
 
 	public Provincia[] obtenerListaProvincias() {
 		Hashtable<Integer, String> lista= DatosEstaticos.getProvincias();
+		if(lista.isEmpty()) {
+			this.cargaCorrecta=false;
+		}
 		Provincia[] modelo = new Provincia[(lista.size()+1)];
 		modelo[0]= new Provincia(-1,"Seleccione una provincia");
 		for (int i=1; i<lista.size();i++) {
@@ -168,6 +176,9 @@ public class Cliente_Datos_Controller {
 		}
 		return modelo;*/
 		ArrayList<LineaAerea> lista= DatosEstaticos.getAerolineas();
+		if(lista.isEmpty()) {
+			//this.cargaCorrecta=false;
+		}
 		LineaAerea[] modelo = new LineaAerea[(lista.size()+1)];
 		int i=0;
 		modelo[i]= new LineaAerea();
@@ -234,6 +245,15 @@ public class Cliente_Datos_Controller {
 		}else {
 			return "";
 		}
+	}
+
+	public void corroboraCarga() {
+		if(this.cargaCorrecta == false) {
+			this.menu.dispose();
+			this.menu.errorCarga();
+			this.mPController.hacerVisibleMP();
+		}
+		
 	}
 	
 }
