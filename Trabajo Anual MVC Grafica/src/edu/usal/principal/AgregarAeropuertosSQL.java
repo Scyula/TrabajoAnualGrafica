@@ -37,7 +37,6 @@ public class AgregarAeropuertosSQL {
 			}
 			con.cerrarConeccion();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -64,7 +63,6 @@ public class AgregarAeropuertosSQL {
 				lista.add(nueva);
 			}
 		}catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return lista;
@@ -84,7 +82,6 @@ public class AgregarAeropuertosSQL {
 				lista.add(nueva);
 			}
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return lista;

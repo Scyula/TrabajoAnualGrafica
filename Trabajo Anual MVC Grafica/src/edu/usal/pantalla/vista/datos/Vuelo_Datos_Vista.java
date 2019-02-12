@@ -53,9 +53,7 @@ public class Vuelo_Datos_Vista extends JFrame {
 	private JTextField textCantidadAsientos;
 	private JTextField textRestantes;
 	
-/**
- * @wbp.parser.constructor
- */ 
+
 	
 	public Vuelo_Datos_Vista(Vuelo_Datos_Controller vista) {
 		this.vista = vista;
@@ -235,7 +233,9 @@ public class Vuelo_Datos_Vista extends JFrame {
 		panel_2.add(label_4);
 		this.setVisible(true);
 	}
-
+	/**
+	 * @wbp.parser.constructor
+	 */ 
 	public Vuelo_Datos_Vista(Vuelo_Datos_Controller vista, Vuelo v) {
 		this.vista = vista;
 		setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);

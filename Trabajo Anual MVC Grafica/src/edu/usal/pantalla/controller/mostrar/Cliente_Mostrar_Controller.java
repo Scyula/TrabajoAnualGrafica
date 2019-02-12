@@ -64,7 +64,6 @@ public class Cliente_Mostrar_Controller {
 			TableRowSorter<TableModel> modeloOrdenado = new TableRowSorter<TableModel>(this.vista.getTable().getModel());
 			this.vista.getTable().setRowSorter(modeloOrdenado);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		

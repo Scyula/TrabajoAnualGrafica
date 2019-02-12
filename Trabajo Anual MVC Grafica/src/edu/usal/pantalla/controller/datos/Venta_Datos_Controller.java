@@ -3,6 +3,8 @@ package edu.usal.pantalla.controller.datos;
 import java.sql.SQLException;
 import java.util.Date;
 
+import javax.swing.text.BadLocationException;
+
 import edu.usal.negocio.dao.factory.ClienteFactory;
 import edu.usal.negocio.dao.factory.VentaFactory;
 import edu.usal.negocio.dao.factory.VueloFactory;
@@ -242,6 +244,8 @@ public class Venta_Datos_Controller {
 					vista.cancelaOperacion();
 					return false;
 				}
+			}else {
+				vista.errorOperacion("No se encontró un vuelo con el ID ingresado");
 			}
 		} catch (SQLException e) {
 			vista.errorBaseDatos(e.getMessage());
@@ -396,7 +400,11 @@ public class Venta_Datos_Controller {
 			}
 		}
 		}catch (NumberFormatException e) {
-			vista.errorOperacion("El valor solo debe contener numeros");
+			try {
+				vista.errorOperacion("El valor solo debe contener numeros");
+				vista.getTextValor().getDocument().remove(vista.getTextValor().getText().length()-1, 1);
+			} catch (BadLocationException e1) {
+			}
 		}
 		
 	}

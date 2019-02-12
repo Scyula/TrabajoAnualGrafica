@@ -25,6 +25,8 @@ public class CapturaItemVenta implements ItemListener {
 			vista.getController().cancelarCuotas();
 		}else if(e.getSource().equals(vista.getRdbtnTarjeta())) {
 			vista.getController().habilitarCuotas();
+		}else if(e.getSource().equals(vista.getTextValor())) {
+			vista.getController().obtenerValorCuotas();
 		}
 
 	}

@@ -15,6 +15,7 @@ import edu.usal.negocio.dominio.Vuelo;
 import edu.usal.pantalla.controller.datos.Venta_Datos_Controller;
 import edu.usal.pantalla.vista.eventos.CapturaBtnVenta_Datos;
 import edu.usal.pantalla.vista.eventos.CapturaItemVenta;
+import edu.usal.pantalla.vista.eventos.CapturaTextValor;
 
 import java.awt.Font;
 import javax.swing.SwingConstants;
@@ -23,6 +24,7 @@ import javax.swing.JRadioButton;
 import java.awt.GridLayout;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
+import javax.swing.JFormattedTextField;
 
 public class Venta_Datos_Vista extends JFrame {
 	
@@ -410,6 +412,7 @@ public class Venta_Datos_Vista extends JFrame {
 		
 		textValor = new JTextField();
 		panel_19.add(textValor);
+		textValor.getDocument().addDocumentListener(new CapturaTextValor(this));
 		textValor.setColumns(10);
 		
 		JLabel label_2 = new JLabel("Metodo de pago");
@@ -892,6 +895,7 @@ public class Venta_Datos_Vista extends JFrame {
 		
 		textValor = new JTextField();
 		panel_19.add(textValor);
+		textValor.getDocument().addDocumentListener(new CapturaTextValor(this));
 		textValor.setColumns(10);
 		
 		JLabel label_2 = new JLabel("Metodo de pago");

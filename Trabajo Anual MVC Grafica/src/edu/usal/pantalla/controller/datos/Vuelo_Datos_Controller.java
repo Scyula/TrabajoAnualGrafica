@@ -26,6 +26,7 @@ import edu.usal.util.IOGeneralDAO;
 public class Vuelo_Datos_Controller {
 	Vuelo_Datos_Vista menu;
 	MenuPrincipalControllerTabla mPController;
+	private Vuelo vuelo;
 	private VueloDAO vuelodao;
 	private boolean cargaCorrecta = true;
 	
@@ -35,6 +36,7 @@ public class Vuelo_Datos_Controller {
 	}
 	
 	public Vuelo_Datos_Controller(MenuPrincipalControllerTabla menuPrincipalController, Vuelo vuelo) {
+		this.vuelo = vuelo;
 		this.mPController= menuPrincipalController;
 		menu = new Vuelo_Datos_Vista(this , vuelo);
 		
@@ -94,6 +96,7 @@ public class Vuelo_Datos_Controller {
 	
 	private Vuelo leerVuelo(Vuelo_Datos_Vista datos) {
 		Vuelo vuelo = new Vuelo();
+		vuelo.setId_vuelo(this.vuelo.getId_vuelo());
 		vuelo.setAerolinea((LineaAerea)datos.getComboBox_Aerolinea().getSelectedItem());
 		vuelo.setCantAsientos(Integer.parseInt(datos.getTextCantidadAsientos().getText()));
 		vuelo.setAeroSalida((Aeropuerto)datos.getComboBox_AeropuertoSalida().getSelectedItem());
@@ -101,7 +104,7 @@ public class Vuelo_Datos_Controller {
 		vuelo.setFechaHoraSalida(obtenerFechaSalida(datos));
 		vuelo.setFechaHoraLlegada(obtenerFechaLlegada(datos));
 		vuelo.setTiempoVuelo(datos.getTextTiempoVuelo().getText());
-		vuelo.setAsientosDisponibles(vuelo.getCantAsientos());
+		vuelo.setAsientosDisponibles(vuelo.getCantAsientos()-this.vuelo.getCantAsientos()+this.vuelo.getAsientosDisponibles());
 		return vuelo;
 	}
 		
@@ -196,7 +199,6 @@ private Date obtenerFechaSalida(Vuelo_Datos_Vista datos) {
 		}
 		return modelo;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;

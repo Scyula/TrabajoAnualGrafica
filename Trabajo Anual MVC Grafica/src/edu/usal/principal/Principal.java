@@ -7,4 +7,5 @@ public class Principal {
 	public static void main(String[] args) {
             	MenuPrincipalControllerTabla menu = new MenuPrincipalControllerTabla();	
 	}
+	
 }

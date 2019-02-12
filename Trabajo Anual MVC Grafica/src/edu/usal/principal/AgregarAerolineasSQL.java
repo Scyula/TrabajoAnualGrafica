@@ -52,7 +52,6 @@ public class AgregarAerolineasSQL {
 				lista.add(nueva);
 			}
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return lista;

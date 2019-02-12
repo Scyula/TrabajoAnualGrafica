@@ -170,7 +170,7 @@ public class MenuPrincipalControllerTabla{
 		private Cliente buscarCliente() {
 			try {
 			ClienteDAO clientedao = ClienteFactory.getClienteDAO(DatosEstaticos.getSource());
-			return clientedao.readCliente(Integer.valueOf((String) this.vista.getTable().getModel().getValueAt(this.vista.getTable().getSelectedRow(), 2)));	
+			return clientedao.readCliente(Integer.valueOf(String.valueOf(this.vista.getTable().getModel().getValueAt(this.vista.getTable().getSelectedRow(), 2))));	
 			} catch (SQLException e) {
 				IOGeneralDAO.pritln(">>>>>Error con la base de datos<<<<<");
 				IOGeneralDAO.pritln(e.getMessage());
@@ -419,7 +419,7 @@ public class MenuPrincipalControllerTabla{
 		private Venta buscarVenta() {
 			try {
 				VentaDAO linea = VentaFactory.getVentaDAO(DatosEstaticos.getSource());
-				return linea.readVenta(Integer.valueOf((String)this.vista.getTable().getModel().getValueAt(this.vista.getTable().getSelectedRow(), 0)));	
+				return linea.readVenta(Integer.valueOf(String.valueOf(this.vista.getTable().getModel().getValueAt(this.vista.getTable().getSelectedRow(), 0))));	
 				} catch (SQLException e) {
 					IOGeneralDAO.pritln(">>>>>Error con la base de datos<<<<<");
 					IOGeneralDAO.pritln(e.getMessage());
