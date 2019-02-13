@@ -980,8 +980,6 @@ public class Venta_Datos_Vista extends JFrame {
 		btnCancelar = new JButton("Cancelar");
 		panel_12.add(btnCancelar);
 		btnCancelar.addActionListener(new CapturaBtnVenta_Datos(this));
-		btnCancelar.addActionListener(new CapturaBtnVenta_Datos(this));
-		btnCancelar.addActionListener(new CapturaBtnVenta_Datos(this));
 		
 		JPanel panel_13 = new JPanel();
 		panel_12.add(panel_13);

@@ -43,47 +43,95 @@ public class Vuelo_Datos_Controller {
 	}
 
 	public void updateDatos(Vuelo_Datos_Vista datos) {
-		System.out.println("Datos recibidos(update)");
 		vuelodao = VueloFactory.getVueloDAO(DatosEstaticos.getSource());
 		Vuelo vuelo = new Vuelo();
-		vuelo = this.leerVuelo(datos);
-		try {
-			if(vuelodao.updateVuelo(vuelo)) {
-				menu.exitoOperacion();
-				mPController.seleccionVuelos();
-			}else {
-				menu.fracasoOperacion();
+		if(this.corroborarDatos()) {
+			vuelo = this.leerVuelo(datos);
+			try {
+				if(vuelodao.updateVuelo(vuelo)) {
+					menu.exitoOperacion();
+					mPController.seleccionVuelos();
+				}else {
+					menu.fracasoOperacion();
+				}
+			} catch (SQLException e) {
+				IOGeneralDAO.pritln(">>>>>Error con la base de datos<<<<<");
+				IOGeneralDAO.pritln(e.getMessage());
 			}
-		} catch (SQLException e) {
-			IOGeneralDAO.pritln(">>>>>Error con la base de datos<<<<<");
-			IOGeneralDAO.pritln(e.getMessage());
-		} finally {
 			menu.dispose();
 			mPController.hacerVisibleMP();
 		}
-		IOGeneralDAO.pritln(">>>>>Proceso terminado<<<<<");
 	}
 
 	public void almacenarDatos(Vuelo_Datos_Vista datos) {
-		System.out.println("Datos recibidos(alta)");
 		vuelodao = VueloFactory.getVueloDAO(DatosEstaticos.getSource());
 		Vuelo vuelo = new Vuelo();
-		vuelo = this.leerVuelo(datos);
-		try {
-			if(vuelodao.addVuelo(vuelo)) {
-				menu.exitoOperacion();
-				mPController.seleccionVuelos();
-			}else {
-				menu.fracasoOperacion();
+		if(this.corroborarDatos()) {
+			vuelo = this.leerVuelo(datos);
+			try {
+				if(vuelodao.addVuelo(vuelo)) {
+					menu.exitoOperacion();
+					mPController.seleccionVuelos();
+				}else {
+					menu.fracasoOperacion();
+				}
+			} catch (SQLException e) {
+				IOGeneralDAO.pritln(">>>>>Error con la base de datos<<<<<");
+				IOGeneralDAO.pritln(e.getMessage());
 			}
-		} catch (SQLException e) {
-			IOGeneralDAO.pritln(">>>>>Error con la base de datos<<<<<");
-			IOGeneralDAO.pritln(e.getMessage());
-		} finally {
 			menu.dispose();
 			mPController.hacerVisibleMP();
 		}
-		IOGeneralDAO.pritln(">>>>>Proceso terminado<<<<<");
+	}
+
+	private boolean corroborarDatos() {
+		boolean resultado = true;
+		String error = "";
+		if(this.menu.getComboBox_Aerolinea().getSelectedIndex()==0) {
+			error = error + "\nDebe seleccionar una aerolinea";
+			resultado = false;
+		}
+		if(this.menu.getComboBox_AeropuertoSalida().getSelectedIndex()==0) {
+			error = error + "\nDebe seleccionar un aeropuerto de salida";
+			resultado = false;
+		}
+		if(this.menu.getComboBox_AeropuertoLlegada().getSelectedIndex()==0) {
+			error = error + "\nDebe seleccionar un aeropuerto de llegada";
+			resultado = false;
+		}
+		if(this.menu.getDateSalida().getDate() == null) {
+			error = error + "\nDebe seleccionar una fecha de llegada";
+			resultado = false;
+		}
+		if(this.menu.getDateLlegada().getDate() == null) {
+			error = error + "\nDebe seleccionar una fecha de llegada";
+			resultado = false;
+		}
+		try{
+			Integer.valueOf(this.menu.getTextCantidadAsientos().getText());
+		}catch (NumberFormatException e) {
+			error = error + "\nDebe ingresar un numero entero en la cantidad de asientos";
+			resultado = false;
+		}
+		if(this.menu.getTextTiempoVuelo().getText().isEmpty()) {
+			error = error + "\nDebe ingresar un tiempo de vuelo";
+			resultado = false;
+		}else {
+			char[] aux = this.menu.getTextTiempoVuelo().getText().toCharArray();
+			boolean aprobado = false;
+			for (int i = 0; i < aux.length; i++) {
+				if(Character.isAlphabetic(aux[i])||Character.isDigit(aux[i])) {
+					aprobado = true;
+				}
+			}
+			if(!aprobado) {
+				error = error + "\nTiempo de vuelo ingresado no valido";
+			}
+		}
+		if(!resultado) {			
+			this.menu.errorOperacion(error);
+		}
+		return resultado;
 	}
 
 	public MenuPrincipalControllerTabla getmPController() {

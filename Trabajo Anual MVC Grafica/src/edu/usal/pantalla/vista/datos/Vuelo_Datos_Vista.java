@@ -54,6 +54,9 @@ public class Vuelo_Datos_Vista extends JFrame {
 	private JTextField textRestantes;
 	
 
+/**
+ * @wbp.parser.constructor
+ */ 
 	
 	public Vuelo_Datos_Vista(Vuelo_Datos_Controller vista) {
 		this.vista = vista;
@@ -233,9 +236,7 @@ public class Vuelo_Datos_Vista extends JFrame {
 		panel_2.add(label_4);
 		this.setVisible(true);
 	}
-	/**
-	 * @wbp.parser.constructor
-	 */ 
+	
 	public Vuelo_Datos_Vista(Vuelo_Datos_Controller vista, Vuelo v) {
 		this.vista = vista;
 		setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -429,122 +430,124 @@ public class Vuelo_Datos_Vista extends JFrame {
 	return vista;
 }
 
-public void setVista(Vuelo_Datos_Controller vista) {
-	this.vista = vista;
-}
-
-public JTextField getTextTiempoVuelo() {
-	return textTiempoVuelo;
-}
-
-public void setTextTiempoVuelo(JTextField textTiempoVuelo) {
-	this.textTiempoVuelo = textTiempoVuelo;
-}
-
-public JButton getBtnGuardar() {
-	return btnGuardar;
-}
-
-public void setBtnGuardar(JButton btnGuardar) {
-	this.btnGuardar = btnGuardar;
-}
-
-public JButton getBtnGuardarMod() {
-	return btnGuardarMod;
-}
-
-public void setBtnGuardarMod(JButton btnGuardarMod) {
-	this.btnGuardarMod = btnGuardarMod;
-}
-
-public JButton getBtnCancelar() {
-	return btnCancelar;
-}
-
-public void setBtnCancelar(JButton btnCancelar) {
-	this.btnCancelar = btnCancelar;
-}
-
-public JDateChooser getDateSalida() {
-	return dateSalida;
-}
-
-public void setDateSalida(JDateChooser dateSalida) {
-	this.dateSalida = dateSalida;
-}
-
-public JDateChooser getDateLlegada() {
-	return dateLlegada;
-}
-
-public void setDateLlegada(JDateChooser dateLlegada) {
-	this.dateLlegada = dateLlegada;
-}
-
-public JComboBox<Aeropuerto> getComboBox_AeropuertoSalida() {
-	return comboBox_AeropuertoSalida;
-}
-
-public void setComboBox_AeropuertoSalida(JComboBox<Aeropuerto> comboBox_AeropuertoSalida) {
-	this.comboBox_AeropuertoSalida = comboBox_AeropuertoSalida;
-}
-
-public JComboBox<Aeropuerto> getComboBox_AeropuertoLlegada() {
-	return comboBox_AeropuertoLlegada;
-}
-
-public void setComboBox_AeropuertoLlegada(JComboBox<Aeropuerto> comboBox_AeropuertoLlegada) {
-	this.comboBox_AeropuertoLlegada = comboBox_AeropuertoLlegada;
-}
-
-public JComboBox<LineaAerea> getComboBox_Aerolinea() {
-	return comboBox_Aerolinea;
-}
-
-public void setComboBox_Aerolinea(JComboBox<LineaAerea> comboBox_Aerolinea) {
-	this.comboBox_Aerolinea = comboBox_Aerolinea;
-}
-
-public JComboBox<String> getComboBox_HoraSalida() {
-	return comboBox_HoraSalida;
-}
-
-public void setComboBox_HoraSalida(JComboBox<String> comboBox_HoraSalida) {
-	this.comboBox_HoraSalida = comboBox_HoraSalida;
-}
-
-public JComboBox<String> getComboBox_MinutosSalida() {
-	return comboBox_MinutosSalida;
-}
-
-public void setComboBox_MinutosSalida(JComboBox<String> comboBox_MinutosSalida) {
-	this.comboBox_MinutosSalida = comboBox_MinutosSalida;
-}
-
-public JComboBox<String> getComboBox_HoraLlegada() {
-	return comboBox_HoraLlegada;
-}
-
-public void setComboBox_HoraLlegada(JComboBox<String> comboBox_HoraLlegada) {
-	this.comboBox_HoraLlegada = comboBox_HoraLlegada;
-}
-
-public JComboBox<String> getComboBox_MinutosLlegada() {
-	return comboBox_MinutosLlegada;
-}
-
-public void setComboBox_MinutosLlegada(JComboBox<String> comboBox_MinutosLlegada) {
-	this.comboBox_MinutosLlegada = comboBox_MinutosLlegada;
-}
-
-public JTextField getTextCantidadAsientos() {
-	return textCantidadAsientos;
-}
-
-public void setTextCantidadAsientos(JTextField spinCantidadAsientos) {
-	this.textCantidadAsientos = spinCantidadAsientos;
-}
-
+	public void setVista(Vuelo_Datos_Controller vista) {
+		this.vista = vista;
+	}
+	
+	public JTextField getTextTiempoVuelo() {
+		return textTiempoVuelo;
+	}
+	
+	public void setTextTiempoVuelo(JTextField textTiempoVuelo) {
+		this.textTiempoVuelo = textTiempoVuelo;
+	}
+	
+	public JButton getBtnGuardar() {
+		return btnGuardar;
+	}
+	
+	public void setBtnGuardar(JButton btnGuardar) {
+		this.btnGuardar = btnGuardar;
+	}
+	
+	public JButton getBtnGuardarMod() {
+		return btnGuardarMod;
+	}
+	
+	public void setBtnGuardarMod(JButton btnGuardarMod) {
+		this.btnGuardarMod = btnGuardarMod;
+	}
+	
+	public JButton getBtnCancelar() {
+		return btnCancelar;
+	}
+	
+	public void setBtnCancelar(JButton btnCancelar) {
+		this.btnCancelar = btnCancelar;
+	}
+	
+	public JDateChooser getDateSalida() {
+		return dateSalida;
+	}
+	
+	public void setDateSalida(JDateChooser dateSalida) {
+		this.dateSalida = dateSalida;
+	}
+	
+	public JDateChooser getDateLlegada() {
+		return dateLlegada;
+	}
+	
+	public void setDateLlegada(JDateChooser dateLlegada) {
+		this.dateLlegada = dateLlegada;
+	}
+	
+	public JComboBox<Aeropuerto> getComboBox_AeropuertoSalida() {
+		return comboBox_AeropuertoSalida;
+	}
+	
+	public void setComboBox_AeropuertoSalida(JComboBox<Aeropuerto> comboBox_AeropuertoSalida) {
+		this.comboBox_AeropuertoSalida = comboBox_AeropuertoSalida;
+	}
+	
+	public JComboBox<Aeropuerto> getComboBox_AeropuertoLlegada() {
+		return comboBox_AeropuertoLlegada;
+	}
+	
+	public void setComboBox_AeropuertoLlegada(JComboBox<Aeropuerto> comboBox_AeropuertoLlegada) {
+		this.comboBox_AeropuertoLlegada = comboBox_AeropuertoLlegada;
+	}
+	
+	public JComboBox<LineaAerea> getComboBox_Aerolinea() {
+		return comboBox_Aerolinea;
+	}
+	
+	public void setComboBox_Aerolinea(JComboBox<LineaAerea> comboBox_Aerolinea) {
+		this.comboBox_Aerolinea = comboBox_Aerolinea;
+	}
+	
+	public JComboBox<String> getComboBox_HoraSalida() {
+		return comboBox_HoraSalida;
+	}
+	
+	public void setComboBox_HoraSalida(JComboBox<String> comboBox_HoraSalida) {
+		this.comboBox_HoraSalida = comboBox_HoraSalida;
+	}
+	
+	public JComboBox<String> getComboBox_MinutosSalida() {
+		return comboBox_MinutosSalida;
+	}
+	
+	public void setComboBox_MinutosSalida(JComboBox<String> comboBox_MinutosSalida) {
+		this.comboBox_MinutosSalida = comboBox_MinutosSalida;
+	}
+	
+	public JComboBox<String> getComboBox_HoraLlegada() {
+		return comboBox_HoraLlegada;
+	}
+	
+	public void setComboBox_HoraLlegada(JComboBox<String> comboBox_HoraLlegada) {
+		this.comboBox_HoraLlegada = comboBox_HoraLlegada;
+	}
+	
+	public JComboBox<String> getComboBox_MinutosLlegada() {
+		return comboBox_MinutosLlegada;
+	}
+	
+	public void setComboBox_MinutosLlegada(JComboBox<String> comboBox_MinutosLlegada) {
+		this.comboBox_MinutosLlegada = comboBox_MinutosLlegada;
+	}
+	
+	public JTextField getTextCantidadAsientos() {
+		return textCantidadAsientos;
+	}
+	
+	public void setTextCantidadAsientos(JTextField spinCantidadAsientos) {
+		this.textCantidadAsientos = spinCantidadAsientos;
+	}
+	public void errorOperacion(String problema) {
+		JOptionPane.showMessageDialog(null, "La operacion no se pudo realizar\n"+problema, "", JOptionPane.WARNING_MESSAGE);
+	}
 	public void cancelaOperacion() {
 		JOptionPane.showMessageDialog(null, "La operacion se ha cancelado", "", JOptionPane.WARNING_MESSAGE);
 	}
