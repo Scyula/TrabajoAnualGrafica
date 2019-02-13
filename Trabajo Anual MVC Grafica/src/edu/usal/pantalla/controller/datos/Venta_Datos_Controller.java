@@ -372,41 +372,40 @@ public class Venta_Datos_Controller {
 						return true;
 					}
 				}catch(NumberFormatException e) {
-					vista.errorOperacion("El valor debe ser un numero decimal");
+					this.vista.errorOperacion("El valor debe ser un numero decimal");
 				}
 			}else {
-				vista.errorOperacion("Debe seleccionar un vuelo");
+				this.vista.errorOperacion("Debe seleccionar un vuelo");
 			}
 		}else {
-			vista.errorOperacion("Debe seleccionar un cliente");
+			this.vista.errorOperacion("Debe seleccionar un cliente");
 		}
 		return false;
 	}
 
 	public void actualizarValor() {
 		try {
-			Double valor = (Double.parseDouble(vista.getTextValor().getText()));
-		if(vista.getRdbtnEfectivo().isSelected()) {
-			
-			vista.getTextTotalPagar().setText(String.valueOf(valor));
-		}
-		if(vista.getRdbtnTarjeta().isSelected()) {
-			int c = Integer.valueOf((String) vista.getComboBox_Cuotas().getSelectedItem());
-			if(c==1||c==3||c==6) {
-				vista.getTextValor().setText(String.valueOf(venta.getTotalPagar()));
+			Double valor = Double.parseDouble(this.vista.getTextValor().getText());
+			if(this.vista.getRdbtnEfectivo().isSelected()) {
+				
+				this.vista.getTextTotalPagar().setText(String.valueOf(valor));
 			}
-			if(c==12||c==24) {
-				vista.getTextValor().setText(String.valueOf((venta.getTotalPagar()*1.1)));
+			if(this.vista.getRdbtnTarjeta().isSelected()) {
+				int c = Integer.valueOf((String) this.vista.getComboBox_Cuotas().getSelectedItem());
+				if(c==1||c==3||c==6) {
+					this.vista.getTextTotalPagar().setText(String.valueOf(valor));
+				}
+				if(c==12||c==24) {
+					this.vista.getTextTotalPagar().setText(String.valueOf((valor*1.1)));
+				}
 			}
-		}
 		}catch (NumberFormatException e) {
 			try {
-				vista.errorOperacion("El valor solo debe contener numeros");
-				vista.getTextValor().getDocument().remove(vista.getTextValor().getText().length()-1, 1);
+				this.vista.errorOperacion("El valor solo debe contener numeros");
+				this.vista.getTextValor().getDocument().remove(this.vista.getTextValor().getText().length()-1, 1);
 			} catch (BadLocationException e1) {
 			}
 		}
-		
 	}
 	
 	public void MostrarClientes() {

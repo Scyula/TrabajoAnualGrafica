@@ -46,7 +46,8 @@ public class Vuelo_Datos_Controller {
 		vuelodao = VueloFactory.getVueloDAO(DatosEstaticos.getSource());
 		Vuelo vuelo = new Vuelo();
 		if(this.corroborarDatos()) {
-			vuelo = this.leerVuelo(datos);
+			vuelo = this.leerVueloUpdate(datos);
+			vuelo.setId_vuelo(this.vuelo.getId_vuelo());
 			try {
 				if(vuelodao.updateVuelo(vuelo)) {
 					menu.exitoOperacion();
@@ -142,7 +143,7 @@ public class Vuelo_Datos_Controller {
 		this.mPController = mPController;
 	}
 	
-	private Vuelo leerVuelo(Vuelo_Datos_Vista datos) {
+	private Vuelo leerVueloUpdate(Vuelo_Datos_Vista datos) {
 		Vuelo vuelo = new Vuelo();
 		vuelo.setId_vuelo(this.vuelo.getId_vuelo());
 		vuelo.setAerolinea((LineaAerea)datos.getComboBox_Aerolinea().getSelectedItem());
@@ -153,6 +154,18 @@ public class Vuelo_Datos_Controller {
 		vuelo.setFechaHoraLlegada(obtenerFechaLlegada(datos));
 		vuelo.setTiempoVuelo(datos.getTextTiempoVuelo().getText());
 		vuelo.setAsientosDisponibles(vuelo.getCantAsientos()-this.vuelo.getCantAsientos()+this.vuelo.getAsientosDisponibles());
+		return vuelo;
+	}
+	private Vuelo leerVuelo(Vuelo_Datos_Vista datos) {
+		Vuelo vuelo = new Vuelo();
+		vuelo.setAerolinea((LineaAerea)datos.getComboBox_Aerolinea().getSelectedItem());
+		vuelo.setCantAsientos(Integer.parseInt(datos.getTextCantidadAsientos().getText()));
+		vuelo.setAeroSalida((Aeropuerto)datos.getComboBox_AeropuertoSalida().getSelectedItem());
+		vuelo.setAeroLlegada((Aeropuerto)datos.getComboBox_AeropuertoLlegada().getSelectedItem());
+		vuelo.setFechaHoraSalida(obtenerFechaSalida(datos));
+		vuelo.setFechaHoraLlegada(obtenerFechaLlegada(datos));
+		vuelo.setTiempoVuelo(datos.getTextTiempoVuelo().getText());
+		vuelo.setAsientosDisponibles(vuelo.getCantAsientos());
 		return vuelo;
 	}
 		
