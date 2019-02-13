@@ -40,45 +40,220 @@ public class Cliente_Datos_Controller {
 	}
 
 	public void updateDatos(Cliente_Datos_Vista datos) {
-		System.out.println("Datos recibidos(update)");
-		clientedao = ClienteFactory.getClienteDAO(DatosEstaticos.getSource());
-		Cliente cliente = new Cliente();
-		cliente = this.leerCliente(datos);
-		try {
-			if(clientedao.updateCliente(cliente)) {
-				menu.exitoOperacion();
-				mPController.seleccionClientes();
-			}else {
-				menu.fracasoOperacion();
+		if(corroborarDatos()) {			
+			clientedao = ClienteFactory.getClienteDAO(DatosEstaticos.getSource());
+			Cliente cliente = new Cliente();
+			cliente = this.leerCliente(datos);
+			try {
+				if(clientedao.updateCliente(cliente)) {
+					menu.exitoOperacion();
+					mPController.seleccionClientes();
+				}else {
+					menu.fracasoOperacion();
+				}
+			} catch (SQLException e) {
+				IOGeneralDAO.pritln(">>>>>Error con la base de datos<<<<<");
+				IOGeneralDAO.pritln(e.getMessage());
+			} finally {
+				mPController.hacerVisibleMP();
 			}
-		} catch (SQLException e) {
-			IOGeneralDAO.pritln(">>>>>Error con la base de datos<<<<<");
-			IOGeneralDAO.pritln(e.getMessage());
-		} finally {
-			mPController.hacerVisibleMP();
 		}
-		IOGeneralDAO.pritln(">>>>>Proceso terminado<<<<<");
+	}
+	
+	private boolean corroborarDatos() {
+		boolean resultado = true;
+		String error = "";
+		if(this.menu.getComboBox_Aerolinea().getSelectedIndex()==0) {
+			error = error + "\nDebe seleccionar una aerolinea";
+			resultado = false;
+		}
+		if(this.menu.getComboBox_Pais().getSelectedIndex()==0) {
+			error = error + "\nDebe seleccionar un pais en la direccion";
+			resultado = false;
+		}
+		if(this.menu.getComboBox_Provincia().getSelectedIndex() == 0 && this.menu.getComboBox_Pais().getSelectedIndex() == 9) {
+			error = error + "\nDebe seleccionar una provincia en la direccion";
+			resultado = false;
+		}
+		if(this.menu.getComboBox_PaisEmision().getSelectedIndex()==0) {
+			error = error + "\nDebe seleccionar un pais de emision del pasaporte";
+			resultado = false;
+		}
+		if(this.menu.getFechaNacimiento().getDate() == null) {
+			error = error + "\nDebe ingresar una fecha de nacimiento";
+			resultado = false;
+		}
+		if(this.menu.getEmisionPasaport().getDate() == null) {
+			error = error + "\nDebe ingresar una fecha de emision del pasaporte";
+			resultado = false;
+		}
+		if(this.menu.getVencPasaport().getDate() == null) {
+			error = error + "\nDebe ingresar una fecha de vencimiento del pasaporte";
+			resultado = false;
+		}
+		try{
+			Integer.valueOf(this.menu.getTextDNI().getText());
+		}catch (NumberFormatException e) {
+			error = error + "\nEl DNI deben ser solo numeros";
+			resultado = false;
+		}
+		try{
+			Integer.valueOf(this.menu.getTextCuit().getText());
+		}catch (NumberFormatException e) {
+			error = error + "\nEl CUIT deben ser solo numeros";
+			resultado = false;
+		}
+		if(this.menu.getTextNombre().getText().isEmpty()) {
+			error = error + "\nDebe ingresar el nombre del cliente";
+			resultado = false;
+		}else {
+			char[] aux = this.menu.getTextNombre().getText().toCharArray();
+			boolean aprobado = false;
+			for (int i = 0; i < aux.length; i++) {
+				if(Character.isAlphabetic(aux[i])) {
+					aprobado = true;
+				}
+			}
+			if(!aprobado) {
+				error = error + "\nNombre del cliente no valido";
+			}
+		}
+		if(this.menu.getTextApellido().getText().isEmpty()) {
+			error = error + "\nDebe ingresar el Apellido del cliente";
+			resultado = false;
+		}else {
+			char[] aux = this.menu.getTextApellido().getText().toCharArray();
+			boolean aprobado = false;
+			for (int i = 0; i < aux.length; i++) {
+				if(Character.isAlphabetic(aux[i])) {
+					aprobado = true;
+				}
+			}
+			if(!aprobado) {
+				error = error + "\nApellido del cliente no valido";
+			}
+		}
+		if(this.menu.getTextEmail().getText().isEmpty()) {
+			error = error + "\nDebe ingresar el e-mail del cliente";
+			resultado = false;
+		}else {
+			char[] aux = this.menu.getTextEmail().getText().toCharArray();
+			boolean aprobado = false;
+			for (int i = 0; i < aux.length; i++) {
+				if(Character.isAlphabetic(aux[i])) {
+					aprobado = true;
+				}
+			}
+			if(!aprobado) {
+				error = error + "\nE-mail del cliente no valido";
+			}
+		}
+		if(this.menu.getTextCiudad().getText().isEmpty()) {
+			error = error + "\nDebe ingresar una ciudad en direccion";
+			resultado = false;
+		}else {
+			char[] aux = this.menu.getTextCiudad().getText().toCharArray();
+			boolean aprobado = false;
+			for (int i = 0; i < aux.length; i++) {
+				if(Character.isAlphabetic(aux[i])) {
+					aprobado = true;
+				}
+			}
+			if(!aprobado) {
+				error = error + "\nCiudad ingresada no valida";
+			}
+		}
+		if(this.menu.getTextCodPostal().getText().isEmpty()) {
+			error = error + "\nDebe ingresar el codigo postal de la direccion";
+			resultado = false;
+		}else {
+			char[] aux = this.menu.getTextCodPostal().getText().toCharArray();
+			boolean aprobado = false;
+			for (int i = 0; i < aux.length; i++) {
+				if(Character.isAlphabetic(aux[i]) || Character.isDigit(aux[i])) {
+					aprobado = true;
+				}
+			}
+			if(!aprobado) {
+				error = error + "\nCodigo postal ingresado no valido";
+			}
+		}
+		if(this.menu.getTextCalle().getText().isEmpty()) {
+			error = error + "\nDebe ingresar la calle de la direccion";
+			resultado = false;
+		}else {
+			char[] aux = this.menu.getTextCalle().getText().toCharArray();
+			boolean aprobado = false;
+			for (int i = 0; i < aux.length; i++) {
+				if(Character.isAlphabetic(aux[i])) {
+					aprobado = true;
+				}
+			}
+			if(!aprobado) {
+				error = error + "\nCalle ingresada no valida";
+			}
+		}
+		if(this.menu.getTextAltura().getText().isEmpty()) {
+			error = error + "\nDebe ingresar la altura de la calle";
+			resultado = false;
+		}else {
+			char[] aux = this.menu.getTextAltura().getText().toCharArray();
+			boolean aprobado = false;
+			for (int i = 0; i < aux.length; i++) {
+				if(Character.isAlphabetic(aux[i]) || Character.isDigit(aux[i])) {
+					aprobado = true;
+				}
+			}
+			if(!aprobado) {
+				error = error + "\nAltura de calle ingresada no valida";
+			}
+		}
+		try{
+			Integer.valueOf(this.menu.getTextNroPasaporte().getText());
+		}catch (NumberFormatException e) {
+			error = error + "\nEl numero de pasaporte debe ser solo numeros";
+			resultado = false;
+		}
+		if(this.menu.getTextAutoridadEmision().getText().isEmpty()) {
+			error = error + "\nDebe ingresar una autoridad de emision";
+			resultado = false;
+		}else {
+			char[] aux = this.menu.getTextAutoridadEmision().getText().toCharArray();
+			boolean aprobado = false;
+			for (int i = 0; i < aux.length; i++) {
+				if(Character.isAlphabetic(aux[i])) {
+					aprobado = true;
+				}
+			}
+			if(!aprobado) {
+				error = error + "\nAutoridad de emision ingresada no valida";
+			}
+		}
+		if(!resultado) {			
+			this.menu.errorOperacion(error);
+		}
+		return resultado;
 	}
 
 	public void almacenarDatos(Cliente_Datos_Vista datos) {
-		System.out.println("Datos recibidos(alta)");
-		clientedao = ClienteFactory.getClienteDAO(DatosEstaticos.getSource());
-		Cliente cliente = new Cliente();
-		cliente = this.leerCliente(datos);
-		try {
-			if(clientedao.addCliente(cliente)) {
-				menu.exitoOperacion();
-				mPController.seleccionClientes();
-			}else {
-				menu.fracasoOperacion();
+		if(corroborarDatos()) {			
+			clientedao = ClienteFactory.getClienteDAO(DatosEstaticos.getSource());
+			Cliente cliente = new Cliente();
+			cliente = this.leerCliente(datos);
+			try {
+				if(clientedao.addCliente(cliente)) {
+					menu.exitoOperacion();
+					mPController.seleccionClientes();
+				}else {
+					menu.fracasoOperacion();
+				}
+			} catch (SQLException e) {
+				IOGeneralDAO.pritln(">>>>>Error con la base de datos<<<<<");
+				IOGeneralDAO.pritln(e.getMessage());
+			} finally {
+				mPController.hacerVisibleMP();
 			}
-		} catch (SQLException e) {
-			IOGeneralDAO.pritln(">>>>>Error con la base de datos<<<<<");
-			IOGeneralDAO.pritln(e.getMessage());
-		} finally {
-			mPController.hacerVisibleMP();
 		}
-		IOGeneralDAO.pritln(">>>>>Proceso terminado<<<<<");
 	}
 
 	public MenuPrincipalControllerTabla getmPController() {

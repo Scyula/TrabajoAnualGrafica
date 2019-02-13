@@ -29,42 +29,60 @@ public class LineaAerea_Datos_Controller {
 	}
 
 	public void guardarDatos() {
-		try {
-			aerolineadao = LineaAereaFactory.getLineaAereaDAO(DatosEstaticos.getSource());
-			if(aerolineadao.addLineaAerea(new LineaAerea(0, menu.getTextNombre().getText(), menu.getComboBoxAlianza().getSelectedIndex(),	 null))) {
-				menu.exitoOperacion();
-				DatosEstaticos.actualizarAerolineas();
-				mPController.seleccionAerolinea();
-			}else {
-				menu.fracasoOperacion();
-			}
-		} catch (SQLException e) {
-			IOGeneralDAO.pritln(">>>>>Error con la base de datos<<<<<");
-			IOGeneralDAO.pritln(e.getMessage());
-		}
-		menu.dispose();
-		mPController.seleccionAerolinea();
-		mPController.hacerVisibleMP();
-	}
-
-	public void updateDatos() {
-		try {
-			aerolineadao = LineaAereaFactory.getLineaAereaDAO(DatosEstaticos.getSource());
-			if(aerolineadao.updateLineaAerea(new LineaAerea(Integer.parseInt(menu.getLblID_Asignado().getText()), menu.getTextNombre().getText(), menu.getComboBoxAlianza().getSelectedIndex(), null))) {
+		if(validarDatos()) {
+			try {
+				aerolineadao = LineaAereaFactory.getLineaAereaDAO(DatosEstaticos.getSource());
+				if(aerolineadao.addLineaAerea(new LineaAerea(0, menu.getTextNombre().getText(), menu.getComboBoxAlianza().getSelectedIndex(),	 null))) {
 					menu.exitoOperacion();
 					DatosEstaticos.actualizarAerolineas();
 					mPController.seleccionAerolinea();
-			}else {
-				menu.fracasoOperacion();
+				}else {
+					menu.fracasoOperacion();
+				}
+			} catch (SQLException e) {
+				IOGeneralDAO.pritln(">>>>>Error con la base de datos<<<<<");
+				IOGeneralDAO.pritln(e.getMessage());
 			}
-		}catch (SQLException e) {
-			IOGeneralDAO.pritln(">>>>>Error con la base de datos<<<<<");
-			IOGeneralDAO.pritln(e.getMessage());
+			menu.dispose();
+			mPController.seleccionAerolinea();
+			mPController.hacerVisibleMP();
 		}
-		menu.dispose();
-		mPController.seleccionAerolinea();
-		mPController.hacerVisibleMP();
 	}
+
+	private boolean validarDatos() {
+		char[] aux = this.menu.getTextNombre().getText().toCharArray();
+		boolean aprobado = false;
+		for (int i = 0; i < aux.length; i++) {
+			if(Character.isAlphabetic(aux[i])) {
+				aprobado = true;
+			}
+		}
+		if(!aprobado) {
+			this.menu.errorOperacion("\nNombre ingresado no valido");
+		}
+		return aprobado;
+	}
+
+	public void updateDatos() {
+		if(validarDatos()) {
+			try {
+				aerolineadao = LineaAereaFactory.getLineaAereaDAO(DatosEstaticos.getSource());
+				if(aerolineadao.updateLineaAerea(new LineaAerea(Integer.parseInt(menu.getLblID_Asignado().getText()), menu.getTextNombre().getText(), menu.getComboBoxAlianza().getSelectedIndex(), null))) {
+						menu.exitoOperacion();
+						DatosEstaticos.actualizarAerolineas();
+						mPController.seleccionAerolinea();
+				}else {
+					menu.fracasoOperacion();
+				}
+			}catch (SQLException e) {
+				IOGeneralDAO.pritln(">>>>>Error con la base de datos<<<<<");
+				IOGeneralDAO.pritln(e.getMessage());
+			}
+			menu.dispose();
+			mPController.seleccionAerolinea();
+			mPController.hacerVisibleMP();
+		}
+	}		
 	public void cerrarVentana() {
 		menu.dispose();
 	}

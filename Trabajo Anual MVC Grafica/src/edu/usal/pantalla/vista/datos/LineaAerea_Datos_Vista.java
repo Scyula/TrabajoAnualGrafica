@@ -243,6 +243,9 @@ public class LineaAerea_Datos_Vista extends JFrame {
 	public void setBtnGuardarMod(JButton btnGuardarMod) {
 		this.btnGuardarMod = btnGuardarMod;
 	}
+	public void errorOperacion(String problema) {
+		JOptionPane.showMessageDialog(null, "La operacion no se pudo realizar\n"+problema, "", JOptionPane.WARNING_MESSAGE);
+	}
 	public void cancelaOperacion() {
 		JOptionPane.showMessageDialog(null, "La operacion se ha cancelado", "", JOptionPane.WARNING_MESSAGE);
 	}

@@ -77,6 +77,7 @@ public class Cliente_Datos_Vista extends JFrame {
 	private JDateChooser FechaNacimiento;
 	private JLabel lbl_Alianza;
 	
+	
 	public Cliente_Datos_Vista(Cliente_Datos_Controller vista) {
 		
 		this.vista = vista;
@@ -1003,7 +1004,9 @@ public Cliente_Datos_Vista(Cliente_Datos_Controller vista, Cliente c) {
 	public void setBtnGuardarMod(JButton btnGuardarMod) {
 		this.btnGuardarMod = btnGuardarMod;
 	}
-	
+	public void errorOperacion(String problema) {
+		JOptionPane.showMessageDialog(null, "La operacion no se pudo realizar\n"+problema, "", JOptionPane.WARNING_MESSAGE);
+	}
 	public void cancelaOperacion() {
 		JOptionPane.showMessageDialog(null, "La operacion se ha cancelado", "", JOptionPane.WARNING_MESSAGE);
 	}
